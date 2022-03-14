@@ -23,6 +23,17 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
         GameState test = new GameState();
-        test.display_grid();
+        test.grid = new int[][]{
+	             {0, 0, 0, 0, 0, 0, 0, 0},
+	             {0, 0, 0, 0, 0, 0, 0, 0},
+	             {0, 2, 1, 0, 0, 1, 0, 0},
+	             {0, 0, 1, 1, 1, 2, 0, 0},
+	             {0, 0, 1, 1, 1, 2, 0, 0},
+	             {0, 0, 1, 2, 2, 2, 0, 0},
+	             {0, 0, 0, 0, 0, 0, 0, 0},
+	             {0, 0, 0, 0, 0, 0, 0, 0}
+	             };
+	    test.displayGrid();
+	    System.out.println(test.validPositions(2).toString());
     }
 }

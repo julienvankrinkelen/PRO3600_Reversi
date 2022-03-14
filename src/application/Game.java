@@ -8,11 +8,11 @@ public class Game {
         this.currentGame=currentGame;
     }
 
-    void start_reversi() {
+    void startReversi() {
 
     }
 
-    void play_in(Move move) {
+    void playIn(Move move) {
 
     }
 
