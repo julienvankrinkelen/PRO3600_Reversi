@@ -1,1 +1,13 @@
+/*.class
 /bin/
+/target/
+/out/
+/.project
+/.classpath
+/.settings
+/.metadata
+/.checkstyle
+/.iml
+/.idea
+/~
+*/##
