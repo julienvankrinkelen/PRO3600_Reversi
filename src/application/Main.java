@@ -34,6 +34,7 @@ public class Main extends Application {
 	             {0, 0, 0, 0, 0, 0, 0, 0}
 	             };
 	    test.displayGrid();
-	    System.out.println(test.validPositions(2).toString());
+	    System.out.println(test.validPositions(2));
+	    
     }
 }

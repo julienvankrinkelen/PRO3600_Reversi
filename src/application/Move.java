@@ -1,5 +1,7 @@
 package application;
 
+import java.util.*;
+
 public class Move {
 	int player;
 	Position position;
@@ -11,15 +13,25 @@ public class Move {
 		this.currentGameState=currentGameState;
 	}
 	
+	public boolean equals(Move move) {
+		return this.player==move.player && this.position.equals(move.position);
+	}
+	
 	public String toString() {
 		return position.toString();
 	}
 	
 	boolean isValid() {
-		return true;
+		if (!this.position.inGrid()) return false;
+		Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
+		for (Position dir: dirs) { //checks if disks can be sandwiched in a direction
+			if (this.currentGameState.sandwicheck(this, dir, true)>0) return true; //if a sandwich can be made in this direction
+		}
+		return false; //if no sandwich can be made from this position, then the move is not legal
 	}
 	
 	int disksFlipped() {
+		//TODO if needed
 		return 0;
 	}
 	
@@ -39,5 +51,14 @@ public class Move {
             this.currentGameState.grid[this.position.x][this.position.y] = this.player;
         }
         return res;
+    }
+    
+    public boolean isIn(ArrayList<Move> moves) {
+    	for (int i=0; i<moves.size(); i++) {
+    		if (this.equals(moves.get(i))) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 }
