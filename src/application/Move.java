@@ -25,7 +25,7 @@ public class Move {
 		if (!this.position.inGrid()) return false;
 		Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
 		for (Position dir: dirs) { //checks if disks can be sandwiched in a direction
-			if (this.currentGameState.sandwicheck(this, dir, true)>0) return true; //if a sandwich can be made in this direction
+			if (this.currentGameState.sandwicheck(this, dir)>0) return true; //if a sandwich can be made in this direction
 		}
 		return false; //if no sandwich can be made from this position, then the move is not legal
 	}
@@ -39,7 +39,7 @@ public class Move {
         Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
         int res=0; // sum of every disc flipped
         for (int i=0; i<dirs.length; i++) { // for every direction
-            int count_i = this.currentGameState.sandwicheck(this, dirs[i], true); // number of discs that can be flipped in said direction
+            int count_i = this.currentGameState.sandwicheck(this, dirs[i]); // number of discs that can be flipped in said direction
             res=res+count_i; // adds number of flipped discs
             for (int j=1; j<count_i +1; j++) {
                 int x = this.position.x + (dirs[i].x)*j;
