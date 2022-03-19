@@ -6,106 +6,66 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class SimpleViewCtrl {
-
+	
+	//déclaration des pions blancs
     @FXML
-    private ImageView BlackPawn00;
+    private ImageView BlackPawn00, BlackPawn01, BlackPawn02, BlackPawn03, BlackPawn04, BlackPawn05, BlackPawn06, BlackPawn07,
+    				  BlackPawn10, BlackPawn11, BlackPawn12, BlackPawn13, BlackPawn14, BlackPawn15, BlackPawn16, BlackPawn17,
+    				  BlackPawn20, BlackPawn21, BlackPawn22, BlackPawn23, BlackPawn24, BlackPawn25, BlackPawn26, BlackPawn27,
+    				  BlackPawn30, BlackPawn31, BlackPawn32, BlackPawn33, BlackPawn34, BlackPawn35, BlackPawn36, BlackPawn37,
+    				  BlackPawn40, BlackPawn41, BlackPawn42, BlackPawn43, BlackPawn44, BlackPawn45, BlackPawn46, BlackPawn47,
+    				  BlackPawn50, BlackPawn51, BlackPawn52, BlackPawn53, BlackPawn54, BlackPawn55, BlackPawn56, BlackPawn57,
+    				  BlackPawn60, BlackPawn61, BlackPawn62, BlackPawn63, BlackPawn64, BlackPawn65, BlackPawn66, BlackPawn67,
+    				  BlackPawn70, BlackPawn71, BlackPawn72, BlackPawn73, BlackPawn74, BlackPawn75, BlackPawn76, BlackPawn77;
     
+    //déclaration des pions noirs
     @FXML
-    private ImageView BlackPawn01;
+    private ImageView WhitePawn00, WhitePawn01, WhitePawn02, WhitePawn03, WhitePawn04, WhitePawn05, WhitePawn06, WhitePawn07,
+    				  WhitePawn10, WhitePawn11, WhitePawn12, WhitePawn13, WhitePawn14, WhitePawn15, WhitePawn16, WhitePawn17,
+    				  WhitePawn20, WhitePawn21, WhitePawn22, WhitePawn23, WhitePawn24, WhitePawn25, WhitePawn26, WhitePawn27,
+    				  WhitePawn30, WhitePawn31, WhitePawn32, WhitePawn33, WhitePawn34, WhitePawn35, WhitePawn36, WhitePawn37,
+    				  WhitePawn40, WhitePawn41, WhitePawn42, WhitePawn43, WhitePawn44, WhitePawn45, WhitePawn46, WhitePawn47,
+    				  WhitePawn50, WhitePawn51, WhitePawn52, WhitePawn53, WhitePawn54, WhitePawn55, WhitePawn56, WhitePawn57,
+    				  WhitePawn60, WhitePawn61, WhitePawn62, WhitePawn63, WhitePawn64, WhitePawn65, WhitePawn66, WhitePawn67,
+    				  WhitePawn70, WhitePawn71, WhitePawn72, WhitePawn73, WhitePawn74, WhitePawn75, WhitePawn76, WhitePawn77;
+
     
-    @FXML
-    private ImageView BlackPawn02;
-    
-    @FXML
-    private ImageView BlackPawn03;
-
-    @FXML
-    private ImageView BlackPawn04;
-
-    @FXML
-    private ImageView BlackPawn05;
-
-    @FXML
-    private ImageView BlackPawn06;
-
-    @FXML
-    private ImageView BlackPawn07;
-
-    @FXML
-    private ImageView BlackPawn34;
-
-    @FXML
-    private ImageView BlackPawn43;
-
     @FXML
     private ImageView Board;
 
     @FXML
-    private ImageView WhitePawn00;
+    private Button button00, button01, button02, button03, button04, button05, button06, button07,
+    			   button10, button11, button12, button13, button14, button15, button16, button17,
+    			   button20, button21, button22, button23, button24, button25, button26, button27,
+    			   button30, button31, button32, button33, button34, button35, button36, button37,
+    			   button40, button41, button42, button43, button44, button45, button46, button47,
+    			   button50, button51, button52, button53, button54, button55, button56, button57,
+    			   button60, button61, button62, button63, button64, button65, button66, button67,
+    			   button70, button71, button72, button73, button74, button75, button76, button77;
 
-    @FXML
-    private ImageView WhitePawn01;
-
-    @FXML
-    private ImageView WhitePawn02;
-
-    @FXML
-    private ImageView WhitePawn03;
-
-    @FXML
-    private ImageView WhitePawn04;
-
-    @FXML
-    private ImageView WhitePawn05;
-
-    @FXML
-    private ImageView WhitePawn06;
-
-    @FXML
-    private ImageView WhitePawn07;
-
-    @FXML
-    private ImageView WhitePawn33;
-
-    @FXML
-    private ImageView WhitePawn44;
-
-    @FXML
-    private Button button00;
-
-    @FXML
-    private Button button01;
-
-    @FXML
-    private Button button02;
-
-    @FXML
-    private Button button03;
-
-    @FXML
-    private Button button04;
-
-    @FXML
-    private Button button05;
-
-    @FXML
-    private Button button06;
-
-    @FXML
-    private Button button07;
-   
-    
-
-    
-   //Remplacer plus tard par la var currentPlayer
-	int tour =0;
-	
+	int tour=1;
+	//tour = Main.test.currentPlayer;
     @FXML
     void onClick(MouseEvent event) {
     	//Création des tableaux des pions noirs / blancs déjà positionnés sur les cases en invisible par défaut
     	//Pour l'instant, test avec uniquement les boutons / ImageView de la première ligne (ligne 0)
-    	ImageView[] WhiteTab = {WhitePawn00, WhitePawn01, WhitePawn02, WhitePawn03, WhitePawn04, WhitePawn05, WhitePawn06, WhitePawn07};
-    	ImageView[] BlackTab = {BlackPawn00, BlackPawn01, BlackPawn02, BlackPawn03, BlackPawn04, BlackPawn05, BlackPawn06, BlackPawn07};
+    	ImageView[] WhiteTab = {WhitePawn00, WhitePawn01, WhitePawn02, WhitePawn03, WhitePawn04, WhitePawn05, WhitePawn06, WhitePawn07, 
+    							WhitePawn10, WhitePawn11, WhitePawn12, WhitePawn13, WhitePawn14, WhitePawn15, WhitePawn16, WhitePawn17,
+    							WhitePawn20, WhitePawn21, WhitePawn22, WhitePawn23, WhitePawn24, WhitePawn25, WhitePawn26, WhitePawn27,
+    							WhitePawn30, WhitePawn31, WhitePawn32, WhitePawn33, 			 WhitePawn35, WhitePawn36, WhitePawn37,
+    							WhitePawn40, WhitePawn41, WhitePawn42, 				WhitePawn44, WhitePawn45, WhitePawn46, WhitePawn47,
+    							WhitePawn50, WhitePawn51, WhitePawn52, WhitePawn53, WhitePawn54, WhitePawn55, WhitePawn56, WhitePawn57,
+    							WhitePawn60, WhitePawn61, WhitePawn62, WhitePawn63, WhitePawn64, WhitePawn65, WhitePawn66, WhitePawn67,
+    							WhitePawn70, WhitePawn71, WhitePawn72, WhitePawn73, WhitePawn74, WhitePawn75, WhitePawn76, WhitePawn77};
+    	
+    	ImageView[] BlackTab = {BlackPawn00, BlackPawn01, BlackPawn02, BlackPawn03, BlackPawn04, BlackPawn05, BlackPawn06, BlackPawn07, 
+    							BlackPawn10, BlackPawn11, BlackPawn12, BlackPawn13, BlackPawn14, BlackPawn15, BlackPawn16, BlackPawn17,
+    							BlackPawn20, BlackPawn21, BlackPawn22, BlackPawn23, BlackPawn24, BlackPawn25, BlackPawn26, BlackPawn27,
+    							BlackPawn30, BlackPawn31, BlackPawn32, 				BlackPawn34, BlackPawn35, BlackPawn36, BlackPawn37,
+    							BlackPawn40, BlackPawn41, BlackPawn42, BlackPawn43, 			 BlackPawn45, BlackPawn46, BlackPawn47,
+    							BlackPawn50, BlackPawn51, BlackPawn52, BlackPawn53, BlackPawn54, BlackPawn55, BlackPawn56, BlackPawn57,
+    							BlackPawn60, BlackPawn61, BlackPawn62, BlackPawn63, BlackPawn64, BlackPawn65, BlackPawn66, BlackPawn67,
+    							BlackPawn70, BlackPawn71, BlackPawn72, BlackPawn73, BlackPawn74, BlackPawn75, BlackPawn76, BlackPawn77};
     	
     	
     	
@@ -117,33 +77,32 @@ public class SimpleViewCtrl {
     	
     	//On veut avoir accès aux ImageView des pions noirs et blancs : on récupère les id des ImageView avec la position du bouton récupéré
     	String butname = buttonpushed.getId();
-    	String blacknameiv = "BlackPawn" +butname.substring(6);
-    	String whitenameiv = "WhitePawn" +butname.substring(6);
+    	
     		
-    	//Si c'est le tour des blancs :
-    	if(tour==1) {
+    	
+    	    	//Si c'est le tour des blancs :
+    	if(Main.test.currentPlayer==2) {
+    		String whitenameiv = "WhitePawn" +butname.substring(6);
     		for(int i = 0; i<WhiteTab.length; i++) {
     			if(WhiteTab[i].getId().equals(whitenameiv)) {
     				//On affiche le pion blanc sur la case du bouton appuyé
     					WhiteTab[i].setVisible(true);
-    					tour=0;
-    					
+    					Main.test.currentPlayer=1;
+    				
     			}
     		}
     	}
     	//Si c'est le tour des noirs : 
-    	else if(tour==0) {
+    	else if(Main.test.currentPlayer==1) {
+    		String blacknameiv = "BlackPawn" +butname.substring(6);
     		for(int i = 0; i<BlackTab.length; i++) {
     			if(BlackTab[i].getId().equals(blacknameiv)) {
     				//On affiche le pion noir sur la case du bouton appuyé
     				BlackTab[i].setVisible(true);
-    				tour=1;
+    				Main.test.currentPlayer=2;
     			}
   
     		}
     	}
     }
 }
-  
-
-

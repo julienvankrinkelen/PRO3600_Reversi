@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 
 public class Main extends Application {
 
+        //variable globale dans la classe main pour résoudre le pb de com avec le ctrl
+        static GameState test;
         @Override
         public void start(Stage primaryStage) {
 
@@ -31,23 +33,23 @@ public class Main extends Application {
 
         }
         public static void main(String[] args) {
+            //Initialiser avant car launch(args) lance scenebuilder et attend les évènements
+                 test = new GameState();
                 launch(args);
-                launch(args);
-                GameState test = new GameState();
-                test.grid = new int[][]{
-        	             {0, 0, 0, 0, 0, 0, 0, 0},
-        	             {0, 0, 0, 0, 0, 0, 0, 0},
-        	             {0, 2, 1, 0, 0, 1, 0, 0},
-        	             {0, 0, 1, 1, 1, 2, 0, 0},
-        	             {0, 0, 1, 1, 1, 2, 0, 0},
-        	             {0, 0, 1, 2, 2, 2, 0, 0},
-        	             {0, 0, 0, 0, 0, 0, 0, 0},
-        	             {0, 0, 0, 0, 0, 0, 0, 0}
-        	             };
-        	    test.displayGrid();
-        	    System.out.println(test.validPositions(2));
-        	    
+
+                /*test.grid = new int[][]{
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 2, 1, 0, 0, 1, 0, 0},
+                         {0, 0, 1, 1, 1, 2, 0, 0},
+                         {0, 0, 1, 1, 1, 2, 0, 0},
+                         {0, 0, 1, 2, 2, 2, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0},
+                         {0, 0, 0, 0, 0, 0, 0, 0}
+                         };
+                test.displayGrid();
+                System.out.println(test.validPositions(2));
+                */
             }
 
-        }
 }
