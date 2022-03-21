@@ -30,7 +30,7 @@ public class Move {
 		return false; //if no sandwich can be made from this position, then the move is not legal
 	}
 	
-    int flipDiscs(boolean flip) { // return the nummber of disks that can be flipped by playing this and if (flip), flips them
+    int flipDisks() { // return the number of disks that can be flipped by playing this and if (flip), flips them
         Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
         int res=0; // sum of every disc flipped
         for (int i=0; i<dirs.length; i++) { // for every direction
@@ -42,7 +42,7 @@ public class Move {
 	            this.currentGameState.grid[x][y] = this.player; // flips the disc
             }
         }
-        if (res>0 && flip) {
+        if (res>0) {
             this.currentGameState.grid[this.position.x][this.position.y] = this.player;
         }
         return res;

@@ -33,23 +33,10 @@ public class Main extends Application {
 
         }
         public static void main(String[] args) {
-            //Initialiser avant car launch(args) lance scenebuilder et attend les évènements
-                 test = new GameState();
-                launch(args);
-
-                /*test.grid = new int[][]{
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 2, 1, 0, 0, 1, 0, 0},
-                         {0, 0, 1, 1, 1, 2, 0, 0},
-                         {0, 0, 1, 1, 1, 2, 0, 0},
-                         {0, 0, 1, 2, 2, 2, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0},
-                         {0, 0, 0, 0, 0, 0, 0, 0}
-                         };
-                test.displayGrid();
-                System.out.println(test.validPositions(2));
-                */
-            }
+        	test = new GameState(); //initialise before launch(args) because SceneBuilder waits for evenements
+        	Game testGame = new Game(test);
+        	testGame.startReversi();
+        	//launch(args); //uncomment to enable gui
+        }
 
 }
