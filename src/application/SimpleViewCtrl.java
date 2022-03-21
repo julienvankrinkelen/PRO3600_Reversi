@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 
 public class SimpleViewCtrl {
 	
-	//déclaration des pions blancs
+	//white disks declaration
     @FXML
     private ImageView BlackPawn00, BlackPawn01, BlackPawn02, BlackPawn03, BlackPawn04, BlackPawn05, BlackPawn06, BlackPawn07,
     				  BlackPawn10, BlackPawn11, BlackPawn12, BlackPawn13, BlackPawn14, BlackPawn15, BlackPawn16, BlackPawn17,
@@ -18,7 +18,7 @@ public class SimpleViewCtrl {
     				  BlackPawn60, BlackPawn61, BlackPawn62, BlackPawn63, BlackPawn64, BlackPawn65, BlackPawn66, BlackPawn67,
     				  BlackPawn70, BlackPawn71, BlackPawn72, BlackPawn73, BlackPawn74, BlackPawn75, BlackPawn76, BlackPawn77;
     
-    //déclaration des pions noirs
+    //black disks declaration
     @FXML
     private ImageView WhitePawn00, WhitePawn01, WhitePawn02, WhitePawn03, WhitePawn04, WhitePawn05, WhitePawn06, WhitePawn07,
     				  WhitePawn10, WhitePawn11, WhitePawn12, WhitePawn13, WhitePawn14, WhitePawn15, WhitePawn16, WhitePawn17,
@@ -47,8 +47,7 @@ public class SimpleViewCtrl {
 	//tour = Main.test.currentPlayer;
     @FXML
     void onClick(MouseEvent event) {
-    	//Création des tableaux des pions noirs / blancs déjà positionnés sur les cases en invisible par défaut
-    	//Pour l'instant, test avec uniquement les boutons / ImageView de la première ligne (ligne 0)
+    	//Creating black and white disks arrays already positioned on the squares and invisible by default
     	ImageView[] WhiteTab = {WhitePawn00, WhitePawn01, WhitePawn02, WhitePawn03, WhitePawn04, WhitePawn05, WhitePawn06, WhitePawn07, 
     							WhitePawn10, WhitePawn11, WhitePawn12, WhitePawn13, WhitePawn14, WhitePawn15, WhitePawn16, WhitePawn17,
     							WhitePawn20, WhitePawn21, WhitePawn22, WhitePawn23, WhitePawn24, WhitePawn25, WhitePawn26, WhitePawn27,
@@ -67,37 +66,33 @@ public class SimpleViewCtrl {
     							BlackPawn60, BlackPawn61, BlackPawn62, BlackPawn63, BlackPawn64, BlackPawn65, BlackPawn66, BlackPawn67,
     							BlackPawn70, BlackPawn71, BlackPawn72, BlackPawn73, BlackPawn74, BlackPawn75, BlackPawn76, BlackPawn77};
     	
-    	
-    	
-    	//On récupère le bouton sur lequel on a cliqué pour l'opacifier et le désactiver
+    	//getting the button clicked in order to opacity it and disable it
     	Object o = event.getSource();
     	Button buttonpushed = (Button)o;
     	buttonpushed.setOpacity(0);
     	buttonpushed.setDisable(true);
     	
-    	//On veut avoir accès aux ImageView des pions noirs et blancs : on récupère les id des ImageView avec la position du bouton récupéré
+    	//getting acces to black and white disks ImageView ids with the position of the button
     	String butname = buttonpushed.getId();
     	
-    		
-    	
-    	    	//Si c'est le tour des blancs :
+    	//white's turn
     	if(Main.test.currentPlayer==2) {
     		String whitenameiv = "WhitePawn" +butname.substring(6);
     		for(int i = 0; i<WhiteTab.length; i++) {
     			if(WhiteTab[i].getId().equals(whitenameiv)) {
-    				//On affiche le pion blanc sur la case du bouton appuyé
+    				//displaying white disk on the square of the clicked button
     					WhiteTab[i].setVisible(true);
     					Main.test.currentPlayer=1;
     				
     			}
     		}
     	}
-    	//Si c'est le tour des noirs : 
+    	//black's turn
     	else if(Main.test.currentPlayer==1) {
     		String blacknameiv = "BlackPawn" +butname.substring(6);
     		for(int i = 0; i<BlackTab.length; i++) {
     			if(BlackTab[i].getId().equals(blacknameiv)) {
-    				//On affiche le pion noir sur la case du bouton appuyé
+    				//displaying black disk on the square of the clicked button
     				BlackTab[i].setVisible(true);
     				Main.test.currentPlayer=2;
     			}

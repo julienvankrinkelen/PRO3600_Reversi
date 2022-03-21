@@ -23,22 +23,21 @@ public class GameState {
 		             }; //initializing boardgame grid (0 = empty square)
 	}
 	
-	int sandwicheck(Move move, Position dir) {
-		int res = 0;
-		Position curPos = move.position;
-		if(!curPos.inGrid()) return res; //the Move tested is not in the grid and thus not legal
-		int curDisk = this.grid[curPos.x][curPos.y];
-		int opponent;
-		if (curDisk==1) opponent = 2; 
-		else opponent = 1;
-		while (this.grid[curPos.x][curPos.y]!=opponent) { //if no opponent's disk is reached, we can continue to count disks
-			res++; //we can sandwich one more disk
-			curPos.x += dir.x; //updates curPos to go
-			curPos.y += dir.y; //in direction dir
-			if (!curPos.inGrid()) return 0; // if we go out of the grid then no disk can be sandwiched
-		}		
-		return res;
-	}
+    int sandwicheck(Move move,Position dir) { //counts how many opponent's disks the disk played with move can sandwich in direction dir ((0, -1) = up, (-1, 1) = lef down diag...)
+        int res = 0; //result
+        Position curPos = new Position(move.position.x+dir.x, move.position.y+dir.y); //position the algorithm is currently checking
+        while ((curPos.inGrid())) { //while it's in the grid
+            if (this.grid[curPos.x][curPos.y]==0) break; //break out of while loop if curPos is an empty square
+            int curDisk = grid[curPos.x][curPos.y]; //color of the disk in curPos, 0 if no disk in curPos
+            if (curDisk==move.player) { // disk of the player's color encountered
+                return res;
+            }
+            res += 1;
+            curPos.x += dir.x; // updates curPos to go
+            curPos.y += dir.y; // in direction dir
+        }
+        return 0; // got out of the grid -> no sandwich
+    }
 	
 	void displayGrid() { //test function to display GameState grid in console
         System.out.println("  A B C D E F G H"); // labels columns
@@ -78,7 +77,11 @@ public class GameState {
     		for (int j=0; j<8; j++) {
     			if (this.grid[i][j]==0) { //this square needs to be empty
     				Move tested = new Move(player, new Position(i, j), this);
-    				if (tested.isValid() && !tested.isIn(res)) res.add(tested); //the tested move needs to be legal and we prevent doubles from appearing in res
+    				//System.out.println("Testing: " + tested.toString());;
+    				if (tested.isValid() && !tested.isIn(res)) {
+    					res.add(tested); //the tested move needs to be legal and we prevent doubles from appearing in res
+    				}
+    				//System.out.println("Current res: " + res.toString() + "\n"); //debuging
     			}
     		}
     	}
