@@ -9,30 +9,31 @@ public class SimpleViewCtrl {
 	
 	//white disks declaration
     @FXML
-    private ImageView BlackPawn00, BlackPawn01, BlackPawn02, BlackPawn03, BlackPawn04, BlackPawn05, BlackPawn06, BlackPawn07,
-    				  BlackPawn10, BlackPawn11, BlackPawn12, BlackPawn13, BlackPawn14, BlackPawn15, BlackPawn16, BlackPawn17,
-    				  BlackPawn20, BlackPawn21, BlackPawn22, BlackPawn23, BlackPawn24, BlackPawn25, BlackPawn26, BlackPawn27,
-    				  BlackPawn30, BlackPawn31, BlackPawn32, BlackPawn33, BlackPawn34, BlackPawn35, BlackPawn36, BlackPawn37,
-    				  BlackPawn40, BlackPawn41, BlackPawn42, BlackPawn43, BlackPawn44, BlackPawn45, BlackPawn46, BlackPawn47,
-    				  BlackPawn50, BlackPawn51, BlackPawn52, BlackPawn53, BlackPawn54, BlackPawn55, BlackPawn56, BlackPawn57,
-    				  BlackPawn60, BlackPawn61, BlackPawn62, BlackPawn63, BlackPawn64, BlackPawn65, BlackPawn66, BlackPawn67,
-    				  BlackPawn70, BlackPawn71, BlackPawn72, BlackPawn73, BlackPawn74, BlackPawn75, BlackPawn76, BlackPawn77;
+    private ImageView BlackDisk00, BlackDisk01, BlackDisk02, BlackDisk03, BlackDisk04, BlackDisk05, BlackDisk06, BlackDisk07,
+    				  BlackDisk10, BlackDisk11, BlackDisk12, BlackDisk13, BlackDisk14, BlackDisk15, BlackDisk16, BlackDisk17,
+    				  BlackDisk20, BlackDisk21, BlackDisk22, BlackDisk23, BlackDisk24, BlackDisk25, BlackDisk26, BlackDisk27,
+    				  BlackDisk30, BlackDisk31, BlackDisk32, BlackDisk33, BlackDisk34, BlackDisk35, BlackDisk36, BlackDisk37,
+    				  BlackDisk40, BlackDisk41, BlackDisk42, BlackDisk43, BlackDisk44, BlackDisk45, BlackDisk46, BlackDisk47,
+    				  BlackDisk50, BlackDisk51, BlackDisk52, BlackDisk53, BlackDisk54, BlackDisk55, BlackDisk56, BlackDisk57,
+    				  BlackDisk60, BlackDisk61, BlackDisk62, BlackDisk63, BlackDisk64, BlackDisk65, BlackDisk66, BlackDisk67,
+    				  BlackDisk70, BlackDisk71, BlackDisk72, BlackDisk73, BlackDisk74, BlackDisk75, BlackDisk76, BlackDisk77;
     
     //black disks declaration
     @FXML
-    private ImageView WhitePawn00, WhitePawn01, WhitePawn02, WhitePawn03, WhitePawn04, WhitePawn05, WhitePawn06, WhitePawn07,
-    				  WhitePawn10, WhitePawn11, WhitePawn12, WhitePawn13, WhitePawn14, WhitePawn15, WhitePawn16, WhitePawn17,
-    				  WhitePawn20, WhitePawn21, WhitePawn22, WhitePawn23, WhitePawn24, WhitePawn25, WhitePawn26, WhitePawn27,
-    				  WhitePawn30, WhitePawn31, WhitePawn32, WhitePawn33, WhitePawn34, WhitePawn35, WhitePawn36, WhitePawn37,
-    				  WhitePawn40, WhitePawn41, WhitePawn42, WhitePawn43, WhitePawn44, WhitePawn45, WhitePawn46, WhitePawn47,
-    				  WhitePawn50, WhitePawn51, WhitePawn52, WhitePawn53, WhitePawn54, WhitePawn55, WhitePawn56, WhitePawn57,
-    				  WhitePawn60, WhitePawn61, WhitePawn62, WhitePawn63, WhitePawn64, WhitePawn65, WhitePawn66, WhitePawn67,
-    				  WhitePawn70, WhitePawn71, WhitePawn72, WhitePawn73, WhitePawn74, WhitePawn75, WhitePawn76, WhitePawn77;
+    private ImageView WhiteDisk00, WhiteDisk01, WhiteDisk02, WhiteDisk03, WhiteDisk04, WhiteDisk05, WhiteDisk06, WhiteDisk07,
+    				  WhiteDisk10, WhiteDisk11, WhiteDisk12, WhiteDisk13, WhiteDisk14, WhiteDisk15, WhiteDisk16, WhiteDisk17,
+    				  WhiteDisk20, WhiteDisk21, WhiteDisk22, WhiteDisk23, WhiteDisk24, WhiteDisk25, WhiteDisk26, WhiteDisk27,
+    				  WhiteDisk30, WhiteDisk31, WhiteDisk32, WhiteDisk33, WhiteDisk34, WhiteDisk35, WhiteDisk36, WhiteDisk37,
+    				  WhiteDisk40, WhiteDisk41, WhiteDisk42, WhiteDisk43, WhiteDisk44, WhiteDisk45, WhiteDisk46, WhiteDisk47,
+    				  WhiteDisk50, WhiteDisk51, WhiteDisk52, WhiteDisk53, WhiteDisk54, WhiteDisk55, WhiteDisk56, WhiteDisk57,
+    				  WhiteDisk60, WhiteDisk61, WhiteDisk62, WhiteDisk63, WhiteDisk64, WhiteDisk65, WhiteDisk66, WhiteDisk67,
+    				  WhiteDisk70, WhiteDisk71, WhiteDisk72, WhiteDisk73, WhiteDisk74, WhiteDisk75, WhiteDisk76, WhiteDisk77;
 
-    
+    //board image declaration
     @FXML
     private ImageView Board;
-
+    
+    //buttons declaration
     @FXML
     private Button button00, button01, button02, button03, button04, button05, button06, button07,
     			   button10, button11, button12, button13, button14, button15, button16, button17,
@@ -43,33 +44,44 @@ public class SimpleViewCtrl {
     			   button60, button61, button62, button63, button64, button65, button66, button67,
     			   button70, button71, button72, button73, button74, button75, button76, button77;
 
-	int tour=1;
-	//tour = Main.test.currentPlayer;
+    /**
+     * This method is called by any button we click on the board
+     * 
+     * Once a button is clicked on: 
+     * 	Gets the source of the button with the method Object getSource() 
+     * 	Set it invisible and disabled with the methods Button setVisible() and Button setDisable()
+     * 	
+     * To get the right disk, we have to initialize arrays of the disks ids. In fact, the image is not linked with the button in the fxml file (the button
+     *  is just on top of the disk covering it). So, by cutting the position string of the event Button, it builds the ids of the black and white disks of
+     *  the position. Then, by searching the disk with the right id in the array, it can display it (either BLACK or WHITE according to Main.test.currentPlayer)
+     * 	
+     * @param event
+     */
     @FXML
     void onClick(MouseEvent event) {
     	//Creating black and white disks arrays already positioned on the squares and invisible by default
-    	ImageView[] WhiteTab = {WhitePawn00, WhitePawn01, WhitePawn02, WhitePawn03, WhitePawn04, WhitePawn05, WhitePawn06, WhitePawn07, 
-    							WhitePawn10, WhitePawn11, WhitePawn12, WhitePawn13, WhitePawn14, WhitePawn15, WhitePawn16, WhitePawn17,
-    							WhitePawn20, WhitePawn21, WhitePawn22, WhitePawn23, WhitePawn24, WhitePawn25, WhitePawn26, WhitePawn27,
-    							WhitePawn30, WhitePawn31, WhitePawn32, WhitePawn33, 			 WhitePawn35, WhitePawn36, WhitePawn37,
-    							WhitePawn40, WhitePawn41, WhitePawn42, 				WhitePawn44, WhitePawn45, WhitePawn46, WhitePawn47,
-    							WhitePawn50, WhitePawn51, WhitePawn52, WhitePawn53, WhitePawn54, WhitePawn55, WhitePawn56, WhitePawn57,
-    							WhitePawn60, WhitePawn61, WhitePawn62, WhitePawn63, WhitePawn64, WhitePawn65, WhitePawn66, WhitePawn67,
-    							WhitePawn70, WhitePawn71, WhitePawn72, WhitePawn73, WhitePawn74, WhitePawn75, WhitePawn76, WhitePawn77};
+    	ImageView[] WhiteTab = {WhiteDisk00, WhiteDisk01, WhiteDisk02, WhiteDisk03, WhiteDisk04, WhiteDisk05, WhiteDisk06, WhiteDisk07, 
+    							WhiteDisk10, WhiteDisk11, WhiteDisk12, WhiteDisk13, WhiteDisk14, WhiteDisk15, WhiteDisk16, WhiteDisk17,
+    							WhiteDisk20, WhiteDisk21, WhiteDisk22, WhiteDisk23, WhiteDisk24, WhiteDisk25, WhiteDisk26, WhiteDisk27,
+    							WhiteDisk30, WhiteDisk31, WhiteDisk32, WhiteDisk33, 			 WhiteDisk35, WhiteDisk36, WhiteDisk37,
+    							WhiteDisk40, WhiteDisk41, WhiteDisk42, 				WhiteDisk44, WhiteDisk45, WhiteDisk46, WhiteDisk47,
+    							WhiteDisk50, WhiteDisk51, WhiteDisk52, WhiteDisk53, WhiteDisk54, WhiteDisk55, WhiteDisk56, WhiteDisk57,
+    							WhiteDisk60, WhiteDisk61, WhiteDisk62, WhiteDisk63, WhiteDisk64, WhiteDisk65, WhiteDisk66, WhiteDisk67,
+    							WhiteDisk70, WhiteDisk71, WhiteDisk72, WhiteDisk73, WhiteDisk74, WhiteDisk75, WhiteDisk76, WhiteDisk77};
     	
-    	ImageView[] BlackTab = {BlackPawn00, BlackPawn01, BlackPawn02, BlackPawn03, BlackPawn04, BlackPawn05, BlackPawn06, BlackPawn07, 
-    							BlackPawn10, BlackPawn11, BlackPawn12, BlackPawn13, BlackPawn14, BlackPawn15, BlackPawn16, BlackPawn17,
-    							BlackPawn20, BlackPawn21, BlackPawn22, BlackPawn23, BlackPawn24, BlackPawn25, BlackPawn26, BlackPawn27,
-    							BlackPawn30, BlackPawn31, BlackPawn32, 				BlackPawn34, BlackPawn35, BlackPawn36, BlackPawn37,
-    							BlackPawn40, BlackPawn41, BlackPawn42, BlackPawn43, 			 BlackPawn45, BlackPawn46, BlackPawn47,
-    							BlackPawn50, BlackPawn51, BlackPawn52, BlackPawn53, BlackPawn54, BlackPawn55, BlackPawn56, BlackPawn57,
-    							BlackPawn60, BlackPawn61, BlackPawn62, BlackPawn63, BlackPawn64, BlackPawn65, BlackPawn66, BlackPawn67,
-    							BlackPawn70, BlackPawn71, BlackPawn72, BlackPawn73, BlackPawn74, BlackPawn75, BlackPawn76, BlackPawn77};
+    	ImageView[] BlackTab = {BlackDisk00, BlackDisk01, BlackDisk02, BlackDisk03, BlackDisk04, BlackDisk05, BlackDisk06, BlackDisk07, 
+    							BlackDisk10, BlackDisk11, BlackDisk12, BlackDisk13, BlackDisk14, BlackDisk15, BlackDisk16, BlackDisk17,
+    							BlackDisk20, BlackDisk21, BlackDisk22, BlackDisk23, BlackDisk24, BlackDisk25, BlackDisk26, BlackDisk27,
+    							BlackDisk30, BlackDisk31, BlackDisk32, 				BlackDisk34, BlackDisk35, BlackDisk36, BlackDisk37,
+    							BlackDisk40, BlackDisk41, BlackDisk42, BlackDisk43, 			 BlackDisk45, BlackDisk46, BlackDisk47,
+    							BlackDisk50, BlackDisk51, BlackDisk52, BlackDisk53, BlackDisk54, BlackDisk55, BlackDisk56, BlackDisk57,
+    							BlackDisk60, BlackDisk61, BlackDisk62, BlackDisk63, BlackDisk64, BlackDisk65, BlackDisk66, BlackDisk67,
+    							BlackDisk70, BlackDisk71, BlackDisk72, BlackDisk73, BlackDisk74, BlackDisk75, BlackDisk76, BlackDisk77};
     	
     	//getting the button clicked in order to opacity it and disable it
     	Object o = event.getSource();
     	Button buttonpushed = (Button)o;
-    	buttonpushed.setOpacity(0);
+    	buttonpushed.setVisible(false);
     	buttonpushed.setDisable(true);
     	
     	//getting acces to black and white disks ImageView ids with the position of the button
@@ -77,7 +89,7 @@ public class SimpleViewCtrl {
     	
     	//white's turn
     	if(Main.test.currentPlayer==2) {
-    		String whitenameiv = "WhitePawn" +butname.substring(6);
+    		String whitenameiv = "WhiteDisk" +butname.substring(6);
     		for(int i = 0; i<WhiteTab.length; i++) {
     			if(WhiteTab[i].getId().equals(whitenameiv)) {
     				//displaying white disk on the square of the clicked button
@@ -89,7 +101,7 @@ public class SimpleViewCtrl {
     	}
     	//black's turn
     	else if(Main.test.currentPlayer==1) {
-    		String blacknameiv = "BlackPawn" +butname.substring(6);
+    		String blacknameiv = "BlackDisk" +butname.substring(6);
     		for(int i = 0; i<BlackTab.length; i++) {
     			if(BlackTab[i].getId().equals(blacknameiv)) {
     				//displaying black disk on the square of the clicked button
