@@ -88,25 +88,25 @@ public class SimpleViewCtrl {
     	String butname = buttonpushed.getId();
     	
     	//white's turn
-    	if(Main.test.currentPlayer==2) {
+    	if(Main.test.currentPlayer==Color.WHITE) {
     		String whitenameiv = "WhiteDisk" +butname.substring(6);
     		for(int i = 0; i<WhiteTab.length; i++) {
     			if(WhiteTab[i].getId().equals(whitenameiv)) {
     				//displaying white disk on the square of the clicked button
     					WhiteTab[i].setVisible(true);
-    					Main.test.currentPlayer=1;
+    					Main.test.currentPlayer=Color.BLACK;
     				
     			}
     		}
     	}
     	//black's turn
-    	else if(Main.test.currentPlayer==1) {
+    	else if(Main.test.currentPlayer==Color.BLACK) {
     		String blacknameiv = "BlackDisk" +butname.substring(6);
     		for(int i = 0; i<BlackTab.length; i++) {
     			if(BlackTab[i].getId().equals(blacknameiv)) {
     				//displaying black disk on the square of the clicked button
     				BlackTab[i].setVisible(true);
-    				Main.test.currentPlayer=2;
+    				Main.test.currentPlayer=Color.WHITE;
     			}
   
     		}
