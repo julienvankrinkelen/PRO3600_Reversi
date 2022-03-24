@@ -3,32 +3,32 @@ package application;
 import java.util.*;
 
 public class GameState {
-	int currentPlayer; // 1=BLACK; 2=WHITE
-	int[][] grid;
+	Color currentPlayer;
+	Color grid[][];
 	Move lastMove;
 	GameState previous;
 	GameState future;
 
 	public GameState() {
-		this.currentPlayer = 1;
-		this.grid = new int[][]{
-		             {0, 0, 0, 0, 0, 0, 0, 0},
-		             {0, 0, 0, 0, 0, 0, 0, 0},
-		             {0, 0, 0, 0, 0, 0, 0, 0},
-		             {0, 0, 0, 2, 1, 0, 0, 0},
-		             {0, 0, 0, 1, 2, 0, 0, 0},
-		             {0, 0, 0, 0, 0, 0, 0, 0},
-		             {0, 0, 0, 0, 0, 0, 0, 0},
-		             {0, 0, 0, 0, 0, 0, 0, 0}
-		             }; //initializing boardgame grid (0 = empty square)
+		this.currentPlayer = Color.BLACK;
+		this.grid = new Color[][]{
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.WHITE, Color.BLACK, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.BLACK, Color.WHITE, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY}
+		             }; //initializing boardgame grid
 	}
 	
     int sandwicheck(Move move,Position dir) { //counts how many opponent's disks the disk played with move can sandwich in direction dir ((0, -1) = up, (-1, 1) = lef down diag...)
         int res = 0; //result
         Position curPos = new Position(move.position.x+dir.x, move.position.y+dir.y); //position the algorithm is currently checking
         while ((curPos.inGrid())) { //while it's in the grid
-            if (this.grid[curPos.x][curPos.y]==0) break; //break out of while loop if curPos is an empty square
-            int curDisk = grid[curPos.x][curPos.y]; //color of the disk in curPos, 0 if no disk in curPos
+            if (this.grid[curPos.x][curPos.y]==Color.EMPTY) break; //break out of while loop if curPos is an empty square
+            Color curDisk = grid[curPos.x][curPos.y]; //color of the disk in curPos, 0 if no disk in curPos
             if (curDisk==move.player) { // disk of the player's color encountered
                 return res;
             }
@@ -39,16 +39,24 @@ public class GameState {
         return 0; // got out of the grid -> no sandwich
     }
 	
-	void displayGrid() { //test function to display GameState grid in console
+    void displayGrid() { //test function to display this.grid in console
         System.out.println("  A B C D E F G H"); // labels columns
         for (int i=0; i<this.grid.length; i++) {
-            String line_i= Integer.toString(i+1) + " "; // labels line number i
+            System.out.print(Integer.valueOf(i+1) + " ");
             for (int j=0; j<this.grid.length; j++) {
-                if (this.grid[i][j] == 0) line_i=line_i + ". "; // if the square is empty
-                else if (this.grid[i][j]==1) line_i=line_i + "x "; // if the square in position (i,j) is BLACK
-                else if (this.grid[i][j]==2) line_i=line_i + "o "; // if the square in position (i,j) is WHITE
+                switch (this.grid[i][j]) {
+                    case EMPTY: //square is empty
+                        System.out.print(". ");
+                        break;
+                    case BLACK: //black disk
+                        System.out.print("x ");
+                        break;
+                    case WHITE: //white disk
+                        System.out.print("o ");
+                        break;
+                }
             }
-            System.out.println(line_i);
+            System.out.println(); //skips line
         }
     }
 	
@@ -57,8 +65,8 @@ public class GameState {
         int white=0;
         for (int i=0; i<this.grid.length; i++) {
             for (int j=0; j<this.grid.length; j++) {
-                if (this.grid[i][j]==1) black++;
-                else if (this.grid[i][j]==2) white++;
+                if (this.grid[i][j]==Color.BLACK) black++;
+                else if (this.grid[i][j]==Color.WHITE) white++;
             }
         }
         int[] score = {black, white};
@@ -71,11 +79,11 @@ public class GameState {
         System.out.println("WHITE = " + score[1]);
     }
     
-    public ArrayList<Move> validPositions(int player) {
+    public ArrayList<Move> validPositions(Color player) {
     	ArrayList<Move> res = new ArrayList<Move>();
     	for (int i=0; i<8; i++) {
     		for (int j=0; j<8; j++) {
-    			if (this.grid[i][j]==0) { //this square needs to be empty
+    			if (this.grid[i][j]==Color.EMPTY) { //this square needs to be empty
     				Move tested = new Move(player, new Position(i, j), this);
     				//System.out.println("Testing: " + tested.toString());;
     				if (tested.isValid() && !tested.isIn(res)) {

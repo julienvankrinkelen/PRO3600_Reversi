@@ -18,7 +18,7 @@ public class Game {
     	while(!endOfGame) {
     		System.out.println("\n   Current board");
     		this.currentGame.displayGrid();
-    		if (this.currentGame.currentPlayer==1) System.out.println("x's turn");
+    		if (this.currentGame.currentPlayer==Color.BLACK) System.out.println("x's turn");
     		else System.out.println("o's turn");
     		boolean inputIsValid = false; //false until the input is a valid move
     		while (!inputIsValid) {
@@ -32,8 +32,8 @@ public class Game {
     			if(!inputIsValid) System.out.println("Invalid move, please try again"); //error message if the move inputed is not valid
     			else this.playIn(input); //if the move is valid, play it
     		}
-    		if (this.currentGame.currentPlayer==1) this.currentGame.currentPlayer = 2;	//changes
-    		else this.currentGame.currentPlayer = 1;									//player
+    		if (this.currentGame.currentPlayer==Color.BLACK) this.currentGame.currentPlayer = Color.WHITE;	//changes
+    		else this.currentGame.currentPlayer = Color.BLACK;									//player
     		validPositions = this.currentGame.validPositions(this.currentGame.currentPlayer); //calculates the new list of legal moves to play in
     		if (validPositions.size()==0) endOfGame = true; //if there is no valid move, then the game ends
     		

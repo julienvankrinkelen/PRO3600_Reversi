@@ -3,11 +3,11 @@ package application;
 import java.util.*;
 
 public class Move {
-	int player;
+	Color player;
 	Position position;
 	GameState currentGameState;
 	
-	Move(int player, Position position, GameState currentGameState) {
+	Move(Color player, Position position, GameState currentGameState) {
 		this.player=player;
 		this.position=position;
 		this.currentGameState=currentGameState;
@@ -30,7 +30,7 @@ public class Move {
 		return false; //if no sandwich can be made from this position, then the move is not legal
 	}
 	
-    int flipDisks() { // return the number of disks that can be flipped by playing this and if (flip), flips them
+    int flipDisks() { // return the nummber of disks that can be flipped by playing this and if (flip), flips them
         Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
         int res=0; // sum of every disc flipped
         for (int i=0; i<dirs.length; i++) { // for every direction
