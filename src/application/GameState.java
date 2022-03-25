@@ -2,12 +2,21 @@ package application;
 
 import java.util.*;
 
+/**
+ * GameState is a java class that contains anything related to a specific game state (current player, current grid etc ...).
+ *
+ */
+
 public class GameState {
 	Color currentPlayer;
 	Color grid[][];
 	Move lastMove;
 	GameState previous;
 	GameState future;
+
+    /**
+	 * This is the constructor of GameState. It is only used at the beginning of a game.
+	 */
 
 	public GameState() {
 		this.currentPlayer = Color.BLACK;
@@ -22,6 +31,14 @@ public class GameState {
 		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY}
 		             }; //initializing boardgame grid
 	}
+
+    /**
+	 * sandwicheck is a method that counts how many opponent's disks the disk played with move can sandwich in said direction.
+	 * @param move is the move (player, position and current game state) tested.
+	 * @param dir is the direction in which the sandwich is tested (ex : dir ((0, -1) = up, (-1, 1) = lef down diag...).
+	 * @return an integer representing the number of opponent's disks the disk played can sandwich (0 if no sandwich is possible). 
+	 * @see Move
+	 */
 	
     int sandwicheck(Move move,Position dir) { //counts how many opponent's disks the disk played with move can sandwich in direction dir ((0, -1) = up, (-1, 1) = lef down diag...)
         int res = 0; //result
@@ -39,6 +56,10 @@ public class GameState {
         return 0; // got out of the grid -> no sandwich
     }
 	
+    /**
+     * displayGrid is a test function to display the grid in console.
+     */
+
     void displayGrid() { //test function to display this.grid in console
         System.out.println("  A B C D E F G H"); // labels columns
         for (int i=0; i<this.grid.length; i++) {
@@ -59,6 +80,11 @@ public class GameState {
             System.out.println(); //skips line
         }
     }
+
+    /**
+	 * scores counts the number of black disks and white disks on the grid.
+	 * @return two integers : the scores of black, white
+	 */
 	
 	int[] scores() { // returns the scores of black, white
         int black=0; 
@@ -73,12 +99,23 @@ public class GameState {
         return score;
     }
 
+    /**
+	 * displayScores is a test function used to display the scores of the two players.
+	 */
+
     void displayScores() {
         int[] score = this.scores();
         System.out.println("BLACK = " + score[0]);
         System.out.println("WHITE = " + score[1]);
     }
     
+    /**
+     * validPositions is a method that checks the moves a player can make in the current game state.
+     * @param player is the player whose moves are checked.
+     * @return an ArrayList of all the valid moves said player can make in the current game state.
+     * @see isValid
+     */
+     
     public ArrayList<Move> validPositions(Color player) {
     	ArrayList<Move> res = new ArrayList<Move>();
     	for (int i=0; i<8; i++) {
