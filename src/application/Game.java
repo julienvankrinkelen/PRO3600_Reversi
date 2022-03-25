@@ -2,6 +2,11 @@ package application;
 
 import java.util.*;
 
+/**
+ * Game is java class used to play a reversi game.
+ *
+ */
+
 public class Game {
 
     GameState currentGame;
@@ -9,6 +14,10 @@ public class Game {
     Game(GameState currentGame) {
         this.currentGame=currentGame;
     }
+
+	/**
+     * startReversi is the method used to start a reversi game between two human opponents.
+     */
 
     void startReversi() {
     	System.out.println("--- Starting Reversi ---");
@@ -58,13 +67,27 @@ public class Game {
     	this.currentGame.displayGrid();
     }
 
+	/**
+     * playIn is a method that plays a move in the current game grid.
+     * @param move is the move to be played
+     * @see flipDisks
+     */
+
     void playIn(Move move) {
     	move.flipDisks();
     }
 
+	/**
+     * [TO DO] undo is a method that will cancel the last move
+     */
+
     void undo() {
 
     }
+
+	/**
+     * [TO DO] redo is a method that will cancel undo
+     */
 
     void redo() {
 
