@@ -33,7 +33,7 @@ public class Main extends Application {
 
         }
         public static void main(String[] args) {
-        	test = new GameState(); //initialise before launch(args) because SceneBuilder waits for evenements
+        	GameState test = new GameState(); //initialise before launch(args) because SceneBuilder waits for evenements
         	Game testGame = new Game(test);
         	testGame.startReversi();
         	//launch(args); //uncomment to enable gui
