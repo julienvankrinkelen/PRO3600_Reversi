@@ -55,26 +55,29 @@ public class Move {
 		}
 		return false; //if no sandwich can be made from this position, then the move is not legal
 	}
-
-	/**
-	 * flipDisks is a method that plays the valid move and flips the sandwiched opponents disks. 
-	 * @return the number of disks that can be flipped by playing said move.
-	 */
 	
-    int flipDisks() { // return the nummber of disks that can be flipped by playing this and if (flip), flips them
+	/**
+     * flipDisks is a method that plays the valid move and flips the sandwiched opponents disks. 
+     * @return an array of the positions of the disks that can be flipped by playing said move.
+     */
+    
+    public ArrayList<Position> flipDisks() { // return the number of disks that can be flipped by playing this and if (flip), flips them
         Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
-        int res=0; // sum of every disc flipped
+        ArrayList<Position> res = new ArrayList<Position>(); // will contain the positions of the disks that can be flipped
+        int num=0; // sum of every disc flipped
         for (int i=0; i<dirs.length; i++) { // for every direction
             int count_i = this.currentGameState.sandwicheck(this, dirs[i]); // number of discs that can be flipped in said direction
-            res=res+count_i; // adds number of flipped discs
-	        for (int j=1; j<count_i +1; j++) {
-	            int x = this.position.x + (dirs[i].x)*j;
-	            int y = this.position.y + (dirs[i].y)*j; // coordinates of the disc to flip
-	            this.currentGameState.grid[x][y] = this.player; // flips the disc
+            num=num+count_i; // adds number of flipped discs
+            for (int j=1; j<count_i +1; j++) {
+                int x = this.position.x + (dirs[i].x)*j;
+                int y = this.position.y + (dirs[i].y)*j; // coordinates of the disc to flip
+                this.currentGameState.grid[x][y] = this.player; // flips the disc
+                Position pos = new Position(x,y);
+                res.add(pos); // adds position to the array
             }
         }
-        if (res>0) {
-            this.currentGameState.grid[this.position.x][this.position.y] = this.player;
+        if (num>0) { // if the move is valid
+            this.currentGameState.grid[this.position.x][this.position.y] = this.player; // plays the move
         }
         return res;
     }
