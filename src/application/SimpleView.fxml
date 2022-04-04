@@ -69,12 +69,12 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="BlackDisk43" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <ImageView fx:id="BlackDisk34" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="BlackDisk34" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <ImageView fx:id="BlackDisk43" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
                </image>
@@ -717,16 +717,6 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="WhiteDisk34" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@assets/sprite_white_disk.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="WhiteDisk43" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-               <image>
-                  <Image url="@assets/sprite_white_disk.png" />
-               </image>
-            </ImageView>
             <ImageView fx:id="BlackDisk33" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -741,6 +731,16 @@
             <Button fx:id="button34" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Button fx:id="button43" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Button fx:id="button44" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <ImageView fx:id="WhiteDisk34" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@assets/sprite_white_disk.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="WhiteDisk43" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@assets/sprite_white_disk.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
       <Button fx:id="buttonPlay" layoutX="638.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play" />

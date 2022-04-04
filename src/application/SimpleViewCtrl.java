@@ -96,7 +96,7 @@ public class SimpleViewCtrl {
     	buttonpushed.setOpacity(0);
     	buttonpushed.setDisable(true);
     	
-    	//getting acces to black and white disks ImageView ids with the position of the button
+    	//getting access to black and white disks ImageView ids with the position of the button
     	String butname = buttonpushed.getId();
     	//Get the coordinates
     	String strx = butname.substring(6,7);
