@@ -6,18 +6,16 @@ package application;
  */
 
 public enum Color {
-BLACK, WHITE, EMPTY;
+	BLACK, WHITE, EMPTY;
 
-
-Color Opponent() {
-    
-    switch(this) {
-        case BLACK:
-            return WHITE;
-        case WHITE:
-            return BLACK;
-        default:
-            return EMPTY;
-    }
-}
+	Color Opponent() { //return the opponent of this
+    	switch(this) {
+        	case BLACK:
+        		return WHITE;
+        	case WHITE:
+        		return BLACK;
+        	default:
+        		return EMPTY;
+    	}
+	}
 }
