@@ -104,6 +104,7 @@ public class SimpleViewCtrl {
     		
     	//white's turn
     	if(Main.testGame.currentGame.currentPlayer==Color.WHITE) {
+    		System.out.println("o's turn"); //debug
     		String whitenameiv = "WhiteDisk" +butname.substring(6);
     		for(int i = 0; i<WhiteTab.length; i++) {
     			if(WhiteTab[i].getId().equals(whitenameiv)) {
@@ -121,6 +122,7 @@ public class SimpleViewCtrl {
     	}
     	//black's turn
     	else if(Main.testGame.currentGame.currentPlayer==Color.BLACK) {
+    		System.out.println("x's turn"); //debug
     		String blacknameiv = "BlackDisk" +butname.substring(6);
     		for(int i = 0; i<BlackTab.length; i++) {
     			if(BlackTab[i].getId().equals(blacknameiv)) {
@@ -144,11 +146,28 @@ public class SimpleViewCtrl {
     			disableButton(buttontodisable);
     		}
     	}
-    	ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
-    	System.out.println(validPositions.toString()); //debug
-    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
-    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y));	
-    	}   	
+    	ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
+    	if (validPositions.size()!=0) { //if the current player can play
+	    	System.out.println("Valid positions: " + validPositions.toString()); //debug
+	    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+	    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y));	
+	    	}
+    	}
+    	else { //if the current player cannot play, skip a turn
+    		Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
+    		System.out.println("Skipped a turn");
+    		validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play for the new player
+    		if (validPositions.size()!=0) { //if the new current player can play
+    			System.out.println("Valid positions: " + validPositions.toString()); //debug
+    	    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    	    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y));	
+    	    	}
+    		}
+    		else { //none of the players can play: end the game
+    			System.out.println("GAME OVER"); //debug
+    			System.out.println("Scores:    o: " + Main.testGame.currentGame.scores()[1] + " |   x: " + Main.testGame.currentGame.scores()[0]); //debug
+    		}
+    	}
     }
     
     /**
@@ -229,7 +248,7 @@ void disableButton(String buttontodisable) { //hides and disables buttontodisabl
 	@FXML
 	void onClickPlay(MouseEvent event) {
 		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
-		System.out.println(validPositions.toString()); //debug
+		System.out.println("Valid positions: " + validPositions.toString()); //debug
 		for(Move buttontodisplay: validPositions) { //for each valid move, the for loop enables the corresponding button
 			String but_x = String.valueOf(buttontodisplay.position.x);
 			String but_y = String.valueOf(buttontodisplay.position.y);
@@ -245,8 +264,9 @@ void disableButton(String buttontodisable) { //hides and disables buttontodisabl
 	}
 
 	@FXML
-	void onClickLeave(MouseEvent event) {
-		//permet de cliquer sur un bouton "quitter", ce qui permet de quitter le jeu sans erreur
+	void onClickLeave(MouseEvent event) { //allows the player to cleanly quit the game by clicking on the "Leave" button
+		System.out.println("Player has left the game"); //debug
+		System.out.println("Scores:    o: " + Main.testGame.currentGame.scores()[1] + " |   x: " + Main.testGame.currentGame.scores()[0]); //debug
 		Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
 		stage.close();
 	}
