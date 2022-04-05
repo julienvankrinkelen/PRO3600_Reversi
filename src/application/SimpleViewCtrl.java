@@ -86,19 +86,14 @@ public class SimpleViewCtrl {
     							BlackDisk50, BlackDisk51, BlackDisk52, BlackDisk53, BlackDisk54, BlackDisk55, BlackDisk56, BlackDisk57,
     							BlackDisk60, BlackDisk61, BlackDisk62, BlackDisk63, BlackDisk64, BlackDisk65, BlackDisk66, BlackDisk67,
     							BlackDisk70, BlackDisk71, BlackDisk72, BlackDisk73, BlackDisk74, BlackDisk75, BlackDisk76, BlackDisk77};
-    
-    	
-
-    	
-    	//getting the button clicked in order to opacity it and disable it
+   
+    	//getting the button clicked in order to hide it and disable it
     	Object o = event.getSource();
     	Button buttonpushed = (Button)o;
     	buttonpushed.setOpacity(0);
-    	buttonpushed.setDisable(true);
-    	
-    	//getting access to black and white disks ImageView ids with the position of the button
-    	String butname = buttonpushed.getId();
-    	//Get the coordinates
+    	buttonpushed.setDisable(true);    	
+    	String butname = buttonpushed.getId(); //gets access to black and white disks ImageView ids with the position of the button
+    	//the following two lines extract the coordinates of the button clicked
     	String strx = butname.substring(6,7);
     	String stry = butname.substring(7,8);
     	
@@ -112,23 +107,15 @@ public class SimpleViewCtrl {
     		String whitenameiv = "WhiteDisk" +butname.substring(6);
     		for(int i = 0; i<WhiteTab.length; i++) {
     			if(WhiteTab[i].getId().equals(whitenameiv)) {
-    				//displaying white disk on the square of the clicked button
-    					WhiteTab[i].setVisible(true);
-    					
-    					Move move = new Move(Color.WHITE, position, Main.testGame.currentGame);
-    					
-    				//flip et met la pos dans la grid
-    					ArrayList<Position> flippedDisks = move.flipDisks();
-        				
-        				for(Position toflip : flippedDisks) {
-        					String whiteivtodisplay = "WhiteDisk" + Integer.valueOf(toflip.x) + Integer.valueOf(toflip.y);
-        				
-        					flipDisks(whiteivtodisplay);
-        				}
-    					
-    				//Change le tour
-    					Main.testGame.currentGame.currentPlayer=Color.BLACK;
-    				
+   					WhiteTab[i].setVisible(true); //displays the blakc disk corresponding to the button clicked
+   					Move move = new Move(Color.WHITE, position, Main.testGame.currentGame);
+   					//the following 5 lines update the gui by flipping the sandwiched disks and showing the disk that has been played
+    				ArrayList<Position> flippedDisks = move.flipDisks();        				
+        			for(Position toflip : flippedDisks) {
+        				String whiteivtodisplay = "WhiteDisk" + Integer.valueOf(toflip.x) + Integer.valueOf(toflip.y);
+        				flipDisks(whiteivtodisplay);
+        			}
+    				Main.testGame.currentGame.currentPlayer=Color.BLACK; //next turn
     			}
     		}
     	}
@@ -137,65 +124,38 @@ public class SimpleViewCtrl {
     		String blacknameiv = "BlackDisk" +butname.substring(6);
     		for(int i = 0; i<BlackTab.length; i++) {
     			if(BlackTab[i].getId().equals(blacknameiv)) {
-    				//displaying black disk on the square of the clicked button
-    				BlackTab[i].setVisible(true);
-    				
+    				BlackTab[i].setVisible(true); //displays the blakc disk corresponding to the button clicked
     				Move move = new Move(Color.BLACK, position, Main.testGame.currentGame);
-    				//flip et met la pos dans la grid
+    				//the following 5 lines update the gui by flipping the sandwiched disks and showing the disk that has been played
     				ArrayList<Position> flippedDisks = move.flipDisks();
-    				
     				for(Position toflip : flippedDisks) {
     					String blackivtodisplay = "BlackDisk" + Integer.valueOf(toflip.x) + Integer.valueOf(toflip.y);
-    					System.out.println(blackivtodisplay);
-    					
     					flipDisks(blackivtodisplay);
     				}
-    				
-    				Main.testGame.currentGame.currentPlayer=Color.WHITE;
-    				
+    				Main.testGame.currentGame.currentPlayer=Color.WHITE; //next turn
     			}
     		}
     	}
-    	
-    	Main.testGame.currentGame.displayGrid(); //test affichage
-    	
-    	
-    	
-    	
-    	// Disabling every button
+    	Main.testGame.currentGame.displayGrid(); //debug
+    	//the following 5 lines disable every button on the board
     	for(int i=0;i<8;i++) {
     		for(int j=0;j<8;j++) {
     			String buttontodisable = "button" + Integer.valueOf(i) + Integer.valueOf(j);
-    			//System.out.println(buttontodisable);
     			disableButton(buttontodisable);
     		}
     	}
-    	
     	ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
-    	System.out.println(validPositions.toString());
-    	for(Move buttontodisplay: validPositions) {
-    		String but_x = String.valueOf(buttontodisplay.position.x);
-    		String but_y = String.valueOf(buttontodisplay.position.y);
-    		String but_string = "button" + but_x + but_y;
-    		displayButton(but_string);
-    		
-    	}
-    	
-    		
-    	
-    			 
-    	
-    	
-    	
-
-    	
+    	System.out.println(validPositions.toString()); //debug
+    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y));	
+    	}   	
     }
     
     /**
-     * 
+     * Flip one disk in the gui (changes its color)
+     * @param disktoflip The disk that has to be flipped
      */
 void flipDisks(String disktoflip) {
-	
 	ImageView[] WhiteTab = {WhiteDisk00, WhiteDisk01, WhiteDisk02, WhiteDisk03, WhiteDisk04, WhiteDisk05, WhiteDisk06, WhiteDisk07, 
 							WhiteDisk10, WhiteDisk11, WhiteDisk12, WhiteDisk13, WhiteDisk14, WhiteDisk15, WhiteDisk16, WhiteDisk17,
 							WhiteDisk20, WhiteDisk21, WhiteDisk22, WhiteDisk23, WhiteDisk24, WhiteDisk25, WhiteDisk26, WhiteDisk27,
@@ -214,30 +174,25 @@ void flipDisks(String disktoflip) {
 							BlackDisk60, BlackDisk61, BlackDisk62, BlackDisk63, BlackDisk64, BlackDisk65, BlackDisk66, BlackDisk67,
 							BlackDisk70, BlackDisk71, BlackDisk72, BlackDisk73, BlackDisk74, BlackDisk75, BlackDisk76, BlackDisk77};
 
-	if(Main.testGame.currentGame.currentPlayer==Color.BLACK) {
-		//System.out.println(disktoflip);
-		for(int i = 0; i<BlackTab.length; i++) {
-			if(BlackTab[i].getId().equals(disktoflip)) {
-				System.out.println(disktoflip);
-				WhiteTab[i].setVisible(false);
-				BlackTab[i].setVisible(true);
-				
+		if(Main.testGame.currentGame.currentPlayer==Color.BLACK) { //black's turn
+			for(int i = 0; i<BlackTab.length; i++) {
+				if(BlackTab[i].getId().equals(disktoflip)) {
+					WhiteTab[i].setVisible(false); //hide the white image
+					BlackTab[i].setVisible(true); //shows the black image
+					}
 				}
 			}
-	
-		}
-	else if(Main.testGame.currentGame.currentPlayer==Color.WHITE) {
-		for(int i = 0; i<WhiteTab.length; i++) {
-			if(WhiteTab[i].getId().equals(disktoflip)) {
-				System.out.println(disktoflip);
-				BlackTab[i].setVisible(false);
-				WhiteTab[i].setVisible(true);
-							}
+		else if(Main.testGame.currentGame.currentPlayer==Color.WHITE) { //white's turn
+			for(int i = 0; i<WhiteTab.length; i++) {
+				if(WhiteTab[i].getId().equals(disktoflip)) {
+					BlackTab[i].setVisible(false); //hides the black image
+					WhiteTab[i].setVisible(true); //shows the white image
+				}
+			}
 		}
 	}
-}
-void disableButton(String buttontodisable) {
 
+void disableButton(String buttontodisable) { //hides and disables buttontodisable
 	Button[] buttonTab =   {button00, button01, button02, button03, button04, button05, button06, button07,
 							button10, button11, button12, button13, button14, button15, button16, button17,
 							button20, button21, button22, button23, button24, button25, button26, button27,
@@ -246,69 +201,55 @@ void disableButton(String buttontodisable) {
 							button50, button51, button52, button53, button54, button55, button56, button57,
 							button60, button61, button62, button63, button64, button65, button66, button67,
 							button70, button71, button72, button73, button74, button75, button76, button77};
-	
-	for(int i = 0; i<buttonTab.length; i++) {
-		if(buttonTab[i].getId().equals(buttontodisable)) {
+		for(int i = 0; i<buttonTab.length; i++) {
+			if(buttonTab[i].getId().equals(buttontodisable)) {
 				buttonTab[i].setDisable(true);
 				buttonTab[i].setVisible(false);
+			}
+		}	
 	}
-}
-	
-	
-}
 
-void displayButton(String buttonvalid) {
-	//On passe en argument l'id du bouton pour l'afficher et l'activer.
-	Button[] buttonTab =   {button00, button01, button02, button03, button04, button05, button06, button07,
-			    			button10, button11, button12, button13, button14, button15, button16, button17,
-			    			button20, button21, button22, button23, button24, button25, button26, button27,
-			    			button30, button31, button32, button33, button34, button35, button36, button37,
-			    			button40, button41, button42, button43, button44, button45, button46, button47,
-			    			button50, button51, button52, button53, button54, button55, button56, button57,
-			    			button60, button61, button62, button63, button64, button65, button66, button67,
-			    			button70, button71, button72, button73, button74, button75, button76, button77};
-	
-	for(int i = 0; i<buttonTab.length; i++) {
-		if(buttonTab[i].getId().equals(buttonvalid)) {
+	void displayButton(String buttonvalid) { //displays and enables buttonvalid
+		Button[] buttonTab =   {button00, button01, button02, button03, button04, button05, button06, button07,
+				    			button10, button11, button12, button13, button14, button15, button16, button17,
+				    			button20, button21, button22, button23, button24, button25, button26, button27,
+				    			button30, button31, button32, button33, button34, button35, button36, button37,
+				    			button40, button41, button42, button43, button44, button45, button46, button47,
+				    			button50, button51, button52, button53, button54, button55, button56, button57,
+				    			button60, button61, button62, button63, button64, button65, button66, button67,
+				    			button70, button71, button72, button73, button74, button75, button76, button77};
+		for(int i = 0; i<buttonTab.length; i++) {
+			if(buttonTab[i].getId().equals(buttonvalid)) {
 				buttonTab[i].setDisable(false);
 				buttonTab[i].setVisible(true);
+			}
 		}
 	}
-}
 
-
-
-@FXML
-void onClickPlay(MouseEvent event) {
-	
-	ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
-	System.out.println(validPositions.toString());
-	for(Move buttontodisplay: validPositions) {
-		String but_x = String.valueOf(buttontodisplay.position.x);
-		String but_y = String.valueOf(buttontodisplay.position.y);
-		String but_string = "button" + but_x + but_y;
-		displayButton(but_string);
-		
+	@FXML
+	void onClickPlay(MouseEvent event) {
+		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
+		System.out.println(validPositions.toString()); //debug
+		for(Move buttontodisplay: validPositions) { //for each valid move, the for loop enables the corresponding button
+			String but_x = String.valueOf(buttontodisplay.position.x);
+			String but_y = String.valueOf(buttontodisplay.position.y);
+			String but_string = "button" + but_x + but_y;
+			displayButton(but_string);
+		}
+		//the following 4 lines disable the 4 initial squares 
+		disableButton("button33");
+		disableButton("button44");
+		disableButton("button43");
+		disableButton("button34");
+		buttonPlay.setDisable(true); //disables Play button: the player cannot start two games at once
 	}
-	
-	//Initialisation des coups possibles pour les noirs (toujours les mêmes coups de départ)
-	disableButton("button33");
-	disableButton("button44");
-	disableButton("button43");
-	disableButton("button34");
-	
-    
-	buttonPlay.setDisable(true);
-		}
 
-
-
-@FXML
-void onClickLeave(MouseEvent event) {
-	//permet de cliquer sur un bouton "quitter", ce qui permet de quitter le jeu sans erreur
-	Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-	stage.close();
-		}
+	@FXML
+	void onClickLeave(MouseEvent event) {
+		//permet de cliquer sur un bouton "quitter", ce qui permet de quitter le jeu sans erreur
+		Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+		stage.close();
+	}
 }
 
 
