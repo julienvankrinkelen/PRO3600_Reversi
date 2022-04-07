@@ -7,20 +7,26 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane minHeight="300.0" minWidth="300.0" prefHeight="858.0" prefWidth="1185.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SimpleViewCtrl">
+<AnchorPane minHeight="500.0" minWidth="500.0" prefHeight="1037.0" prefWidth="1460.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SimpleViewCtrl">
    <children>
-      <ImageView fitHeight="858.0" fitWidth="1195.0" layoutX="-7.0">
+      <ImageView fx:id="woodbackground" fitHeight="1037.0" fitWidth="1469.0" layoutX="-7.0">
          <image>
             <Image url="@assets/sprite_wood.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="Board" fitHeight="600.0" fitWidth="600.0" layoutX="203.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="buttonPlay" layoutX="78.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play" />
+      <Button fx:id="buttonLeave" layoutX="78.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#onClickLeave" prefHeight="64.0" prefWidth="117.0" text="Leave" />
+      <Button fx:id="buttonUndo" layoutX="1207.0" layoutY="301.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="179.0" text="Undo" />
+      <TextFlow fx:id="blackscore" layoutX="492.0" layoutY="71.0" prefHeight="88.0" prefWidth="152.0" />
+      <TextFlow fx:id="whitescore" layoutX="817.0" layoutY="71.0" prefHeight="88.0" prefWidth="152.0" />
+      <ImageView fx:id="Board" fitHeight="678.0" fitWidth="698.0" layoutX="391.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/sprite_board.png" />
          </image>
       </ImageView>
-      <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="215.0" layoutY="128.0" prefHeight="567.0" prefWidth="573.0" AnchorPane.topAnchor="128.0">
+      <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="406.0" layoutY="197.0" prefHeight="644.0" prefWidth="648.0" AnchorPane.topAnchor="197.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -42,7 +48,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="button00" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button00" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk00" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -53,7 +59,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button01" disable="true" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button01" disable="true" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="WhiteDisk01" fitHeight="52.0" fitWidth="52.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_white_disk.png" />
@@ -84,7 +90,7 @@
                   <Image url="@assets/sprite_black_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button02" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button02" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk02" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -95,7 +101,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button03" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button03" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk03" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -106,7 +112,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button06" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button06" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk06" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -117,7 +123,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button05" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button05" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk05" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -128,7 +134,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button04" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button04" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk04" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -139,7 +145,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button07" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="button07" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk07" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -150,7 +156,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button10" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="button10" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk10" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -161,7 +167,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button11" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="button11" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <ImageView fx:id="BlackDisk11" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -172,7 +178,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button12" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="button12" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk12" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -183,7 +189,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button13" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="button13" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk13" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -194,7 +200,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button20" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="button20" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk20" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -205,7 +211,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button21" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="button21" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <ImageView fx:id="BlackDisk21" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -216,7 +222,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button22" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="button22" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk22" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -227,7 +233,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button23" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="button23" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <ImageView fx:id="BlackDisk23" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -238,7 +244,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button14" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="button14" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk14" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -249,7 +255,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button24" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="button24" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk24" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -260,7 +266,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button25" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="button25" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk25" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -271,7 +277,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button36" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Button fx:id="button36" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk36" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -282,7 +288,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button27" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="button27" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk27" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -293,7 +299,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button16" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="button16" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk16" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -304,7 +310,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button15" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="button15" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk15" fitHeight="52.0" fitWidth="52.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -315,7 +321,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button30" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Button fx:id="button30" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk30" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -326,7 +332,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button31" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Button fx:id="button31" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk31" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -337,7 +343,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button32" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Button fx:id="button32" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk32" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -348,7 +354,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button35" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Button fx:id="button35" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk35" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -359,7 +365,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button37" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Button fx:id="button37" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk37" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -370,7 +376,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button40" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <Button fx:id="button40" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk40" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -381,7 +387,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button41" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <Button fx:id="button41" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk41" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -392,7 +398,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button42" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="button42" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <ImageView fx:id="BlackDisk42" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -403,7 +409,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button45" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="button45" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <ImageView fx:id="BlackDisk45" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -414,7 +420,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button46" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="button46" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <ImageView fx:id="BlackDisk46" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -425,7 +431,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button47" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="button47" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <ImageView fx:id="BlackDisk47" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -436,7 +442,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button50" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button50" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk50" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -447,7 +453,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button51" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button51" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk51" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -458,7 +464,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button52" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button52" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk52" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -469,7 +475,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button53" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button53" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk53" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -480,7 +486,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button55" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button55" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk55" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -491,7 +497,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button54" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button54" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk54" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -502,7 +508,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button56" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button56" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk56" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -513,7 +519,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button57" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="button57" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <ImageView fx:id="BlackDisk57" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -524,7 +530,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button60" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button60" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk60" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -535,7 +541,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button61" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button61" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk61" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -546,7 +552,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button62" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button62" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk62" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -557,7 +563,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button63" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button63" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk63" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -568,7 +574,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button64" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button64" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk64" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -579,7 +585,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button65" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button65" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk65" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -590,7 +596,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button66" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button66" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk66" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -601,7 +607,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button67" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="button67" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <ImageView fx:id="BlackDisk67" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -612,7 +618,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button70" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button70" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk70" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -623,7 +629,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button71" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button71" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk71" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -634,7 +640,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button72" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button72" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk72" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -645,7 +651,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button73" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button73" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk73" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -656,7 +662,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button74" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button74" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk74" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -667,7 +673,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button75" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button75" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk75" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -678,7 +684,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button76" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button76" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk76" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -689,7 +695,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button77" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="button77" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ImageView fx:id="BlackDisk77" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -700,7 +706,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button26" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="button26" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <ImageView fx:id="BlackDisk26" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -711,7 +717,7 @@
                   <Image url="@assets/sprite_white_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button17" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="button17" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <ImageView fx:id="BlackDisk17" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <image>
                   <Image url="@assets/sprite_black_disk.png" />
@@ -732,10 +738,10 @@
                   <Image url="@assets/sprite_black_disk.png" />
                </image>
             </ImageView>
-            <Button fx:id="button33" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <Button fx:id="button34" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <Button fx:id="button43" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Button fx:id="button44" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.71" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Button fx:id="button33" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button fx:id="button34" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button fx:id="button43" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button fx:id="button44" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#onClick" opacity="0.5" prefHeight="52.0" prefWidth="52.0" style="-fx-background-radius: 100;" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
             <ImageView fx:id="WhiteDisk34" fitHeight="52.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
                   <Image url="@assets/sprite_white_disk.png" />
@@ -748,7 +754,5 @@
             </ImageView>
          </children>
       </GridPane>
-      <Button fx:id="buttonPlay" layoutX="837.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play" />
-      <Button fx:id="buttonLeave" layoutX="837.0" layoutY="111.0" mnemonicParsing="false" onMouseClicked="#onClickLeave" prefHeight="64.0" prefWidth="117.0" text="Leave" />
    </children>
 </AnchorPane>
