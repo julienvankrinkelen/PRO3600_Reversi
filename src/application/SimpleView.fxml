@@ -9,22 +9,22 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane minHeight="500.0" minWidth="500.0" prefHeight="1030.0" prefWidth="1435.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SimpleViewCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="500.0" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SimpleViewCtrl">
    <children>
-      <ImageView fx:id="woodbackground" fitHeight="1037.0" fitWidth="1460.0" layoutX="-22.0" layoutY="-4.0">
+      <ImageView fx:id="woodbackground" fitHeight="709.0" fitWidth="1027.0" layoutX="-22.0" layoutY="-4.0">
          <image>
             <Image url="@assets/sprite_wood.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonPlay" layoutX="78.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play" />
-      <Button fx:id="buttonLeave" layoutX="78.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#onClickLeave" prefHeight="64.0" prefWidth="117.0" text="Leave" />
-      <Button fx:id="buttonUndo" layoutX="1207.0" layoutY="301.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="179.0" text="Undo" />
-      <ImageView fx:id="Board" fitHeight="678.0" fitWidth="698.0" layoutX="391.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="buttonPlay" layoutX="53.0" layoutY="282.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play" />
+      <Button fx:id="buttonLeave" layoutX="53.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onClickLeave" prefHeight="64.0" prefWidth="117.0" text="Leave" />
+      <Button fx:id="buttonUndo" layoutX="840.0" layoutY="355.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="95.0" text="Undo" />
+      <ImageView fx:id="Board" fitHeight="550.0" fitWidth="550.0" layoutX="225.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/sprite_board.png" />
          </image>
       </ImageView>
-      <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="406.0" layoutY="197.0" prefHeight="644.0" prefWidth="648.0" AnchorPane.topAnchor="197.0">
+      <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="238.0" layoutY="119.0" prefHeight="517.0" prefWidth="525.0" AnchorPane.topAnchor="119.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -752,8 +752,8 @@
             </ImageView>
          </children>
       </GridPane>
-      <TextField fx:id="whitescore" layoutX="797.0" layoutY="99.0" />
-      <TextField fx:id="blackscore" layoutX="520.0" layoutY="99.0" />
-      <Button fx:id="buttonPlayAgain" disable="true" layoutX="78.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play Again" visible="false" />
+      <TextField fx:id="whitescore" layoutX="547.0" layoutY="57.0" />
+      <TextField fx:id="blackscore" layoutX="287.0" layoutY="57.0" />
+      <Button fx:id="buttonPlayAgain" disable="true" layoutX="53.0" layoutY="282.0" mnemonicParsing="false" onMouseClicked="#onClickPlayAgain" prefHeight="64.0" prefWidth="117.0" text="Play Again" visible="false" />
    </children>
 </AnchorPane>

@@ -157,7 +157,7 @@ public class SimpleViewCtrl {
     			System.out.println("Scores:    o: " + Main.testGame.currentGame.scores()[1] + " |   x: " + Main.testGame.currentGame.scores()[0]); //debug
     		}
     	}
-    	displayScore();
+    	displayScore(); //updates scores
     }
     
     
@@ -265,6 +265,7 @@ public class SimpleViewCtrl {
 
 	@FXML
 	void onClickPlay(MouseEvent event) {
+		buttonPlay.setDisable(true); //disables Play button: the player cannot start two games at once
 		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
 		System.out.println("Valid positions: " + validPositions.toString()); //debug
 		for(Move buttontodisplay: validPositions) { //for each valid move, the for loop enables the corresponding button
@@ -273,7 +274,6 @@ public class SimpleViewCtrl {
 			String but_string = "button" + but_x + but_y;
 			displayButton(but_string, true);
 		}
-		buttonPlay.setDisable(true); //disables Play button: the player cannot start two games at once
 	}
 
 	@FXML
@@ -288,6 +288,8 @@ public class SimpleViewCtrl {
 	
 	@FXML
 	void onClickPlayAgain(MouseEvent event) {
+		buttonPlayAgain.setDisable(true); //disables Play button: the player cannot start two games at once
+		System.out.println("Click on Play Again detected"); //debug
 		//Disables every disk on the board to play again
 		for(int i=0;i<8;i++) {
     		for(int j=0;j<8;j++) {
@@ -295,10 +297,34 @@ public class SimpleViewCtrl {
     			String blackdisktodisable = "BlackDisk" + Integer.valueOf(i) + Integer.valueOf(j);
     			displayDisk(whitedisktodisable, Color.WHITE, false);
     			displayDisk(blackdisktodisable, Color.BLACK, false);
+    			// the following 4 lines display the first 4 disks
     			}
     		}
-		//RESET LA GRID ICI ET RECALCULER LES POSITIONS POSSIBLES
-		buttonPlayAgain.setDisable(true); //disables Play button: the player cannot start two games at once
+		//the following 4 lines display the four initial disks
+		displayDisk("BlackDisk34", Color.WHITE, false);
+		displayDisk("BlackDisk43", Color.BLACK, false);
+		displayDisk("WhiteDisk33", Color.WHITE, false);
+		displayDisk("WhiteDisk44", Color.BLACK, false);
+		Main.testGame.currentGame.currentPlayer = Color.BLACK; //initializes first player
+		Main.testGame.currentGame.grid = new Color[][]{
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.WHITE, Color.BLACK, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.BLACK, Color.WHITE, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+            {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY}
+            }; //initializing boardgame grid
+		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
+		System.out.println("Valid positions: " + validPositions.toString()); //debug
+		for(Move buttontodisplay: validPositions) { //for each valid move, the for loop enables the corresponding button
+			String but_x = String.valueOf(buttontodisplay.position.x);
+			String but_y = String.valueOf(buttontodisplay.position.y);
+			String but_string = "button" + but_x + but_y;
+			displayButton(but_string, true);
+		}
+		displayScore(); //updates scores
 		}
 	}
 
