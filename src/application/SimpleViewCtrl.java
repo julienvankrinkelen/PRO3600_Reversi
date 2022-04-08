@@ -101,8 +101,8 @@ public class SimpleViewCtrl {
    			//the following 5 lines update the gui by flipping the sandwiched disks and showing the disk that has been played
     		ArrayList<Position> flippedDisks = move.flipDisks();        				
         	for(Position toflip : flippedDisks) {
-        		String whiteivtodisplay = "WhiteDisk" + Integer.valueOf(toflip.x) + Integer.valueOf(toflip.y);
-        		flipDisks(whiteivtodisplay);
+        		String positiontoflip = String.valueOf(toflip.x) + String.valueOf(toflip.y);
+        		flipDisks(positiontoflip);
         	}
     		Main.testGame.currentGame.currentPlayer=Color.BLACK; //next turn
     			
@@ -117,8 +117,9 @@ public class SimpleViewCtrl {
     		//the following 5 lines update the gui by flipping the sandwiched disks and showing the disk that has been played
     		ArrayList<Position> flippedDisks = move.flipDisks();
     		for(Position toflip : flippedDisks) {
-    			String blackivtodisplay = "BlackDisk" + Integer.valueOf(toflip.x) + Integer.valueOf(toflip.y);
-    			flipDisks(blackivtodisplay);
+    			String positiontoflip = String.valueOf(toflip.x) + String.valueOf(toflip.y);
+    			
+    			flipDisks(positiontoflip);
     		}
     		Main.testGame.currentGame.currentPlayer=Color.WHITE; //next turn
     			
@@ -169,15 +170,20 @@ public class SimpleViewCtrl {
      * Flip one disk in the gui (changes its color)
      * @param disktoflip The disk that has to be flipped
      */
-    void flipDisks(String disktoflip) {
+    void flipDisks(String positiontoflip) {
+    	String whitetoflip = "WhiteDisk" + positiontoflip;
+    	String blacktoflip = "BlackDisk" + positiontoflip;
 		if(Main.testGame.currentGame.currentPlayer==Color.BLACK) { //black's turn
-			displayDisk(disktoflip, Color.WHITE, false);
-			displayDisk(disktoflip, Color.BLACK, true);
+		
+			displayDisk(whitetoflip, Color.WHITE, false);
+			
+			displayDisk(blacktoflip, Color.BLACK, true);
 			
 			}
 		else if(Main.testGame.currentGame.currentPlayer==Color.WHITE) { //white's turn
-			displayDisk(disktoflip, Color.BLACK, false);
-			displayDisk(disktoflip, Color.WHITE, true);
+			displayDisk(blacktoflip, Color.BLACK, false);
+			
+			displayDisk(whitetoflip, Color.WHITE, true);
 			
 		}
 	}
@@ -230,26 +236,26 @@ public class SimpleViewCtrl {
 		if(color == Color.BLACK) {
 			for(int i = 0; i<BlackTab.length; i++) {
 				if(BlackTab[i].getId().equals(disktochange)) {
-					if(display) {
-						BlackTab[i].setDisable(false);
+					if(display == true) {
+						
 						BlackTab[i].setVisible(true);
 					}
-					else {
-						BlackTab[i].setDisable(true);
+					else if (display == false) {
+						
 						BlackTab[i].setVisible(false);
 					}
 				}
 			}
 		}
-			else {
+			else if(color == Color.WHITE) {
 				for(int i = 0; i<WhiteTab.length; i++) {
 					if(WhiteTab[i].getId().equals(disktochange)) {
-						if(display) {
-							WhiteTab[i].setDisable(false);
+						if(display==true) {
+							
 							WhiteTab[i].setVisible(true);
 						}
-						else {
-							WhiteTab[i].setDisable(true);
+						else if(display == false) {
+						
 							WhiteTab[i].setVisible(false);
 					}
 				}
@@ -278,6 +284,7 @@ public class SimpleViewCtrl {
 		stage.close();
 	}
 	
+	// CREER METHODE START GAME APPELEE PAR PLAY ET PLAYAGAIN
 	
 	@FXML
 	void onClickPlayAgain(MouseEvent event) {
