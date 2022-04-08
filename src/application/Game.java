@@ -1,6 +1,6 @@
 package application;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Game is java class used to play a reversi game.
@@ -15,20 +15,21 @@ public class Game {
         this.currentGame=currentGame;
     }
 
+
 	/**
      * startReversi is the method used to start a reversi game between two human opponents.
      */
-
+/*
     void startReversi() {
-    	//System.out.println("--- Starting Reversi ---");
-    	//Scanner sc= new Scanner(System.in);
+    	System.out.println("--- Starting Reversi ---");
+    	Scanner sc= new Scanner(System.in);
     	boolean endOfGame = false;
 		ArrayList<Move> validPositions = this.currentGame.validPositions(this.currentGame.currentPlayer); //calculates the list of legal moves to play in
     	while(!endOfGame) {
-    		//System.out.println("\n   Current board");
-    		//this.currentGame.displayGrid();
-    		//if (this.currentGame.currentPlayer==Color.BLACK) System.out.println("x's turn");
-    		//else System.out.println("o's turn");
+    		System.out.println("\n   Current board");
+    		this.currentGame.displayGrid();
+    		if (this.currentGame.currentPlayer==Color.BLACK) System.out.println("x's turn");
+    		else System.out.println("o's turn");
     		boolean inputIsValid = false; //false until the input is a valid move
     		while (!inputIsValid) {
     			System.out.println("Valid moves: " + validPositions.toString());
@@ -66,7 +67,9 @@ public class Game {
     	System.out.println("     End board");
     	this.currentGame.displayGrid();
     }
-
+*/
+ 
+ 
 	/**
      * playIn is a method that plays a move in the current game grid.
      * @param move is the move to be played

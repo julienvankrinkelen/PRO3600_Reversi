@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane minHeight="500.0" minWidth="500.0" prefHeight="1037.0" prefWidth="1460.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SimpleViewCtrl">
+<AnchorPane minHeight="500.0" minWidth="500.0" prefHeight="1030.0" prefWidth="1435.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SimpleViewCtrl">
    <children>
-      <ImageView fx:id="woodbackground" fitHeight="1037.0" fitWidth="1469.0" layoutX="-7.0">
+      <ImageView fx:id="woodbackground" fitHeight="1037.0" fitWidth="1460.0" layoutX="-22.0" layoutY="-4.0">
          <image>
             <Image url="@assets/sprite_wood.png" />
          </image>
@@ -19,8 +19,6 @@
       <Button fx:id="buttonPlay" layoutX="78.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play" />
       <Button fx:id="buttonLeave" layoutX="78.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#onClickLeave" prefHeight="64.0" prefWidth="117.0" text="Leave" />
       <Button fx:id="buttonUndo" layoutX="1207.0" layoutY="301.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="179.0" text="Undo" />
-      <TextFlow fx:id="blackscore" layoutX="492.0" layoutY="71.0" prefHeight="88.0" prefWidth="152.0" />
-      <TextFlow fx:id="whitescore" layoutX="817.0" layoutY="71.0" prefHeight="88.0" prefWidth="152.0" />
       <ImageView fx:id="Board" fitHeight="678.0" fitWidth="698.0" layoutX="391.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/sprite_board.png" />
@@ -754,5 +752,8 @@
             </ImageView>
          </children>
       </GridPane>
+      <TextField fx:id="whitescore" layoutX="797.0" layoutY="99.0" />
+      <TextField fx:id="blackscore" layoutX="520.0" layoutY="99.0" />
+      <Button fx:id="buttonPlayAgain" disable="true" layoutX="78.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" prefHeight="64.0" prefWidth="117.0" text="Play Again" visible="false" />
    </children>
 </AnchorPane>
