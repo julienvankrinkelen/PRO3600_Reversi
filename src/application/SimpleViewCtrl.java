@@ -38,7 +38,7 @@ public class SimpleViewCtrl {
     private ImageView Board;
     
     @FXML
-    private ImageView woodbackground;
+    private ImageView woodbackground, background_endgame;
       
     //buttons declaration
     @FXML
@@ -80,7 +80,7 @@ public class SimpleViewCtrl {
     	//getting the button clicked in order to hide it and disable it
     	Object o = event.getSource();
     	Button buttonpushed = (Button)o;
-    	buttonpushed.setOpacity(0);
+    	buttonpushed.setVisible(false);
     	buttonpushed.setDisable(true);    	
     	String butname = buttonpushed.getId(); //gets access to black and white disks ImageView ids with the position of the button
     	//the following two lines extract the coordinates of the button clicked
@@ -151,6 +151,8 @@ public class SimpleViewCtrl {
     	    	}
     		}
     		else { //none of the players can play: end the game
+    			background_endgame.setVisible(true);
+    			background_endgame.setDisable(false);
     			buttonPlayAgain.setVisible(true);
     			buttonPlayAgain.setDisable(false);
     			System.out.println("GAME OVER"); //debug
@@ -203,14 +205,15 @@ public class SimpleViewCtrl {
 				if(buttonTab[i].getId().equals(buttontochange)) {
 					buttonTab[i].setDisable(false);
 					buttonTab[i].setVisible(true);
+					System.out.println("Enabled " + buttontochange); //debug
 				}
 			}
 		}
-			else {
-				for(int i = 0; i<buttonTab.length; i++) {
-					if(buttonTab[i].getId().equals(buttontochange)) {
-						buttonTab[i].setDisable(true);
-						buttonTab[i].setVisible(false);
+		else {
+			for(int i = 0; i<buttonTab.length; i++) {
+				if(buttonTab[i].getId().equals(buttontochange)) {
+					buttonTab[i].setDisable(true);
+					buttonTab[i].setVisible(false);
 				}
 			}
 		}
@@ -237,26 +240,22 @@ public class SimpleViewCtrl {
 			for(int i = 0; i<BlackTab.length; i++) {
 				if(BlackTab[i].getId().equals(disktochange)) {
 					if(display == true) {
-						
 						BlackTab[i].setVisible(true);
 					}
 					else if (display == false) {
-						
 						BlackTab[i].setVisible(false);
 					}
 				}
 			}
 		}
-			else if(color == Color.WHITE) {
-				for(int i = 0; i<WhiteTab.length; i++) {
-					if(WhiteTab[i].getId().equals(disktochange)) {
-						if(display==true) {
-							
-							WhiteTab[i].setVisible(true);
-						}
-						else if(display == false) {
-						
-							WhiteTab[i].setVisible(false);
+		else if(color == Color.WHITE) {
+			for(int i = 0; i<WhiteTab.length; i++) {
+				if(WhiteTab[i].getId().equals(disktochange)) {
+					if(display==true) {
+						WhiteTab[i].setVisible(true);
+					}
+					else if(display == false) {
+						WhiteTab[i].setVisible(false);
 					}
 				}
 			}
@@ -288,7 +287,10 @@ public class SimpleViewCtrl {
 	
 	@FXML
 	void onClickPlayAgain(MouseEvent event) {
+		background_endgame.setVisible(false);
+		background_endgame.setDisable(true);
 		buttonPlayAgain.setDisable(true); //disables Play button: the player cannot start two games at once
+		buttonPlay.setVisible(false);
 		System.out.println("Click on Play Again detected"); //debug
 		//Disables every disk on the board to play again
 		for(int i=0;i<8;i++) {
@@ -297,14 +299,13 @@ public class SimpleViewCtrl {
     			String blackdisktodisable = "BlackDisk" + Integer.valueOf(i) + Integer.valueOf(j);
     			displayDisk(whitedisktodisable, Color.WHITE, false);
     			displayDisk(blackdisktodisable, Color.BLACK, false);
-    			// the following 4 lines display the first 4 disks
-    			}
     		}
+    	}
 		//the following 4 lines display the four initial disks
-		displayDisk("BlackDisk34", Color.WHITE, false);
-		displayDisk("BlackDisk43", Color.BLACK, false);
-		displayDisk("WhiteDisk33", Color.WHITE, false);
-		displayDisk("WhiteDisk44", Color.BLACK, false);
+		displayDisk("BlackDisk34", Color.BLACK, true);
+		displayDisk("BlackDisk43", Color.BLACK, true);
+		displayDisk("WhiteDisk33", Color.WHITE, true);
+		displayDisk("WhiteDisk44", Color.WHITE, true);
 		Main.testGame.currentGame.currentPlayer = Color.BLACK; //initializes first player
 		Main.testGame.currentGame.grid = new Color[][]{
             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
@@ -316,19 +317,64 @@ public class SimpleViewCtrl {
             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY}
             }; //initializing boardgame grid
-		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play in
+		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
 		System.out.println("Valid positions: " + validPositions.toString()); //debug
 		for(Move buttontodisplay: validPositions) { //for each valid move, the for loop enables the corresponding button
 			String but_x = String.valueOf(buttontodisplay.position.x);
 			String but_y = String.valueOf(buttontodisplay.position.y);
 			String but_string = "button" + but_x + but_y;
 			displayButton(but_string, true);
-		}
-		displayScore(); //updates scores
+			System.out.println(but_string);
 		}
 	}
 
+//method that highlights a button when mouseover
+	@FXML
+	void onEntered(MouseEvent event) {
+		
+		Object o = event.getSource();
+    	Button buttonover = (Button)o;
+		
+	    buttonover.setStyle("-fx-background-color: #279AF1; -fx-background-radius: 100");
+	}
+//method that disables the highlight when mouse moves out of the button
+	@FXML
+	void onExited(MouseEvent event) {
+		Object o = event.getSource();
+    	Button buttonover = (Button)o;
+		
+		buttonover.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 100");
+	}
+
+//method that highlights a buttonmenu when mouseover
+	@FXML
+	void onEnteredMenuButton(MouseEvent event) {	
+		Object o = event.getSource();
+	    Button buttonover = (Button)o;
+	    buttonover.setStyle("-fx-border-color: #279AF1; -fx-background-color: #DCDCDC");
+		
+	}
+	
+//method that disables the highlight when mouse moves out of the buttonmenu
+	@FXML
+	void onExitedMenuButton(MouseEvent event) {
+		Object o = event.getSource();
+    	Button buttonover = (Button)o;
+	    buttonover.setStyle("-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF");
+	
+	}
 
 
+	@FXML
+	void onClickUndo(MouseEvent event){
+			
+	}
+
+	@FXML
+	void onClickRedo(MouseEvent event) {
+		
+	}
+
+}
 
 

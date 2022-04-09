@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 
@@ -25,7 +26,8 @@ public class Main extends Application {
                         primaryStage.setScene(scene);
                         primaryStage.sizeToScene();
                         primaryStage.show();
-
+                        primaryStage.setTitle("PRO3600_Reversi");
+                        
                 }
                 catch (IOException e) {
                         e.printStackTrace();
