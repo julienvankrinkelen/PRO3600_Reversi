@@ -38,7 +38,7 @@ public class SimpleViewCtrl {
     private ImageView Board;
     
     @FXML
-    private ImageView woodbackground, background_endgame;
+    private ImageView woodbackground, background_endgame, gameOverText, winnerWhite, winnerBlack;
       
     //buttons declaration
     @FXML
@@ -51,7 +51,7 @@ public class SimpleViewCtrl {
     			   button60, button61, button62, button63, button64, button65, button66, button67,
     			   button70, button71, button72, button73, button74, button75, button76, button77;
     @FXML
-    private Button buttonPlay, buttonLeave, buttonPlayAgain, buttonUndo, buttonRedo;
+    private Button buttonPlay, buttonLeave, buttonPlayAgain, buttonUndo, buttonRedo, buttonLeaveMenu;
     
     @FXML
     private TextField whitescore, blackscore;
@@ -151,12 +151,32 @@ public class SimpleViewCtrl {
     	    	}
     		}
     		else { //none of the players can play: end the game
+    			System.out.println("GAME OVER"); //debug
+    			int[] scores = Main.testGame.currentGame.scores();
+    			System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
+    			//the following lines show the game over screen (winner, buttons...)
     			background_endgame.setVisible(true);
     			background_endgame.setDisable(false);
+    			gameOverText.setVisible(true);
+    			if (scores[0]<scores[1]) { //white wins
+    				winnerWhite.setVisible(true);
+    			}
+    			else if (scores[0]>scores[1]) { //black wins
+    				winnerBlack.setVisible(true);
+    			}
+    			else { //draw: the winner is the current player
+    				if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    					winnerWhite.setVisible(true);
+    				}
+    				else {
+    					winnerBlack.setVisible(true);
+    				}
+    			}
     			buttonPlayAgain.setVisible(true);
     			buttonPlayAgain.setDisable(false);
-    			System.out.println("GAME OVER"); //debug
-    			System.out.println("Scores:    o: " + Main.testGame.currentGame.scores()[1] + " |   x: " + Main.testGame.currentGame.scores()[0]); //debug
+    			buttonLeaveMenu.setVisible(true);
+    			buttonLeaveMenu.setDisable(false);
+    			
     		}
     	}
     	displayScore(); //updates scores
@@ -164,8 +184,9 @@ public class SimpleViewCtrl {
     
     
     void displayScore() {
-    	blackscore.setText("black : " + Main.testGame.currentGame.scores()[0]);
-    	whitescore.setText("white : " + Main.testGame.currentGame.scores()[1]);
+    	int[] scores = Main.testGame.currentGame.scores();
+    	blackscore.setText("black : " + scores[0]);
+    	whitescore.setText("white : " + scores[1]);
     }
     
     /**
@@ -205,7 +226,6 @@ public class SimpleViewCtrl {
 				if(buttonTab[i].getId().equals(buttontochange)) {
 					buttonTab[i].setDisable(false);
 					buttonTab[i].setVisible(true);
-					System.out.println("Enabled " + buttontochange); //debug
 				}
 			}
 		}
@@ -287,10 +307,16 @@ public class SimpleViewCtrl {
 	
 	@FXML
 	void onClickPlayAgain(MouseEvent event) {
+		//the following lines hide the game over screen
 		background_endgame.setVisible(false);
 		background_endgame.setDisable(true);
+		gameOverText.setVisible(false);
+		winnerWhite.setVisible(false);
+		winnerBlack.setVisible(false);
 		buttonPlayAgain.setDisable(true); //disables Play button: the player cannot start two games at once
-		buttonPlay.setVisible(false);
+		buttonPlayAgain.setVisible(false);
+		buttonLeaveMenu.setDisable(true);
+		buttonLeaveMenu.setVisible(false);
 		System.out.println("Click on Play Again detected"); //debug
 		//Disables every disk on the board to play again
 		for(int i=0;i<8;i++) {
@@ -324,7 +350,6 @@ public class SimpleViewCtrl {
 			String but_y = String.valueOf(buttontodisplay.position.y);
 			String but_string = "button" + but_x + but_y;
 			displayButton(but_string, true);
-			System.out.println(but_string);
 		}
 	}
 
