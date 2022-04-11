@@ -38,7 +38,7 @@ public class SimpleViewCtrl {
     private ImageView Board;
     
     @FXML
-    private ImageView woodbackground, background_endgame, gameOverText, winnerWhite, winnerBlack;
+    private ImageView woodbackground, background_endgame, gameOverText, winnerWhite, winnerBlack, curPlayerWhite, curPlayerBlack;
       
     //buttons declaration
     @FXML
@@ -76,7 +76,6 @@ public class SimpleViewCtrl {
 
     @FXML
     void onClick(MouseEvent event) {
-    	//Creating black and white disks arrays already positioned on the squares and invisible by default
     	//getting the button clicked in order to hide it and disable it
     	Object o = event.getSource();
     	Button buttonpushed = (Button)o;
@@ -121,9 +120,7 @@ public class SimpleViewCtrl {
     			
     			flipDisks(positiontoflip);
     		}
-    		Main.testGame.currentGame.currentPlayer=Color.WHITE; //next turn
-    			
-    		
+    		Main.testGame.currentGame.currentPlayer = Color.WHITE; //next turn
     	}
     	Main.testGame.currentGame.displayGrid(); //debug
     	//the following 5 lines disable every button on the board
@@ -154,7 +151,7 @@ public class SimpleViewCtrl {
     			System.out.println("GAME OVER"); //debug
     			int[] scores = Main.testGame.currentGame.scores();
     			System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
-    			//the following lines show the game over screen (winner, buttons...)
+    			//the following 11 lines show the game over screen (winner, buttons...)
     			background_endgame.setVisible(true);
     			background_endgame.setDisable(false);
     			gameOverText.setVisible(true);
@@ -176,17 +173,25 @@ public class SimpleViewCtrl {
     			buttonPlayAgain.setDisable(false);
     			buttonLeaveMenu.setVisible(true);
     			buttonLeaveMenu.setDisable(false);
-    			
     		}
     	}
+    	//the following lines update the current player display
+    	if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+			curPlayerWhite.setVisible(true);
+			curPlayerBlack.setVisible(false);
+		}
+		else {
+			curPlayerBlack.setVisible(true);
+			curPlayerWhite.setVisible(false);			
+		}
     	displayScore(); //updates scores
     }
     
     
     void displayScore() {
     	int[] scores = Main.testGame.currentGame.scores();
-    	blackscore.setText("black : " + scores[0]);
-    	whitescore.setText("white : " + scores[1]);
+    	blackscore.setText(""+scores[0]);
+    	whitescore.setText(""+scores[1]);
     }
     
     /**

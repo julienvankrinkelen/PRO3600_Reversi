@@ -16,6 +16,31 @@
             <Image url="@assets/sprite_wood.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="78.0" fitWidth="77.0" layoutX="74.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/sprite_black_disk.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="78.0" fitWidth="77.0" layoutX="849.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/sprite_white_disk.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="currentPlayerText" fitHeight="150.0" fitWidth="200.0" layoutX="340.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/currentPlayer.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="curPlayerWhite" fitHeight="83.0" fitWidth="89.0" layoutX="561.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@assets/sprite_white_disk.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="curPlayerBlack" fitHeight="89.0" fitWidth="83.0" layoutX="561.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/sprite_black_disk.png" />
+         </image>
+      </ImageView>
       <Button fx:id="buttonPlay" layoutX="53.0" layoutY="282.0" mnemonicParsing="false" onMouseClicked="#onClickPlay" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="64.0" prefWidth="117.0" text="Play" />
       <Button fx:id="buttonLeave" layoutX="53.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onClickLeave" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="64.0" prefWidth="117.0" text="Leave" />
       <Button fx:id="buttonRedo" layoutX="840.0" layoutY="418.0" mnemonicParsing="false" onMouseClicked="#onClickRedo" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="45.0" prefWidth="95.0" text="Redo" />
@@ -758,8 +783,8 @@
             <Image url="@assets/rectangle-noir.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="whitescore" layoutX="547.0" layoutY="57.0" />
-      <TextField fx:id="blackscore" layoutX="287.0" layoutY="57.0" />
+      <TextField fx:id="whitescore" alignment="CENTER" layoutX="874.0" layoutY="196.0" prefHeight="25.0" prefWidth="29.0" text="2" />
+      <TextField fx:id="blackscore" alignment="CENTER" layoutX="98.0" layoutY="196.0" prefHeight="25.0" prefWidth="29.0" text="2" />
       <Button fx:id="buttonPlayAgain" disable="true" layoutX="349.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#onClickPlayAgain" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="64.0" prefWidth="117.0" text="Play Again" visible="false" />
       <Button fx:id="buttonLeaveMenu" disable="true" layoutX="535.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#onClickLeave" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="64.0" prefWidth="117.0" text="Leave" visible="false" />
       <ImageView fx:id="gameOverText" disable="true" fitHeight="197.0" fitWidth="454.0" layoutX="273.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" visible="false">
