@@ -33,12 +33,9 @@ public class SimpleViewCtrl {
     				  WhiteDisk60, WhiteDisk61, WhiteDisk62, WhiteDisk63, WhiteDisk64, WhiteDisk65, WhiteDisk66, WhiteDisk67,
     				  WhiteDisk70, WhiteDisk71, WhiteDisk72, WhiteDisk73, WhiteDisk74, WhiteDisk75, WhiteDisk76, WhiteDisk77;
 
-    //board image declaration
+    //images declaration
     @FXML
-    private ImageView Board;
-    
-    @FXML
-    private ImageView woodbackground, background_endgame, gameOverText, winnerWhite, winnerBlack, curPlayerWhite, curPlayerBlack;
+    private ImageView Board, woodbackground, background_endgame, gameOverText, winnerWhite, winnerBlack, curPlayerWhite, curPlayerBlack, chooseMode;
       
     //buttons declaration
     @FXML
@@ -50,26 +47,62 @@ public class SimpleViewCtrl {
     			   button50, button51, button52, button53, button54, button55, button56, button57,
     			   button60, button61, button62, button63, button64, button65, button66, button67,
     			   button70, button71, button72, button73, button74, button75, button76, button77;
-    @FXML
-    private Button buttonPlay, buttonLeave, buttonPlayAgain, buttonUndo, buttonRedo, buttonLeaveMenu;
     
+    //Menu buttons declaration
+    @FXML
+    private Button buttonPlay, buttonLeave, buttonPlayAgain, buttonUndo, buttonRedo, buttonLeaveMenu, buttonBotMode, buttonHumanMode;
+    
+    //texts that show score declaration
     @FXML
     private TextField whitescore, blackscore;
     
     
    
-
+    //bot = true  -> the bot is used
+    //bot = false -> the bot is not used. It is the 1V1 local mode
+    boolean bot;
+    
     
     /**
-     * This method is called by any button we click on the board
+     * This method is called either by the button "1 versus 1" or the button "1 versus Bot" when the program is first executed
+     * @param event
+     */
+    
+    @FXML
+    void onClickButtonMode(MouseEvent event) {
+    	Object o = event.getSource();
+    	Button buttonmode = (Button)o;
+    	whitescore.setDisable(false);
+    	blackscore.setDisable(false);
+    	chooseMode.setDisable(true);
+    	chooseMode.setVisible(false);
+    	buttonHumanMode.setDisable(true);
+    	buttonHumanMode.setVisible(false);
+    	buttonBotMode.setDisable(true);
+    	buttonBotMode.setVisible(false);
+    	background_endgame.setDisable(true);
+    	background_endgame.setVisible(false);
+    	if(buttonmode == buttonHumanMode) {
+    		//Activate the 1V1 mode
+    		bot=false;
+    	}
+    	
+    	else if (buttonmode == buttonBotMode) {
+    		//Activate the Bot mode
+    		bot=true;
+    	}
+    }
+    
+    
+    
+    /**
+     * This method is called by any button we click on the BOARD
      * 
      * Once a button is clicked on: 
      * 	Gets the source of the button with the method Object getSource() 
      * 	Set it invisible and disabled with the methods Button setVisible() and Button setDisable()
-     * 	
-     * To get the right disk, we have to initialize arrays of the disks ids. In fact, the image is not linked with the button in the fxml file (the button
-     *  is just on top of the disk covering it). So, by cutting the position string of the event Button, it builds the ids of the black and white disks of
-     *  the position. Then, by searching the disk with the right id in the array, it can display it (either BLACK or WHITE according to Main.test.currentPlayer)
+     * 
+     * +...	
      * 	
      * @param event
      */
@@ -187,7 +220,9 @@ public class SimpleViewCtrl {
     	displayScore(); //updates scores
     }
     
-    
+    /**
+     * Displays scores by updating the textFields "blackscore" and "whitescore" with the currentGame.scores() method.
+     */
     void displayScore() {
     	int[] scores = Main.testGame.currentGame.scores();
     	blackscore.setText(""+scores[0]);
@@ -195,7 +230,10 @@ public class SimpleViewCtrl {
     }
     
     /**
-     * Flip one disk in the gui (changes its color)
+     * Takes a position in the grid. 
+     * 	If it's black's turn, displays a black disk and disables the white disk
+     * 	If it's white's turn, displays a black disk and disables the black disk
+     * 
      * @param disktoflip The disk that has to be flipped
      */
     void flipDisks(String positiontoflip) {
@@ -216,7 +254,14 @@ public class SimpleViewCtrl {
 		}
 	}
 
-
+    /**
+     * This method takes the String id of a button and displays or disables the button
+	 * 	This method is necessary because we can't use the button methods setDisable and setVisible on a string
+	 * 	Then we use the method .getId().equals(String button_id) to get the right button in the array buttonTab
+	 * 
+     * @param buttontochange the button to be enabled or disabled
+     * @param display (if display = true, displays the button. if displays = false, disables the button)
+     */
 	void displayButton(String buttontochange, boolean display) { //displays or disables button according to boolean
 		Button[] buttonTab =   {button00, button01, button02, button03, button04, button05, button06, button07,
 				    			button10, button11, button12, button13, button14, button15, button16, button17,
@@ -243,6 +288,15 @@ public class SimpleViewCtrl {
 			}
 		}
 	}
+	/**
+	 * This method takes the String id of an image and displays or disables the image. 
+	 * 	This method is necessary because we can't use the button method setVisible on a string.
+	 * 	Then we use the method .getId().equals(String button_id) to get the right button in the arrays WhiteTab and BlackTab
+	 * 
+	 * @param disktochange the disk to be displayed or disabled
+	 * @param color (White or Black)
+	 * @param display (if display = true, displays the disk. if display = false, disables the disk)
+	 */
 	void displayDisk(String disktochange, Color color, boolean display) { //displays or disables disk according to boolean	
 		ImageView[] WhiteTab = {WhiteDisk00, WhiteDisk01, WhiteDisk02, WhiteDisk03, WhiteDisk04, WhiteDisk05, WhiteDisk06, WhiteDisk07, 
 								WhiteDisk10, WhiteDisk11, WhiteDisk12, WhiteDisk13, WhiteDisk14, WhiteDisk15, WhiteDisk16, WhiteDisk17,
@@ -286,7 +340,13 @@ public class SimpleViewCtrl {
 			}
 		}
 	}
-
+	
+	/**
+	 * This method is called when we click on the button Play (if you want to play again, you have to click on the button Play Again).
+	 *  It enables the 4 valid positions at the start of the game by enabling 4 buttons.
+	 *  
+	 * @param event
+	 */
 	@FXML
 	void onClickPlay(MouseEvent event) {
 		buttonPlay.setDisable(true); //disables Play button: the player cannot start two games at once
@@ -299,17 +359,27 @@ public class SimpleViewCtrl {
 			displayButton(but_string, true);
 		}
 	}
-
+	
+	/**
+	 * This method is called when we click on the button Leave
+	 * allows the player to cleanly quit the game 
+	 * 
+	 * @param event
+	 */
 	@FXML
-	void onClickLeave(MouseEvent event) { //allows the player to cleanly quit the game by clicking on the "Leave" button
+	void onClickLeave(MouseEvent event) { 
 		System.out.println("Player has left the game"); //debug
 		System.out.println("Scores:    o: " + Main.testGame.currentGame.scores()[1] + " |   x: " + Main.testGame.currentGame.scores()[0]); //debug
 		Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
 		stage.close();
 	}
 	
-	// CREER METHODE START GAME APPELEE PAR PLAY ET PLAYAGAIN
-	
+	// CREER METHODE START GAME APPELEE PAR PLAY ET PLAYAGAIN ?
+	/**
+	 * This method is called when we click on the button Play Again.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void onClickPlayAgain(MouseEvent event) {
 		//the following lines hide the game over screen
@@ -358,7 +428,7 @@ public class SimpleViewCtrl {
 		}
 	}
 
-//method that highlights a button when mouseover
+	//method that highlights a button when mouseover
 	@FXML
 	void onEntered(MouseEvent event) {
 		
@@ -367,7 +437,7 @@ public class SimpleViewCtrl {
 		
 	    buttonover.setStyle("-fx-background-color: #279AF1; -fx-background-radius: 100");
 	}
-//method that disables the highlight when mouse moves out of the button
+	//method that disables the highlight when mouse moves out of the button
 	@FXML
 	void onExited(MouseEvent event) {
 		Object o = event.getSource();
@@ -376,7 +446,7 @@ public class SimpleViewCtrl {
 		buttonover.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 100");
 	}
 
-//method that highlights a buttonmenu when mouseover
+	//method that highlights a buttonmenu when mouseover
 	@FXML
 	void onEnteredMenuButton(MouseEvent event) {	
 		Object o = event.getSource();
@@ -385,7 +455,7 @@ public class SimpleViewCtrl {
 		
 	}
 	
-//method that disables the highlight when mouse moves out of the buttonmenu
+	//method that disables the highlight when mouse moves out of the buttonmenu
 	@FXML
 	void onExitedMenuButton(MouseEvent event) {
 		Object o = event.getSource();

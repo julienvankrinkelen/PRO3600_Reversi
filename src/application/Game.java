@@ -1,6 +1,5 @@
 package application;
 
-import java.util.ArrayList;
 
 /**
  * Game is java class used to play a reversi game.
