@@ -54,14 +54,14 @@ public class SimpleViewCtrl {
     
     //texts that show score declaration
     @FXML
-    private TextField whitescore, blackscore;
+    private TextField whitescore, blackscore, whitescoreglobal, blackscoreglobal;
     
-    
-   
     //bot = true  -> the bot is used
     //bot = false -> the bot is not used. It is the 1V1 local mode
     boolean bot;
     
+    int blackGlobalScore =0;
+    int whiteGlobalScore =0;
     
     /**
      * This method is called either by the button "1 versus 1" or the button "1 versus Bot" when the program is first executed
@@ -74,6 +74,8 @@ public class SimpleViewCtrl {
     	Button buttonmode = (Button)o;
     	whitescore.setDisable(false);
     	blackscore.setDisable(false);
+    	whitescoreglobal.setDisable(false);
+    	blackscoreglobal.setDisable(false);
     	chooseMode.setDisable(true);
     	chooseMode.setVisible(false);
     	buttonHumanMode.setDisable(true);
@@ -190,18 +192,23 @@ public class SimpleViewCtrl {
     			gameOverText.setVisible(true);
     			if (scores[0]<scores[1]) { //white wins
     				winnerWhite.setVisible(true);
+    				whiteGlobalScore++;
     			}
     			else if (scores[0]>scores[1]) { //black wins
     				winnerBlack.setVisible(true);
+    				blackGlobalScore++;
     			}
     			else { //draw: the winner is the current player
     				if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
     					winnerWhite.setVisible(true);
+    					whiteGlobalScore++;
     				}
     				else {
     					winnerBlack.setVisible(true);
+    					blackGlobalScore++;
     				}
     			}
+    			displayGlobalScore();//update global score
     			buttonPlayAgain.setVisible(true);
     			buttonPlayAgain.setDisable(false);
     			buttonLeaveMenu.setVisible(true);
@@ -227,6 +234,10 @@ public class SimpleViewCtrl {
     	int[] scores = Main.testGame.currentGame.scores();
     	blackscore.setText(""+scores[0]);
     	whitescore.setText(""+scores[1]);
+    }
+    void displayGlobalScore() {
+    	whitescoreglobal.setText(""+whiteGlobalScore);
+    	blackscoreglobal.setText(""+blackGlobalScore);
     }
     
     /**
@@ -426,6 +437,7 @@ public class SimpleViewCtrl {
 			String but_string = "button" + but_x + but_y;
 			displayButton(but_string, true);
 		}
+		displayScore(); 
 	}
 
 	//method that highlights a button when mouseover
