@@ -783,8 +783,10 @@
             <Image url="@assets/rectangle-noir.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="whitescore" alignment="CENTER" disable="true" layoutX="874.0" layoutY="196.0" prefHeight="25.0" prefWidth="29.0" text="2" />
-      <TextField fx:id="blackscore" alignment="CENTER" disable="true" layoutX="98.0" layoutY="196.0" prefHeight="25.0" prefWidth="29.0" text="2" />
+      <TextField fx:id="whitescore" alignment="CENTER" disable="true" editable="false" layoutX="868.0" layoutY="196.0" prefHeight="25.0" prefWidth="40.0" text="2" />
+      <TextField fx:id="blackscore" alignment="CENTER" disable="true" editable="false" layoutX="92.0" layoutY="196.0" prefHeight="25.0" prefWidth="40.0" text="2" />
+      <TextField fx:id="whitescoreglobal" alignment="CENTER" disable="true" editable="false" layoutX="868.0" layoutY="73.0" prefHeight="25.0" prefWidth="40.0" />
+      <TextField fx:id="blackscoreglobal" alignment="CENTER" disable="true" editable="false" layoutX="92.0" layoutY="73.0" prefHeight="25.0" prefWidth="40.0" />
       <Button fx:id="buttonHumanMode" layoutX="410.0" layoutY="282.0" mnemonicParsing="false" onMouseClicked="#onClickButtonMode" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="100.0" prefWidth="160.0" text="1 versus 1" />
       <Button fx:id="buttonBotMode" layoutX="412.0" layoutY="453.0" mnemonicParsing="false" onMouseClicked="#onClickButtonMode" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="100.0" prefWidth="160.0" text="1 versus Bot" />
       <Button fx:id="buttonPlayAgain" disable="true" layoutX="349.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#onClickPlayAgain" onMouseEntered="#onEnteredMenuButton" onMouseExited="#onExitedMenuButton" prefHeight="64.0" prefWidth="117.0" text="Play Again" visible="false" />
