@@ -1,4 +1,4 @@
-package othellopackage;
+package application;
 
 import java.util.ArrayList;
 
@@ -60,17 +60,9 @@ public class Bot {
     	
     		Move moveconsidered = this.moves.get(i);
     		Color[][] copygrid = moveconsidered.currentGameState.copygrid();
-    		
-    		//GameState game = moveconsidered.currentGameState; // stocks currentGameState
-    		//System.out.println("Before the move is played :");
-    		//this.moves.get(0).currentGameState.displayGrid();
-    		
     		moveconsidered.flipDisks(); // plays the move
     		
-    		GameState aftermove = moveconsidered.currentGameState;
-           	//System.out.println("The move is played");
-    		//moveplayed.displayGrid(); // test function
-    		
+			GameState aftermove = moveconsidered.currentGameState;
     		int[] scores = aftermove.scores(); // calculates the scores after move is played
     		
     		if (moveconsidered.player==Color.BLACK) { // if the player is black
@@ -81,8 +73,6 @@ public class Bot {
     		}
     		
     		moveconsidered.currentGameState.grid = copygrid ; // goes back to the way the game state was prior to the move
-    		//System.out.println("The move is undone");
-    		//moveconsidered.currentGameState.displayGrid(); // test function
     	}
     	return res;
     }
@@ -95,7 +85,6 @@ public class Bot {
     	
     		Move moveconsidered = this.moves.get(i);
     		Color[][] copygrid = moveconsidered.currentGameState.copygrid();
-    		//GameState game = moveconsidered.currentGameState; // stocks currentGameState
     		moveconsidered.flipDisks(); // plays the move
     		GameState aftermove = moveconsidered.currentGameState;
     		ArrayList<Move> opponentmobility = aftermove.validPositions(moveconsidered.player.Opponent()); // list of the opponent's possible moves after the move is played
