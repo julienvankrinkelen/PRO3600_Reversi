@@ -39,6 +39,22 @@ public class Main extends Application {
         	testGame = new Game(test);
         	//testGame.startReversi();
         	launch(args); //uncomment to enable gui
+                
+                GameState gamestatetest = new GameState();
+    	        gamestatetest.currentPlayer=Color.BLACK;
+    	        gamestatetest.grid = new Color[][]{
+                        {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+                        {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+                        {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.BLACK, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+                        {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.BLACK, Color.WHITE, Color.WHITE, Color.EMPTY, Color.EMPTY},
+                        {Color.EMPTY, Color.EMPTY, Color.BLACK, Color.WHITE, Color.WHITE, Color.BLACK, Color.EMPTY, Color.EMPTY},
+                        {Color.EMPTY, Color.EMPTY, Color.WHITE, Color.WHITE, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+                        {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
+                        {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY}
+                  };
+    	
+                ArrayList<Move> legalmoves = gamestatetest.validPositions(Color.BLACK);
+                Bot botest = new Bot(legalmoves); // bot test for player BLACK = 9 x possible moves
         }
 
 }
