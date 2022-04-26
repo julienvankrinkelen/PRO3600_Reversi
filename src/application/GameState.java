@@ -10,9 +10,10 @@ import java.util.*;
 public class GameState {
 	Color currentPlayer;
 	Color grid[][];
-	Move lastMove;
-	GameState previous;
-	GameState future;
+	Color grids[][][];
+	Color players[];
+	int turn;
+	
 
     /**
 	 * This is the constructor of GameState. It is only used at the beginning of a game.
@@ -30,7 +31,14 @@ public class GameState {
 		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
 		             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY}
 		             }; //initializing boardgame grid
+		             
+		this.turn = 0;
+		this.grids = new Color[64][8][8];
+		this.players = new Color[64];
+		
+		             
 	}
+	
 
     /**
 	 * sandwicheck is a method that counts how many opponent's disks the disk played with move can sandwich in said direction.
@@ -156,4 +164,28 @@ public class GameState {
 		}
 		return deepcopy;
 	}
+
+
+//DEBUG : display the grid k in the array grids[][][]
+void displayGrids(int k) { //test function to display this.grid in console
+    System.out.println("  A B C D E F G H"); // labels columns
+    for (int i=0; i<this.grid.length; i++) {
+        System.out.print(Integer.valueOf(i+1) + " ");
+        for (int j=0; j<this.grid.length; j++) {
+            switch (this.grids[k][i][j]) {
+                case EMPTY: //square is empty
+                    System.out.print(". ");
+                    break;
+                case BLACK: //black disk
+                    System.out.print("x ");
+                    break;
+                case WHITE: //white disk
+                    System.out.print("o ");
+                    break;
+            }
+        }
+        System.out.println(); //skips line
+    	}
+	}
 }
+
