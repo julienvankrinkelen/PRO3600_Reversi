@@ -61,7 +61,7 @@ public class Move {
      * @return an array of the positions of the disks that can be flipped by playing said move.
      */
     
-    public ArrayList<Position> flipDisks() { // return the number of disks that can be flipped by playing this and if (flip), flips them
+    public ArrayList<Position> flipDisks() { // return the disks that can be flipped by playing this and flips them. 
         Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
         ArrayList<Position> res = new ArrayList<Position>(); // will contain the positions of the disks that can be flipped
         int num=0; // sum of every disc flipped
@@ -82,12 +82,12 @@ public class Move {
         return res;
     }
 
+    
 	/**
      * isIn checks whether a move is already in an ArrayList of moves.
      * @param moves is an ArrayList. 
      * @return true if said move is in the list, false if it is not.
      */
-    
     public boolean isIn(ArrayList<Move> moves) {
     	for (int i=0; i<moves.size(); i++) {
     		if (this.equals(moves.get(i))) {
@@ -96,4 +96,71 @@ public class Move {
     	}
     	return false;
     }
+    
+    /**
+     * Tells if a move is stable (in reversi, a move it considered to be stable if it can never be turned over, for example a corner). The algorithm used is the following:
+     *    1. fill the board with the opponnent's disks except for squares that are not empty and square that are adjacent to the move tested
+     *    2. for each empty adjacent square, try to play an opponent's disk
+     *    3. if the disk can be sandwiched, it is not stable
+     * @return a boolean telling if this is stable or not
+     */
+     boolean isStable() {
+    	 Color[][] consideredGrid = this.currentGameState.grid.clone(); //clones grid to modify it
+    	 if (consideredGrid[this.position.x][this.position.y] != this.player) { //if the move tested is of invalid form
+    		 //System.out.println("consideredGrid[this.position.x][this.position.y] != this.player"); //debug
+    		 return false;
+    	 }
+    	 ArrayList<Position> adjEmpty = new ArrayList<Position>(); //will contain the empty squares adjacent to this.position
+    	 for (int di=-1; di<=1; di++) {		//goes through the list of adjacent
+    		 for (int dj=-1; dj<=1; dj++) {	//squares of this.position
+    			 if (!(di==0 && dj==0)) { //ensures that the considered square is not this.position
+    				 Position consideredPos = new Position(this.position.x+di, this.position.y+dj);
+    				 if (consideredPos.inGrid()) {
+	    				 if (consideredGrid[consideredPos.x][consideredPos.y] == Color.EMPTY) { //if the adjacent square considered is empty
+	    					 //System.out.println("Adding " + consideredPos.toString() + " to adjEmpty"); //debug
+	    					 adjEmpty.add(consideredPos); //adds the considered position (adjacent to this.position and empty)
+	    				 }
+    				 }
+    			 }
+    		 }
+    	 }
+    	 //System.out.println("Calculated adjEmpty ArrayList: " + adjEmpty.toString()); //debug
+    	 //the following lines fill consideredGrid empty squares with this.player.Opponent()'s disk
+    	 Color opponent = this.player.Opponent(); //finds the opponent
+    	 for (int i=0; i<8; i++) {		//goes through
+    		 for (int j=0; j<8; j++) {	//consideredGrid
+    			 if (consideredGrid[i][j] == Color.EMPTY) { //the square is empty
+    				 consideredGrid[i][j] = opponent; //fills the square with this.player.Opponent()
+    			 }
+    		 }
+    	 }
+    	 for (Position pos: adjEmpty) { //goes through the list of adjacent empty square to empty them and try to play at their position (steps 2 and 3)
+    		 //System.out.println("Testing position " + pos.toString()); //debug
+    		 consideredGrid[pos.x][pos.y] = Color.EMPTY; //empties the square at pos
+    		 GameState gameStateToTry = new GameState();	//creates a new GameState
+    		 gameStateToTry.grid = consideredGrid;			//with a grid equal to consideredGrid
+    		 Move moveToTry = new Move(opponent, pos, gameStateToTry); //creates a new Move to test its validity
+    		 Position dirToTry = new Position(this.position.x-pos.y, this.position.y-pos.y); //direction in wich this is located compared to moveToTry
+    		 if (gameStateToTry.sandwicheck(moveToTry, dirToTry)>0) return false; //if this can be sandwiched (ie moveToTry is valid) then it is not stable
+    	 }
+    	 return true; //executed if and only if the disk is stable (see algorithm description in the javadoc)
+     }
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
 }
