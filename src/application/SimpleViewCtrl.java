@@ -111,6 +111,15 @@ public class SimpleViewCtrl {
 
     @FXML
     void onClick(MouseEvent event) {
+    	
+    	
+    	Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.copygrid();
+    	
+    
+    	Main.testGame.currentGame.players[Main.testGame.currentGame.turn] = Main.testGame.currentGame.currentPlayer;
+    	
+    		
+    	
     	//getting the button clicked in order to hide it and disable it
     	Object o = event.getSource();
     	Button buttonpushed = (Button)o;
@@ -125,7 +134,7 @@ public class SimpleViewCtrl {
     	int y = Integer.parseInt(stry);
     	
     	Position position = new Position(x,y);
-    		
+    	
     	//white's turn
     	if(Main.testGame.currentGame.currentPlayer==Color.WHITE) {
     		System.out.println("o's turn"); //debug
@@ -225,6 +234,8 @@ public class SimpleViewCtrl {
 			curPlayerWhite.setVisible(false);			
 		}
     	displayScore(); //updates scores
+    	Main.testGame.currentGame.turn++;
+    	  	
     }
     
     /**
@@ -479,8 +490,64 @@ public class SimpleViewCtrl {
 
 	@FXML
 	void onClickUndo(MouseEvent event){
-			
+		Main.testGame.currentGame.turn--; //on undo
+		System.out.println("on revient au coup " + Main.testGame.currentGame.turn);
+		Main.testGame.currentGame.grid = Main.testGame.currentGame.grids[Main.testGame.currentGame.turn];
+		System.out.println("undoing: ");
+		Main.testGame.currentGame.displayGrid();
+		//resetting the grid
+		for(int i=0;i<8;i++) {
+    		for(int j=0;j<8;j++) {
+    			String whitedisktochange = "WhiteDisk" + Integer.valueOf(i) + Integer.valueOf(j);
+    			String blackdisktochange= "BlackDisk" + Integer.valueOf(i) + Integer.valueOf(j);
+				String buttontodisable = "button" + i + j;
+				
+				displayDisk(whitedisktochange, Color.WHITE, false);
+				displayDisk(blackdisktochange, Color.BLACK, false);
+				displayButton(buttontodisable, false);
+				
+				if(Main.testGame.currentGame.grid[i][j]==Color.BLACK){
+					displayDisk(blackdisktochange, Color.BLACK, true);
+				}
+					
+				else if(Main.testGame.currentGame.grid[i][j]==Color.WHITE) {
+					displayDisk(whitedisktochange, Color.WHITE, true);
+						
+					}
+				
+				
+				}
+			}
+		if(Main.testGame.currentGame.currentPlayer == Color.BLACK) {
+			Main.testGame.currentGame.currentPlayer = Color.WHITE;
+		}
+		else if(Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+			Main.testGame.currentGame.currentPlayer = Color.BLACK;
+		}
+		
+		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
+		System.out.println("Valid positions: " + validPositions.toString()); //debug
+    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
+    	}
+    	
+    	//the following lines update the current player display
+    	if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+			curPlayerWhite.setVisible(true);
+			curPlayerBlack.setVisible(false);
+		}
+		else {
+			Main.testGame.currentGame.currentPlayer= Color.BLACK;
+			curPlayerBlack.setVisible(true);
+			curPlayerWhite.setVisible(false);			
+		}
+    	displayScore(); //updates scores
+    	Main.testGame.currentGame.turn++;
+    	  	
 	}
+	
+		
+	
 
 	@FXML
 	void onClickRedo(MouseEvent event) {
