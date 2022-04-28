@@ -35,7 +35,12 @@ public class Bot {
     	return res;
     }
     
-    private float[] staticEvalCornerGrab() { // okay
+	/**
+     * staticEvalCornerGrab is a method used to evaluate whether the move grabs a corner
+     * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : res[i]=1 if a corner is grabbed
+     */
+
+    private float[] staticEvalCornerGrab() {
         float[] res = new float[this.numMoves];
         for (int i = 0; i < this.scores.length; i++) { //for each move considered by the bot
             int x = this.moves.get(i).position.x;
@@ -47,6 +52,11 @@ public class Bot {
         return res;        
     }
     
+	/**
+     * staticEvalDiskDifference is a method that calculates the difference between the scores of player of opponent
+     * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : res[i]=scores[player]-scores[opponent]
+     */
+
     private float[] staticEvalDiskDifference() { // difference between the scores of player and opponent
     	float[] res = new float[this.numMoves]; // will contain the evaluations of each move
     	for (int i=0; i<this.scores.length; i++) { // for each move considered by the bot
@@ -66,7 +76,12 @@ public class Bot {
     	return res;
     }
     
-    private float[] staticEvalMobility() { // minimizes the opponent's mobility : returns the numbers of the opponent's possible moves for each move played
+	/**
+     * staticEvalMobility is a method that evaluates the number of the opponent's possible moves after the player plays this.moves.get(i)
+     * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : the greater the opponent mobility is, the smaller res[i] is
+     */
+
+    private float[] staticEvalMobility() { // minimizes the opponent's mobility : returns the opposite of the number of the opponent's possible moves for each move played
     	float[] res = new float[this.numMoves]; // will contain the evaluations of each move
     	for (int i=0; i<this.scores.length; i++) { // for each move considered by the bot
     		Move moveconsidered = this.moves.get(i);
@@ -80,6 +95,11 @@ public class Bot {
     	return res;
     }
     
+	/**
+     * staticEvalPlacement is a method that evaluates the position of the move played
+     * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : res[i] is the placement score associated with the position of the considered move
+     */
+
     private float[] staticEvalPlacement() { // evaluates position of the move played
     	float[] res = new float[this.numMoves]; // will contain the evaluations of each move
     	float[][] placements = { // describes placement scores
@@ -143,6 +163,10 @@ public class Bot {
 		}
 		return res;
 	}
+
+	/**
+     * This is a test function used to display this.scores 
+     */
     
     void displayScores() {
     	System.out.print("[");
@@ -151,6 +175,16 @@ public class Bot {
     	}
     	System.out.println("]");
     }
+
+	/**
+     * combine is a method used to associate to this.scores a linear combination of the static evaluations ; the weights may vary during the game
+     * @param corner is the weight associated with staticEvalCornerGrab
+     * @param stability is the weight associated with staticEvalStability
+     * @param mobility is the weight associated with staticEvalMobility
+     * @param placement is the weight associated with staticEvalPlacement
+     * @param frontier is the weight associated with staticEvalFrontier
+     * @param difference is the weight associated with staticEvalDiskDifference
+     */
     
     void combine(float corner, float stability, float mobility, float placement, float frontier, float difference) { // linear combination, calculates scores
     	float[] cornerscores = this.staticEvalCornerGrab();
@@ -164,6 +198,11 @@ public class Bot {
     	}
     }
     
+	/**
+     * max is a method that returns the move with the highest score
+     * @return the move that has the highest evaluation, ie the best move to play
+     */
+	 
     Move max() { // returns move with the highest score
     	float max = this.scores[0];
     	int indicemax = 0;
