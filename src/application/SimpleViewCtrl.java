@@ -63,6 +63,8 @@ public class SimpleViewCtrl {
     int blackGlobalScore =0;
     int whiteGlobalScore =0;
     
+    int numberOfUndoInARow=0;
+    
     /**
      * This method is called either by the button "1 versus 1" or the button "1 versus Bot" when the program is first executed
      * @param event
@@ -84,6 +86,9 @@ public class SimpleViewCtrl {
     	buttonBotMode.setVisible(false);
     	background_endgame.setDisable(true);
     	background_endgame.setVisible(false);
+    	buttonUndo.setDisable(true);
+    	buttonRedo.setDisable(true);
+    	
     	if(buttonmode == buttonHumanMode) {
     		//Activate the 1V1 mode
     		bot=false;
@@ -112,6 +117,8 @@ public class SimpleViewCtrl {
     @FXML
     void onClick(MouseEvent event) {
     	
+    	
+    	numberOfUndoInARow=0;
     	
     	Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.copygrid();
     	
@@ -234,7 +241,18 @@ public class SimpleViewCtrl {
 			curPlayerWhite.setVisible(false);			
 		}
     	displayScore(); //updates scores
-    	Main.testGame.currentGame.turn++;
+    	Main.testGame.currentGame.turn++; //update nest turn
+    	if(Main.testGame.currentGame.turn>=1) {
+    		buttonUndo.setDisable(false);
+    	}
+    	else {
+        	buttonUndo.setDisable(true);
+    	}
+    	buttonRedo.setDisable(true);
+    	//TEST
+    	//On enregistre la grille obtenue dans le tableau grids pour pouvoir faire un redo si besoin.
+    	Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.grid;
+    	
     	  	
     }
     
@@ -490,6 +508,11 @@ public class SimpleViewCtrl {
 
 	@FXML
 	void onClickUndo(MouseEvent event){
+		
+	
+		numberOfUndoInARow++;
+		System.out.println(numberOfUndoInARow);
+		
 		Main.testGame.currentGame.turn--; //on undo
 		System.out.println("on revient au coup " + Main.testGame.currentGame.turn);
 		Main.testGame.currentGame.grid = Main.testGame.currentGame.grids[Main.testGame.currentGame.turn];
@@ -542,16 +565,89 @@ public class SimpleViewCtrl {
 			curPlayerWhite.setVisible(false);			
 		}
     	displayScore(); //updates scores
-    	Main.testGame.currentGame.turn++;
+    	if(Main.testGame.currentGame.turn>=1) {
+    		buttonUndo.setDisable(false);
+    	}
+    	else {
+        	buttonUndo.setDisable(true);  	
+    	}
+    	
+    	buttonRedo.setDisable(false);
     	  	
 	}
 	
 		
 	
-
+	//only usable if undo is called the turn before
 	@FXML
 	void onClickRedo(MouseEvent event) {
+	
+		numberOfUndoInARow--;
+		System.out.println(numberOfUndoInARow);
 		
+		Main.testGame.currentGame.turn++; // Coming back to the previous turn
+		System.out.println("on remonte au coup " + Main.testGame.currentGame.turn);
+		Main.testGame.currentGame.grid = Main.testGame.currentGame.grids[Main.testGame.currentGame.turn];
+		System.out.println("undoing: ");
+		Main.testGame.currentGame.displayGrid();
+		//resetting the grid
+		for(int i=0;i<8;i++) {
+    		for(int j=0;j<8;j++) {
+    			String whitedisktochange = "WhiteDisk" + Integer.valueOf(i) + Integer.valueOf(j);
+    			String blackdisktochange= "BlackDisk" + Integer.valueOf(i) + Integer.valueOf(j);
+				String buttontodisable = "button" + i + j;
+				
+				displayDisk(whitedisktochange, Color.WHITE, false);
+				displayDisk(blackdisktochange, Color.BLACK, false);
+				displayButton(buttontodisable, false);
+				
+				if(Main.testGame.currentGame.grid[i][j]==Color.BLACK){
+					displayDisk(blackdisktochange, Color.BLACK, true);
+				}
+					
+				else if(Main.testGame.currentGame.grid[i][j]==Color.WHITE) {
+					displayDisk(whitedisktochange, Color.WHITE, true);
+						
+					}
+				
+				
+				}
+			}
+		if(Main.testGame.currentGame.currentPlayer == Color.BLACK) {
+			Main.testGame.currentGame.currentPlayer = Color.WHITE;
+		}
+		else if(Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+			Main.testGame.currentGame.currentPlayer = Color.BLACK;
+		}
+		
+		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
+		System.out.println("Valid positions: " + validPositions.toString()); //debug
+    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
+    	}
+    	
+    	//the following lines update the current player display
+    	if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+			curPlayerWhite.setVisible(true);
+			curPlayerBlack.setVisible(false);
+		}
+		else {
+			Main.testGame.currentGame.currentPlayer= Color.BLACK;
+			curPlayerBlack.setVisible(true);
+			curPlayerWhite.setVisible(false);			
+		}
+    	
+    	displayScore(); //updates scores
+    	
+    	if(Main.testGame.currentGame.turn>=1) {
+    		buttonUndo.setDisable(false);
+    	}
+    	else {
+        	buttonUndo.setDisable(true);  	
+    	}
+    	if(numberOfUndoInARow==0) {
+    		buttonRedo.setDisable(true);
+    	}
 	}
 
 }
