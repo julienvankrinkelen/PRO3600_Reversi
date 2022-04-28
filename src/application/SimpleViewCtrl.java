@@ -432,6 +432,7 @@ public class SimpleViewCtrl {
 		buttonPlayAgain.setVisible(false);
 		buttonLeaveMenu.setDisable(true);
 		buttonLeaveMenu.setVisible(false);
+		buttonUndo.setDisable(true);
 		System.out.println("Click on Play Again detected"); //debug
 		//Disables every disk on the board to play again
 		for(int i=0;i<8;i++) {
@@ -458,6 +459,9 @@ public class SimpleViewCtrl {
             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
             {Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY}
             }; //initializing boardgame grid
+        Main.testGame.currentGame.grids = new Color[64][8][8]; // initializing the grids of the boardgames
+        Main.testGame.currentGame.turn=0; //initialize the turn counter
+        Main.testGame.currentGame.players = new Color[64];
 		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
 		System.out.println("Valid positions: " + validPositions.toString()); //debug
 		for(Move buttontodisplay: validPositions) { //for each valid move, the for loop enables the corresponding button
