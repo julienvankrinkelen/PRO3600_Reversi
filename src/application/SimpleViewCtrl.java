@@ -279,8 +279,7 @@ public class SimpleViewCtrl {
     		//On enregistre la grille obtenue dans le tableau grids pour pouvoir faire un redo si besoin.
     		Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.grid;
     		System.out.println("current turn : " + Main.testGame.currentGame.turn);
-    		//Main.testGame.currentGame.players[Main.testGame.currentGame.turn] = Main.testGame.currentGame.currentPlayer;
-    	
+    		
     		}
     	
     	
@@ -328,72 +327,95 @@ public class SimpleViewCtrl {
     			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //next turn
     			validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer);
     			
-    			if(validPositions.size()!=0) { //If the player can play after the bot played : displays the valid positions
-    				for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
-    					displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
-    				}			
-    			}
-    			else if(validPositions.size()==0){//If the player cannot play after the bot played 
-    				Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
-    				validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer);
+    			
+    			
+    			boolean keep=true; // defines a boolean to stay in the loop while the player skips turn and the bot plays
+    			
+    			
+    			while(keep==true){
+    			  	if(validPositions.size()!=0){ //if the player can play
+    					for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    						displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
+    						keep=false;//sort de la boucle
+    						}
+    					}
+    					
+    				else{ //skip turn
+    			 		Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //next turn
+    					validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer);
+    						
+    						if(validPositions.size()!=0){ // if the bot can play
+    							Bot randomtestbotafterskip = new Bot(validPositions);//initializes the bot
+    			    			Move randomMoveafterskip = randomtestbotafterskip.randomBot();//computes a random move among the valid positions
+    			    			
+    			    			
+    			    			
+    			    			if(Main.testGame.currentGame.currentPlayer==Color.WHITE) {
+    			    				String whitenameiv = "WhiteDisk" + randomMoveafterskip.position.x + randomMoveafterskip.position.y;
+    			    				displayDisk(whitenameiv, Color.WHITE, true); // the bot plays the move
+    			    				ArrayList<Position> flippedDisks = randomMoveafterskip.flipDisks();
+    			    	    		for(Position toflip : flippedDisks) {
+    			    	    			String positiontoflip = String.valueOf(toflip.x) + String.valueOf(toflip.y);
+    			    	    			flipDisks(positiontoflip);
+    			    	    		}	
+    			    			}
+    			    			
+    			    			
+    			    			
+    			    			else if(Main.testGame.currentGame.currentPlayer==Color.BLACK) {
+    			    				String blacknameiv = "BlackDisk" + randomMoveafterskip.position.x + randomMoveafterskip.position.y;
+    			    				displayDisk(blacknameiv, Color.WHITE, true); // the bot plays the move
+    			    				ArrayList<Position> flippedDisks = randomMoveafterskip.flipDisks();
+    			    	    		for(Position toflip : flippedDisks) {
+    			    	    			String positiontoflip = String.valueOf(toflip.x) + String.valueOf(toflip.y);
+    			    	    			flipDisks(positiontoflip);
+    			    	    		}	
+    			    			}
+    			    			
+    			    			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //next turn
+    			    			validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer);
+    			    			//revient au début de la boucle : soit le bot rejouera, soit le joueur pourra jouer et on sortira de la boucle
+    						}
     				
-    				
-    				
-    				if(validPositions.size()!=0) {// If the bot can play after the player was canceled : the bot plays again.
-    					
-    					
-    					//////////////////////////////
-    					////////ATTENTION/////////////
-    					//////////////////////////////
-    					
-    					
-    					
-    					
-    				//????? On peut continuer comme ça à l'infini, si le bot joue n'a plus que des coups à lui à jouer, il faut qu'il soit autonome
-    					
-    				
-    				}
-    				else if (validPositions.size()==0) { // If both the bot and the player cannot play : END THE GAME
-    					System.out.println("GAME OVER"); //debug
-        				int[] scores = Main.testGame.currentGame.scores();
-        				System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
-        				//the following 11 lines show the game over screen (winner, buttons...)
-        				background_endgame.setVisible(true);
-        				background_endgame.setDisable(false);
-        				gameOverText.setVisible(true);
-        				if (scores[0]<scores[1]) { //white wins
-        					winnerWhite.setVisible(true);
-        					whiteGlobalScore++;
-        				}
-        				else if (scores[0]>scores[1]) { //black wins
-        					winnerBlack.setVisible(true);
-        					blackGlobalScore++;
-        				}
-        				else { //draw: the winner is the current player
-        					if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
-        						winnerWhite.setVisible(true);
-        						whiteGlobalScore++;
-        					}
-        					else {
-        						winnerBlack.setVisible(true);
-        						blackGlobalScore++;
-        					}
-        				}
-        				displayGlobalScore();//update global score
-        				buttonPlayAgain.setVisible(true);
-        				buttonPlayAgain.setDisable(false);
-        				buttonLeaveMenu.setVisible(true);
-        				buttonLeaveMenu.setDisable(false);
-        			}
-    					
-    			}
-    				
-    				
+    						else { 	// SI AUCUN DES JOUEURS NE PEUT JOUER : PROCEDURE EXIT
+    							System.out.println("GAME OVER"); //debug
+    		    				int[] scores = Main.testGame.currentGame.scores();
+    		    				System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
+    		    				//the following 11 lines show the game over screen (winner, buttons...)
+    		    				background_endgame.setVisible(true);
+    		    				background_endgame.setDisable(false);
+    		    				gameOverText.setVisible(true);
+    		    				if (scores[0]<scores[1]) { //white wins
+    		    					winnerWhite.setVisible(true);
+    		    					whiteGlobalScore++;
+    		    				}
+    		    				else if (scores[0]>scores[1]) { //black wins
+    		    					winnerBlack.setVisible(true);
+    		    					blackGlobalScore++;
+    		    				}
+    		    				else { //draw: the winner is the current player
+    		    					if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    		    						winnerWhite.setVisible(true);
+    		    						whiteGlobalScore++;
+    		    					}
+    		    					else {
+    		    						winnerBlack.setVisible(true);
+    		    						blackGlobalScore++;
+    		    					}
+    		    				}
+    		    				displayGlobalScore();//update global score
+    		    				buttonPlayAgain.setVisible(true);
+    		    				buttonPlayAgain.setDisable(false);
+    		    				buttonLeaveMenu.setVisible(true);
+    		    				buttonLeaveMenu.setDisable(false);
+    		    				break;
+    						}
+    			 		}
+    			}//fin boucle
     		}
     			
-    			
-    			
-    	
+  	
+
     		else { //if the bot cannot play, skips a turn
     			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
     			System.out.println("Skipped a turn");
@@ -464,10 +486,10 @@ public class SimpleViewCtrl {
     		Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.grid;
     	
     		}
-    	
-    	
     }
-
+    	
+    	
+   
     	
     
     
