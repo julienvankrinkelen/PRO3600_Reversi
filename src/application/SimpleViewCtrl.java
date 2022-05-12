@@ -1,6 +1,9 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -111,18 +114,21 @@ public class SimpleViewCtrl {
      * 
      * +...	
      * 	
-     * @param event
+     * @param event 
+     * 
      */
 
     @FXML
-    void onClick(MouseEvent event) {
+    void onClick(MouseEvent event){
     	
     	
-    	numberOfUndoInARow=0;
+    	
+
+    	 
+    	 System.out.println(bot);
+    	numberOfUndoInARow=0;//to tell redo button to enable or disable
     	
     	Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.copygrid();
-    	
-    
     	Main.testGame.currentGame.players[Main.testGame.currentGame.turn] = Main.testGame.currentGame.currentPlayer;
     	
     		
@@ -146,10 +152,10 @@ public class SimpleViewCtrl {
     	if(Main.testGame.currentGame.currentPlayer==Color.WHITE) {
     		System.out.println("o's turn"); //debug
     		String whitenameiv = "WhiteDisk" +butname.substring(6);
-    		displayDisk(whitenameiv, Color.WHITE, true); //displays the blakc disk corresponding to the button clicked
+    		displayDisk(whitenameiv, Color.WHITE, true); //displays the black disk corresponding to the button clicked
    			Move move = new Move(Color.WHITE, position, Main.testGame.currentGame);
    			//the following 5 lines update the gui by flipping the sandwiched disks and showing the disk that has been played
-    		ArrayList<Position> flippedDisks = move.flipDisks();        				
+   			ArrayList<Position> flippedDisks = move.flipDisks();        				
         	for(Position toflip : flippedDisks) {
         		String positiontoflip = String.valueOf(toflip.x) + String.valueOf(toflip.y);
         		flipDisks(positiontoflip);
@@ -181,80 +187,290 @@ public class SimpleViewCtrl {
     			displayButton(buttontodisable, false);
     		}
     	}
+    	
+ 
+    	
+    	
+    	
     	ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
-    	if (validPositions.size()!=0) { //if the current player can play
-	    	System.out.println("Valid positions: " + validPositions.toString()); //debug
-	    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
-	    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
-	    	}
-    	}
-    	else { //if the current player cannot play, skip a turn
-    		Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
-    		System.out.println("Skipped a turn");
-    		validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play for the new player
-    		if (validPositions.size()!=0) { //if the new current player can play
+    	
+    	
+    	
+    	
+    	
+    	
+    	///CASE 1V1 : //////////
+    	if(bot==false) {
+    	
+    		
+    		
+    		
+    		
+    		if (validPositions.size()!=0) { //if the current player can play
     			System.out.println("Valid positions: " + validPositions.toString()); //debug
-    	    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
-    	    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
-    	    	}
+	    			for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+	    				displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);				
+	    			}
+	    	
     		}
-    		else { //none of the players can play: end the game
-    			System.out.println("GAME OVER"); //debug
-    			int[] scores = Main.testGame.currentGame.scores();
-    			System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
-    			//the following 11 lines show the game over screen (winner, buttons...)
-    			background_endgame.setVisible(true);
-    			background_endgame.setDisable(false);
-    			gameOverText.setVisible(true);
-    			if (scores[0]<scores[1]) { //white wins
-    				winnerWhite.setVisible(true);
-    				whiteGlobalScore++;
+	    		
+    		else { //if the current player cannot play, skip a turn
+    			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
+    			System.out.println("Skipped a turn");
+    			validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play for the new player
+    			if (validPositions.size()!=0) { //if the new current player can play
+    				System.out.println("Valid positions: " + validPositions.toString()); //debug
+    				for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    					displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
+    				}
     			}
-    			else if (scores[0]>scores[1]) { //black wins
-    				winnerBlack.setVisible(true);
-    				blackGlobalScore++;
-    			}
-    			else { //draw: the winner is the current player
-    				if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    			else { //none of the players can play: end the game
+    				System.out.println("GAME OVER"); //debug
+    				int[] scores = Main.testGame.currentGame.scores();
+    				System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
+    				//the following 11 lines show the game over screen (winner, buttons...)
+    				background_endgame.setVisible(true);
+    				background_endgame.setDisable(false);
+    				gameOverText.setVisible(true);
+    				if (scores[0]<scores[1]) { //white wins
     					winnerWhite.setVisible(true);
     					whiteGlobalScore++;
     				}
-    				else {
+    				else if (scores[0]>scores[1]) { //black wins
     					winnerBlack.setVisible(true);
     					blackGlobalScore++;
     				}
+    				else { //draw: the winner is the current player
+    					if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    						winnerWhite.setVisible(true);
+    						whiteGlobalScore++;
+    					}
+    					else {
+    						winnerBlack.setVisible(true);
+    						blackGlobalScore++;
+    					}
+    				}
+    				displayGlobalScore();//update global score
+    				buttonPlayAgain.setVisible(true);
+    				buttonPlayAgain.setDisable(false);
+    				buttonLeaveMenu.setVisible(true);
+    				buttonLeaveMenu.setDisable(false);
     			}
-    			displayGlobalScore();//update global score
-    			buttonPlayAgain.setVisible(true);
-    			buttonPlayAgain.setDisable(false);
-    			buttonLeaveMenu.setVisible(true);
-    			buttonLeaveMenu.setDisable(false);
     		}
-    	}
-    	//the following lines update the current player display
-    	if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
-			curPlayerWhite.setVisible(true);
-			curPlayerBlack.setVisible(false);
-		}
-		else {
-			curPlayerBlack.setVisible(true);
-			curPlayerWhite.setVisible(false);			
-		}
-    	displayScore(); //updates scores
-    	Main.testGame.currentGame.turn++; //update nest turn
-    	if(Main.testGame.currentGame.turn>=1) {
-    		buttonUndo.setDisable(false);
-    	}
-    	else {
-        	buttonUndo.setDisable(true);
-    	}
-    	buttonRedo.setDisable(true);
-    	//TEST
-    	//On enregistre la grille obtenue dans le tableau grids pour pouvoir faire un redo si besoin.
-    	Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.grid;
+    		//the following lines update the current player display
+    		if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    			curPlayerWhite.setVisible(true);
+    			curPlayerBlack.setVisible(false);
+    		}
+    		else {
+    			curPlayerBlack.setVisible(true);
+    			curPlayerWhite.setVisible(false);			
+    		}
+    		displayScore(); //updates scores
+    		Main.testGame.currentGame.turn++; //update next turn
+    		if(Main.testGame.currentGame.turn>=1) {
+    			buttonUndo.setDisable(false);
+    		}
+    		else {
+    			buttonUndo.setDisable(true);
+    		}
+    		buttonRedo.setDisable(true);
     	
-    	  	
+    		//On enregistre la grille obtenue dans le tableau grids pour pouvoir faire un redo si besoin.
+    		Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.grid;
+    		System.out.println("current turn : " + Main.testGame.currentGame.turn);
+    		//Main.testGame.currentGame.players[Main.testGame.currentGame.turn] = Main.testGame.currentGame.currentPlayer;
+    	
+    		}
+    	
+    	
+    	
+    	
+    	
+    	/////CASE 1 V BOT : //////////////
+    	else if(bot==true) {
+    		
+    		
+    		
+    		
+    		
+    		
+    		if (validPositions.size()!=0) { //if the bot can play
+    			System.out.println("Valid positions: " + validPositions.toString()); //debug
+    			
+    			Bot randomtestbot = new Bot(validPositions);//initializes the bot
+    			Move randomMove = randomtestbot.randomBot();//computes a random move among the valid positions
+    			
+    			
+    			
+    			if(Main.testGame.currentGame.currentPlayer==Color.WHITE) {
+    				String whitenameiv = "WhiteDisk" + randomMove.position.x + randomMove.position.y;
+    				displayDisk(whitenameiv, Color.WHITE, true); // the bot plays the move
+    				ArrayList<Position> flippedDisks = randomMove.flipDisks();
+    	    		for(Position toflip : flippedDisks) {
+    	    			String positiontoflip = String.valueOf(toflip.x) + String.valueOf(toflip.y);
+    	    			flipDisks(positiontoflip);
+    	    		}	
+    			}
+    			
+    			
+    			
+    			else if(Main.testGame.currentGame.currentPlayer==Color.BLACK) {
+    				String blacknameiv = "BlackDisk" + randomMove.position.x + randomMove.position.y;
+    				displayDisk(blacknameiv, Color.WHITE, true); // the bot plays the move
+    				ArrayList<Position> flippedDisks = randomMove.flipDisks();
+    	    		for(Position toflip : flippedDisks) {
+    	    			String positiontoflip = String.valueOf(toflip.x) + String.valueOf(toflip.y);
+    	    			flipDisks(positiontoflip);
+    	    		}	
+    			}
+    			
+    			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //next turn
+    			validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer);
+    			
+    			if(validPositions.size()!=0) { //If the player can play after the bot played : displays the valid positions
+    				for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    					displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
+    				}			
+    			}
+    			else if(validPositions.size()==0){//If the player cannot play after the bot played 
+    				Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
+    				validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer);
+    				
+    				
+    				
+    				if(validPositions.size()!=0) {// If the bot can play after the player was canceled : the bot plays again.
+    					
+    					
+    					//////////////////////////////
+    					////////ATTENTION/////////////
+    					//////////////////////////////
+    					
+    					
+    					
+    					
+    				//????? On peut continuer comme ça à l'infini, si le bot joue n'a plus que des coups à lui à jouer, il faut qu'il soit autonome
+    					
+    				
+    				}
+    				else if (validPositions.size()==0) { // If both the bot and the player cannot play : END THE GAME
+    					System.out.println("GAME OVER"); //debug
+        				int[] scores = Main.testGame.currentGame.scores();
+        				System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
+        				//the following 11 lines show the game over screen (winner, buttons...)
+        				background_endgame.setVisible(true);
+        				background_endgame.setDisable(false);
+        				gameOverText.setVisible(true);
+        				if (scores[0]<scores[1]) { //white wins
+        					winnerWhite.setVisible(true);
+        					whiteGlobalScore++;
+        				}
+        				else if (scores[0]>scores[1]) { //black wins
+        					winnerBlack.setVisible(true);
+        					blackGlobalScore++;
+        				}
+        				else { //draw: the winner is the current player
+        					if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+        						winnerWhite.setVisible(true);
+        						whiteGlobalScore++;
+        					}
+        					else {
+        						winnerBlack.setVisible(true);
+        						blackGlobalScore++;
+        					}
+        				}
+        				displayGlobalScore();//update global score
+        				buttonPlayAgain.setVisible(true);
+        				buttonPlayAgain.setDisable(false);
+        				buttonLeaveMenu.setVisible(true);
+        				buttonLeaveMenu.setDisable(false);
+        			}
+    					
+    			}
+    				
+    				
+    		}
+    			
+    			
+    			
+    	
+    		else { //if the bot cannot play, skips a turn
+    			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
+    			System.out.println("Skipped a turn");
+    			validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play for the new player
+    			if (validPositions.size()!=0) { //if the new current player can play (the human player)
+    				System.out.println("Valid positions: " + validPositions.toString()); //debug
+    				for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+    					displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
+    				}
+    		}
+    			
+    			
+    			else { //none of the players can play: end the game
+    				System.out.println("GAME OVER"); //debug
+    				int[] scores = Main.testGame.currentGame.scores();
+    				System.out.println("Scores:    o: " + scores[1] + " |   x: " + scores[0]); //debug
+    				//the following 11 lines show the game over screen (winner, buttons...)
+    				background_endgame.setVisible(true);
+    				background_endgame.setDisable(false);
+    				gameOverText.setVisible(true);
+    				if (scores[0]<scores[1]) { //white wins
+    					winnerWhite.setVisible(true);
+    					whiteGlobalScore++;
+    				}
+    				else if (scores[0]>scores[1]) { //black wins
+    					winnerBlack.setVisible(true);
+    					blackGlobalScore++;
+    				}
+    				else { //draw: the winner is the current player
+    					if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    						winnerWhite.setVisible(true);
+    						whiteGlobalScore++;
+    					}
+    					else {
+    						winnerBlack.setVisible(true);
+    						blackGlobalScore++;
+    					}
+    				}
+    				displayGlobalScore();//update global score
+    				buttonPlayAgain.setVisible(true);
+    				buttonPlayAgain.setDisable(false);
+    				buttonLeaveMenu.setVisible(true);
+    				buttonLeaveMenu.setDisable(false);
+    			}
+    		}
+    		//the following lines update the current player display
+    		if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    			curPlayerWhite.setVisible(true);
+    			curPlayerBlack.setVisible(false);
+    		}
+    		else {
+    			curPlayerBlack.setVisible(true);
+    			curPlayerWhite.setVisible(false);			
+    		}
+    		displayScore(); //updates scores
+    		
+    		Main.testGame.currentGame.turn++; //update next turn
+    		
+    		if(Main.testGame.currentGame.turn>=1) {
+    			buttonUndo.setDisable(false);
+    		}
+    		else {
+    			buttonUndo.setDisable(true);
+    		}
+    		buttonRedo.setDisable(true);
+    	
+    		//On enregistre la grille obtenue dans le tableau grids pour pouvoir faire un redo si besoin.
+    		Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.grid;
+    	
+    		}
+    	
+    	
     }
+
+    	
+    
+    
     
     /**
      * Displays scores by updating the textFields "blackscore" and "whitescore" with the currentGame.scores() method.
@@ -515,8 +731,8 @@ public class SimpleViewCtrl {
 		
 	
 		numberOfUndoInARow++;
-		System.out.println(numberOfUndoInARow);
-		
+		System.out.println("nm of undo in a row:" + numberOfUndoInARow);
+		System.out.println("on est au coup " + Main.testGame.currentGame.turn);
 		Main.testGame.currentGame.turn--; //on undo
 		System.out.println("on revient au coup " + Main.testGame.currentGame.turn);
 		Main.testGame.currentGame.grid = Main.testGame.currentGame.grids[Main.testGame.currentGame.turn];
@@ -545,26 +761,33 @@ public class SimpleViewCtrl {
 				
 				}
 			}
-		if(Main.testGame.currentGame.currentPlayer == Color.BLACK) {
-			Main.testGame.currentGame.currentPlayer = Color.WHITE;
-		}
-		else if(Main.testGame.currentGame.currentPlayer == Color.WHITE) {
-			Main.testGame.currentGame.currentPlayer = Color.BLACK;
-		}
 		
-		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
-		System.out.println("Valid positions: " + validPositions.toString()); //debug
-    	for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
-    		displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
-    	}
+		//if bot = false, the other human player has to play, so it changes player. if bot = true, it doesn't change player, 
+		//		because it is the same human player that will play. 
+		if(bot==false) {
+			if(Main.testGame.currentGame.currentPlayer == Color.BLACK) {
+				Main.testGame.currentGame.currentPlayer = Color.WHITE;
+			}
+			else if(Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+				Main.testGame.currentGame.currentPlayer = Color.BLACK;
+			}
+		
+		}
+			ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
+			System.out.println("Valid positions: " + validPositions.toString()); //debug
+			for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
+				displayButton("button" + String.valueOf(buttontodisplay.position.x) + String.valueOf(buttontodisplay.position.y), true);	
     	
+    		}
+		
+		
     	//the following lines update the current player display
     	if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
 			curPlayerWhite.setVisible(true);
 			curPlayerBlack.setVisible(false);
 		}
 		else {
-			Main.testGame.currentGame.currentPlayer= Color.BLACK;
+			
 			curPlayerBlack.setVisible(true);
 			curPlayerWhite.setVisible(false);			
 		}
@@ -617,12 +840,17 @@ public class SimpleViewCtrl {
 				
 				}
 			}
-		if(Main.testGame.currentGame.currentPlayer == Color.BLACK) {
-			Main.testGame.currentGame.currentPlayer = Color.WHITE;
+		//if bot = false, the other human player has to play, so it changes player. if bot = true, it doesn't change player, 
+		//		because it is the same human player that will play. 
+		if(bot==false) {
+			if(Main.testGame.currentGame.currentPlayer == Color.BLACK) {
+				Main.testGame.currentGame.currentPlayer = Color.WHITE;
+			}
+			else if(Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+				Main.testGame.currentGame.currentPlayer = Color.BLACK;
+			}
 		}
-		else if(Main.testGame.currentGame.currentPlayer == Color.WHITE) {
-			Main.testGame.currentGame.currentPlayer = Color.BLACK;
-		}
+		
 		
 		ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
 		System.out.println("Valid positions: " + validPositions.toString()); //debug
@@ -631,12 +859,12 @@ public class SimpleViewCtrl {
     	}
     	
     	//the following lines update the current player display
-    	if (Main.testGame.currentGame.currentPlayer == Color.WHITE) {
+    	if (Main.testGame.currentGame.players[Main.testGame.currentGame.turn] == Color.WHITE) {
 			curPlayerWhite.setVisible(true);
 			curPlayerBlack.setVisible(false);
 		}
 		else {
-			Main.testGame.currentGame.currentPlayer= Color.BLACK;
+			
 			curPlayerBlack.setVisible(true);
 			curPlayerWhite.setVisible(false);			
 		}
@@ -655,5 +883,9 @@ public class SimpleViewCtrl {
 	}
 
 }
+
+
+
+
 
 

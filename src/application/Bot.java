@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Bot {
     ArrayList<Move> moves;
@@ -215,6 +216,9 @@ public class Bot {
     	return this.moves.get(indicemax);  	
     }
     
-    
-    
+    Move randomBot() {
+        Random random = new Random();
+        int randomnb = random.nextInt(this.numMoves);
+        return this.moves.get(randomnb);
+    }  
 }
