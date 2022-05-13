@@ -1,10 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -63,13 +59,18 @@ public class SimpleViewCtrl {
     //bot = false -> the bot is not used. It is the 1V1 local mode
     boolean bot;
     
+    
+    //initializing global scores to 0. No need to initalize the disk scores, it is done by the score function
     int blackGlobalScore =0;
     int whiteGlobalScore =0;
     
+    //variable that is used to know how many redo we can do in a row (=number of undo we just did in a row)
     int numberOfUndoInARow=0;
     
     /**
      * This method is called either by the button "1 versus 1" or the button "1 versus Bot" when the program is first executed
+     * First initializes buttons and textfields to make the game playable for the player
+     * Then, if the player chooses 1versusBot mode : enable bot (bot=true). If the player chooses the 1versus1 mode : disable the bot (bot=false)
      * @param event
      */
     
@@ -106,33 +107,43 @@ public class SimpleViewCtrl {
     
     
     /**
-     * This method is called by any button we click on the BOARD
+     * This method is called by any button we click on the BOARD (not menu buttons outside of the board).
      * 
      * Once a button is clicked on: 
-     * 	Gets the source of the button with the method Object getSource() 
-     * 	Set it invisible and disabled with the methods Button setVisible() and Button setDisable()
+     * 	Displays the disk according to the position of the button we clicked on and according to the color of the current player
+     * 	Switches player and scans the valid positions for the current player
      * 
-     * +...	
-     * 	
+     * 	if 1versus1 mode :
+     * 		if the new player can play : displays its valid positions with the buttons
+     * 		if not : switches player.
+     * 			if the new player can play : displays its valid positions with the buttons
+     * 			if not : none of the players can play : END THE GAME
+     * 
+     * 	if 1versusBot mode :
+     * 		if the bot can play : chooses a position and play. 
+     * 							  switches to human player
+     * 							  repeat :
+     * 									   if the human player can play : displays its valid positions and EXIT the loop
+     * 									   if not : switches to bot. scans its valid positions
+     * 												if the bot can play : chooses a move and plays (go to repeat)
+     * 												else : both the bot and the players cannot play : END THE GAME
+     *		
+     *		if the bot cannnot play : switches to human player, scans its valid positions
+     *								  if the human player can play : displays its valid positions
+     *								  if not : both the player and the bot cannot play : END THE GAME	
      * @param event 
      * 
      */
 
     @FXML
     void onClick(MouseEvent event){
-    	
-    	
-    	
-
-    	 
+    
     	 System.out.println(bot);
     	numberOfUndoInARow=0;//to tell redo button to enable or disable
     	
     	Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.copygrid();
     	Main.testGame.currentGame.players[Main.testGame.currentGame.turn] = Main.testGame.currentGame.currentPlayer;
-    	
-    		
-    	
+    
     	//getting the button clicked in order to hide it and disable it
     	Object o = event.getSource();
     	Button buttonpushed = (Button)o;
@@ -187,10 +198,6 @@ public class SimpleViewCtrl {
     			displayButton(buttontodisable, false);
     		}
     	}
-    	
- 
-    	
-    	
     	
     	ArrayList<Move> validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play
     	
@@ -538,7 +545,7 @@ public class SimpleViewCtrl {
 	 * 	Then we use the method .getId().equals(String button_id) to get the right button in the array buttonTab
 	 * 
      * @param buttontochange the button to be enabled or disabled
-     * @param display (if display = true, displays the button. if displays = false, disables the button)
+     * @param display (if display == true, displays the button. if display == false, disables the button)
      */
 	void displayButton(String buttontochange, boolean display) { //displays or disables button according to boolean
 		Button[] buttonTab =   {button00, button01, button02, button03, button04, button05, button06, button07,
@@ -572,7 +579,7 @@ public class SimpleViewCtrl {
 	 * 	Then we use the method .getId().equals(String button_id) to get the right button in the arrays WhiteTab and BlackTab
 	 * 
 	 * @param disktochange the disk to be displayed or disabled
-	 * @param color (White or Black)
+	 * @param color of the disk to be displayed or disabled. Useful to look into the right array (WhiteTab or BlackTab)
 	 * @param display (if display = true, displays the disk. if display = false, disables the disk)
 	 */
 	void displayDisk(String disktochange, Color color, boolean display) { //displays or disables disk according to boolean	
@@ -621,7 +628,7 @@ public class SimpleViewCtrl {
 	
 	/**
 	 * This method is called when we click on the button Play (if you want to play again, you have to click on the button Play Again).
-	 *  It enables the 4 valid positions at the start of the game by enabling 4 buttons.
+	 *  It enables the 4 valid positions at the start of the game by enabling the 4 buttons.
 	 *  
 	 * @param event
 	 */
@@ -652,10 +659,13 @@ public class SimpleViewCtrl {
 		stage.close();
 	}
 	
-	// CREER METHODE START GAME APPELEE PAR PLAY ET PLAYAGAIN ?
+	
 	/**
 	 * This method is called when we click on the button Play Again.
-	 * 
+	 * 	First cleans the game over screen and sets up a the right buttons for the player
+	 * 	Then disables every disk on the board (no need to clean disk_buttons because at the end of a game : there is no disks to be placed
+	 * 	Then initializes the 4 central disks and creates a new GameState by initializing all of its attributes
+	 * 	Finally : scans the valid positions to be played -> enables the 4 buttons corresponding to the 4 valid positions of the start and updates scores
 	 * @param event
 	 */
 	@FXML
@@ -711,25 +721,36 @@ public class SimpleViewCtrl {
 		displayScore(); 
 	}
 
-	//method that highlights a button when mouseover
+	
+	
+	
+	/**
+	 * method that highlights a button when mouseover (only for disk buttons, on the board)
+	 * @param event
+	 */
 	@FXML
 	void onEntered(MouseEvent event) {
-		
 		Object o = event.getSource();
     	Button buttonover = (Button)o;
-		
 	    buttonover.setStyle("-fx-background-color: #279AF1; -fx-background-radius: 100");
 	}
-	//method that disables the highlight when mouse moves out of the button
+	
+	
+	/**
+	 * Method that disables the highlight when mouse moves out of the button (only for disk buttons, on the board)
+	 * @param event
+	 */
 	@FXML
 	void onExited(MouseEvent event) {
 		Object o = event.getSource();
     	Button buttonover = (Button)o;
-		
 		buttonover.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 100");
 	}
-
-	//method that highlights a buttonmenu when mouseover
+	
+	/**
+	 * Method that highlights a buttonmenu when mouseover 
+	 * @param event
+	 */
 	@FXML
 	void onEnteredMenuButton(MouseEvent event) {	
 		Object o = event.getSource();
@@ -737,8 +758,10 @@ public class SimpleViewCtrl {
 	    buttonover.setStyle("-fx-border-color: #279AF1; -fx-background-color: #DCDCDC");
 		
 	}
-	
-	//method that disables the highlight when mouse moves out of the buttonmenu
+	/**
+	 * Method that disables the highlight when mouse moves out of the buttonmenu
+	 * @param event
+	 */
 	@FXML
 	void onExitedMenuButton(MouseEvent event) {
 		Object o = event.getSource();
@@ -747,7 +770,17 @@ public class SimpleViewCtrl {
 	
 	}
 
-
+	/**
+	 * First, sets the actual grid to the previous one using grids[]
+	 * Then disables every button and disk on the GUI.
+	 * If it is 1versus1 mode, we have to switch player. (if 1versusBot mode, no need to, because the human player is the only one that can undo)
+	 * Then scans the validpositions to play according to the new (previous) grid and displays the buttons.
+	 * Finally : updates the currentplayer fields, images and updates scores
+	 * 
+	 * IMPORTANT : the variable numberOfUndoInARow is incremented for each undo in a row. It is absolutely necessary to the method redo.
+	 * 			   In fact, we can only redo as many times as we did undo without playing meanwhile.
+	 * @param event
+	 */
 	@FXML
 	void onClickUndo(MouseEvent event){
 		
@@ -826,8 +859,16 @@ public class SimpleViewCtrl {
 	}
 	
 		
-	
-	//only usable if undo is called the turn before
+	/**
+	 * First, sets the actual grid to the next one using grids[]
+	 * Then disables every button and disk on the GUI.
+	 * If it is 1versus1 mode, we have to switch player. (if 1versusBot mode, no need to, because the human player is the only one that can undo)
+	 * Then scans the validpositions to play according to the new (next) grid and displays the buttons.
+	 * Finally : updates the currentplayer fields, images and updates scores
+	 * 
+	 * IMPORTANT : the variable numberOfUndoInARow is decremented for each redo in a row. See javadoc on Undo method for more information.
+	 * @param event
+	 */
 	@FXML
 	void onClickRedo(MouseEvent event) {
 	
