@@ -147,6 +147,68 @@ public class Move {
      }
      
      
+     public ArrayList<Move> children(){
+     	 
+     	 Color[][] copygrid = this.currentGameState.copygrid(); // copygrid
+     	 
+     	 GameState gamestatecopy = new GameState(); // creates new gamestate
+     	 gamestatecopy.currentPlayer=this.player;
+     	 gamestatecopy.grid = copygrid;
+     	 
+     	 //System.out.println("this is the copy grid :");
+     	 //gamestatecopy.displayGrid();
+     	 
+     	 Move movetoplay = new Move(this.player, this.position, gamestatecopy); // move copy
+     	 movetoplay.flipDisks(); // plays move
+     	 
+     	 //System.out.println("after the move is played");
+     	 //movetoplay.currentGameState.displayGrid();
+     	 
+     	 ArrayList<Move> children = movetoplay.currentGameState.validPositions(this.player.Opponent());
+     	 
+     	 //System.out.println("after children are calculated");
+     	 //movetoplay.currentGameState.displayGrid();
+     	 
+     	 //System.out.println("grid of first child");
+     	 //children.get(0).currentGameState.displayGrid();
+     	 
+     	 //System.out.println("this is the original grid");
+     	 //this.currentGameState.displayGrid();
+     	 
+     	 
+     	 ArrayList<Move> childrencopy = new ArrayList<Move>();
+     	 
+     	 for (Move child : children) {
+     		 
+     		 Color[][] copycopygrid = movetoplay.currentGameState.copygrid();
+     		 GameState gamestatecopycopy = new GameState();
+     		 gamestatecopycopy.currentPlayer=this.player.Opponent();
+        	 gamestatecopycopy.grid = copycopygrid;
+     		 
+        	 Move childcopy = new Move(child.player, child.position, gamestatecopycopy);
+        	 childrencopy.add(childcopy);
+     	 }
+     	 
+     	 /*System.out.println("grid of first child");
+     	 childrencopy.get(0).currentGameState.displayGrid();
+     	
+     	 childrencopy.get(0).flipDisks();
+     	 childrencopy.get(1).flipDisks();
+     	 System.out.println("grid of first child played");
+     	 childrencopy.get(0).currentGameState.displayGrid();
+     	 
+     	 System.out.println("grid of second child");
+     	 childrencopy.get(1).currentGameState.displayGrid();
+     	 
+     	 System.out.println("grid of third child");
+     	 childrencopy.get(2).currentGameState.displayGrid();
+     	*/
+     	
+     	 
+     	 return childrencopy;
+     }
+     
+     
      
      
      

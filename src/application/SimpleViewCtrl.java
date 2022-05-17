@@ -305,7 +305,7 @@ public class SimpleViewCtrl {
     			System.out.println("Valid positions: " + validPositions.toString()); //debug
     			
     			Bot randomtestbot = new Bot(validPositions);//initializes the bot
-    			Move randomMove = randomtestbot.randomBot();//computes a random move among the valid positions
+    			Move randomMove = randomtestbot.simpleBot(Color.WHITE, Main.testGame.currentGame.turn);//computes a random move among the valid positions
     			
     			
     			
@@ -353,7 +353,7 @@ public class SimpleViewCtrl {
     						
     						if(validPositions.size()!=0){ // if the bot can play
     							Bot randomtestbotafterskip = new Bot(validPositions);//initializes the bot
-    			    			Move randomMoveafterskip = randomtestbotafterskip.randomBot();//computes a random move among the valid positions
+    			    			Move randomMoveafterskip = randomtestbotafterskip.simpleBot(Color.WHITE, Main.testGame.currentGame.turn);//computes a random move among the valid positions
     			    			
     			    			
     			    			
