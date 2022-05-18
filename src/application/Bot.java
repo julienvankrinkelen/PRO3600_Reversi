@@ -19,7 +19,7 @@ public class Bot {
     
     
     /*
-     * TODO static evaluation functions:
+     * static evaluation functions:
      *    - corner grab
      *    - stability
      *    - mobility
@@ -92,7 +92,7 @@ public class Bot {
     }
     
 	/**
-     * staticEvalDiskDifference is a method that calculates the difference between the scores of player of opponent
+     * staticEvalDiskDifference is a method that calculates the difference between the scores of player and opponent
      * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : res[i]=scores[player]-scores[opponent]
      */
     private float[] staticEvalDiskDifference() { // difference between the scores of player and opponent
@@ -196,26 +196,15 @@ public class Bot {
 		return res;
 	}
 
-	/**
-     * This is a test function used to display this.scores 
+    /**
+     * displayMoves is a test function used to display the positions of the moves evaluated
      */
-    
-    /*
-    void displayScores(int turn, Color player) {
-    	this.combine(turn, player);
-    	System.out.print("[");
-    	for (float score : this.scores) {
-    		System.out.print(score + " ");
-    	}
-    	System.out.println("]");
-    }
-    
     void displayMoves() {
     	for (int i=0; i<this.numMoves; i++) {
     		System.out.println(this.moves.get(i).toString());
     	}
     }
-    */
+
 
 	/**
      * combine is a method used to associate to this.scores a linear combination of the static evaluations ; the weights may vary during the game
@@ -233,64 +222,82 @@ public class Bot {
         float placement = 10; //not a very important criteria in itself, used to decide between two similar moves
         float frontier = (float) (20-0.3125*turn); //medium weight, decreasing at the end
         float difference = turn; //from zero to very high at the end
-        float random = (float) 0.01;
+        float random = (float) 0.01; // adds a small part of random
         if (player==Color.WHITE) {
-        	for (int i=0; i<this.scores.length; i++) {
+        	for (int i=0; i<this.scores.length; i++) { // if the player is the maximizing player
                 this.scores[i]= corner * cornerscores[i] + mobility * mobilityscores[i] + placement * placementscores[i] + difference * differencescores[i] + random * (float)Math.random() + stability * stabilityscores[i] + frontier * frontierscores[i];
         	}
         }
         else {
-        	for (int i=0; i<this.scores.length; i++) {
+        	for (int i=0; i<this.scores.length; i++) { // if the player is the minimizing player
         		this.scores[i]= - corner * cornerscores[i] - mobility * mobilityscores[i] - stability * stabilityscores[i]  - difference * differencescores[i] - random * (float)Math.random() - placement * placementscores[i] - frontier * frontierscores[i];
         	}
         }
     }
     
 	/**
-     * max is a method that returns the move with the highest score
+     * max is a method that returns the move with the highest score calculated by static evaluation
      * @return the move that has the highest evaluation, ie the best move to play
      */
     Move max() { // returns move with the highest score (static evaluation)
     	float max = this.scores[0];
     	ArrayList<Move> movesmax = new ArrayList<Move>();
-    	for (int i=1; i<this.scores.length; i++) {
+    	for (int i=1; i<this.scores.length; i++) { // looks for the highest score
     		if (this.scores[i]>max) {
     			max = this.scores[i];
     		}
     	}
-    	for (int i=0; i<this.scores.length; i++) {
+    	for (int i=0; i<this.scores.length; i++) { // creates an array list of moves with the highest score
     		if (this.scores[i]==max) {
     			movesmax.add(this.moves.get(i));
     		}
     	}
     	Random random = new Random();
     	int randomnb = random.nextInt(movesmax.size());
-    	return movesmax.get(randomnb);  	
+    	return movesmax.get(randomnb); // returns a move at random among the array of moves with the highest score
     }
     
     /**
-     * min is a method that returns the move with the lowest score
+     * min is a method that returns the move with the lowest score calculated by static evaluation
      * @return the move that has the lowest static evaluation
      */
     Move min() { // returns move with the lowest score (static evaluation)
     	float min = this.scores[0];
     	ArrayList<Move> movesmin = new ArrayList<Move>();
-        for (int i=1; i<this.scores.length; i++) {
+        for (int i=1; i<this.scores.length; i++) { // looks for the highest score
             if (this.scores[i]<min) {
                 min = this.scores[i];
             }
         }
-        for (int i=0; i<this.scores.length; i++) {
+        for (int i=0; i<this.scores.length; i++) { // creates an array list of moves with the lowest score
         	if (this.scores[i]==min) {
         		movesmin.add(this.moves.get(i));
         	}
         }
         Random random = new Random();
         int randomnb = random.nextInt(movesmin.size());
-        return movesmin.get(randomnb);
+        return movesmin.get(randomnb); // returns a move at random among the array of moves with the lowest score
+    }
+
+	/**
+     * simpleBot is the bot that we are currently using
+     * @param player is the player who is about to play, ie the bot
+     * @param turn describes where we are in the game (beginning, middle, end)
+     * @return the best move to play using static only evaluation
+     */
+    Move simpleBot(Color player, int turn) {
+    	this.combine(turn, player); // calculates the scores
+    	if (player == Color.WHITE) { // the maximizing player is playing
+    		return this.max(); // returns the move with the highest static evaluation
+    	}
+    	else { // the minimizing player is playing
+    		return this.min(); // returns the move with the lowest static evaluation
+    	}
     }
     
     /* unused code (however it is works)
+	this is our try of the minimax function
+
     float singleminimax(Move move, int depth, Color player, int turn, int iter, Bot bot) {
     	if (depth ==0) {
     		return bot.scores[iter];
@@ -342,17 +349,6 @@ public class Bot {
     }
     */
 
-    Move simpleBot(Color player, int turn) {
-    	this.combine(turn, player);
-    	if (player == Color.WHITE) {
-    		this.max().toString();
-    		return this.max();
-    	}
-    	else {
-    		this.min().toString();
-    		return this.min();
-    	}
-    }
 
 }
 
