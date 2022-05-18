@@ -140,23 +140,27 @@ public class Move {
     	 return true; //executed if and only if the disk is stable (see algorithm description in the javadoc)
      }
      
+	/**
+      * children is a method used in minimax to evaluate the opponent's valid moves after this.player plays
+      * @return an array of the opponent valid moves after this.player has played in this.position 
+      */
      public ArrayList<Move> children(){
-     	 Color[][] copygrid = this.currentGameState.copygrid(); // copygrid
-     	 GameState gamestatecopy = new GameState(); // creates new gamestate
+     	 Color[][] copygrid = this.currentGameState.copygrid(); // creates a deep copy of the grid
+     	 GameState gamestatecopy = new GameState(); // creates new GameState
      	 gamestatecopy.currentPlayer=this.player;
-     	 gamestatecopy.grid = copygrid;     	 
-     	 Move movetoplay = new Move(this.player, this.position, gamestatecopy); // move copy
-     	 movetoplay.flipDisks(); // plays move
-     	 ArrayList<Move> children = movetoplay.currentGameState.validPositions(this.player.Opponent());
+     	 gamestatecopy.grid = copygrid; // creates a deep copy of GameState
+     	 Move movetoplay = new Move(this.player, this.position, gamestatecopy); // creates a deep copy of this
+     	 movetoplay.flipDisks(); // plays the move
+     	 ArrayList<Move> children = movetoplay.currentGameState.validPositions(this.player.Opponent()); // calculates the opponent's valid positions after movetoplay is played
      	 ArrayList<Move> childrencopy = new ArrayList<Move>();
-     	 for (Move child : children) {     		 
+     	 for (Move child : children) {  // creates a deep copy of children   		 
      		 Color[][] copycopygrid = movetoplay.currentGameState.copygrid();
      		 GameState gamestatecopycopy = new GameState();
      		 gamestatecopycopy.currentPlayer=this.player.Opponent();
         	 gamestatecopycopy.grid = copycopygrid;
         	 Move childcopy = new Move(child.player, child.position, gamestatecopycopy);
-        	 childrencopy.add(childcopy);
+        	 childrencopy.add(childcopy); 
      	 }
      	 return childrencopy;
-     }     
+     }       
 }
