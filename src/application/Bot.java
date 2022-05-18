@@ -80,13 +80,11 @@ public class Bot {
      * staticEvalCornerGrab is a method used to evaluate whether the move grabs a corner
      * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : res[i]=1 if a corner is grabbed
      */
-
     private float[] staticEvalCornerGrab() {
         float[] res = new float[this.numMoves];
         for (int i = 0; i < this.scores.length; i++) { //for each move considered by the bot
             int x = this.moves.get(i).position.x;
             int y = this.moves.get(i).position.y;
-            // System.out.println(x+", "+y);
             if ((x==0 && y==0) || (x==0 && y==7) || (x==7 && y==0) || (x==7 && y==7)) res[i] = 1; //if it's a corner
             else res[i] = 0;
         }
@@ -97,7 +95,6 @@ public class Bot {
      * staticEvalDiskDifference is a method that calculates the difference between the scores of player of opponent
      * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : res[i]=scores[player]-scores[opponent]
      */
-
     private float[] staticEvalDiskDifference() { // difference between the scores of player and opponent
     	float[] res = new float[this.numMoves]; // will contain the evaluations of each move
     	for (int i=0; i<this.scores.length; i++) { // for each move considered by the bot
@@ -116,7 +113,6 @@ public class Bot {
      * staticEvalMobility is a method that evaluates the number of the opponent's possible moves after the player plays this.moves.get(i)
      * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : the greater the opponent mobility is, the smaller res[i] is
      */
-
     private float[] staticEvalMobility() { // minimizes the opponent's mobility : returns the opposite of the number of the opponent's possible moves for each move played
     	float[] res = new float[this.numMoves]; // will contain the evaluations of each move
     	for (int i=0; i<this.scores.length; i++) { // for each move considered by the bot
@@ -135,7 +131,6 @@ public class Bot {
      * staticEvalPlacement is a method that evaluates the position of the move played
      * @return a list of floats where res[i] is the evaluation of this.moves.get(i) : res[i] is the placement score associated with the position of the considered move
      */
-
     private float[] staticEvalPlacement() { // evaluates position of the move played
     	float[] res = new float[this.numMoves]; // will contain the evaluations of each move
     	float[][] placements = { // describes placement scores
@@ -162,7 +157,6 @@ public class Bot {
     	}
     	return res;
     }
-    
     
     private float staticEvalStabilityOneMove(int moveIndex) { //returns, for this.moves.get(i), the number of stable disk after it was played minus the number of stable disks before it was played
         float res = 0; //result
@@ -215,34 +209,24 @@ public class Bot {
     	}
     	System.out.println("]");
     }
-    */
     
     void displayMoves() {
     	for (int i=0; i<this.numMoves; i++) {
     		System.out.println(this.moves.get(i).toString());
     	}
     }
+    */
 
 	/**
      * combine is a method used to associate to this.scores a linear combination of the static evaluations ; the weights may vary during the game
      */
-    
     void combine(int turn, Color player) { // linear combination, calculates scores
-        System.out.println("this the the method combine");
     	float[] cornerscores = this.staticEvalCornerGrab();
-    	System.out.println("corner");
         float[] stabilityscores = this.staticEvalStability();
-        System.out.println("stability");
         float[] mobilityscores = this.staticEvalMobility();
-        System.out.println("mobility");
         float[] placementscores = this.staticEvalPlacement();
-        System.out.println("placement");
         float[] frontierscores = this.staticEvalFrontier();
-        System.out.println("frontier");
         float[] differencescores = this.staticEvalDiskDifference();
-        System.out.println("difference");
-        System.out.println("static evaluations completed");
-        //please note that the following weighs are temporary and might change during a tweaking phase
         float corner = 64; //weighted very highly at all times
         float stability = 43; //weighted highly at all times
         float mobility = 64-turn; //weighted highly at the beginning and decreases to zero at the end
@@ -250,50 +234,38 @@ public class Bot {
         float frontier = (float) (20-0.3125*turn); //medium weight, decreasing at the end
         float difference = turn; //from zero to very high at the end
         float random = (float) 0.01;
-        // test System.out.println(corner +", " + stability + ", " + mobility + ", " + placement + ", " + frontier + ", " + difference);
         if (player==Color.WHITE) {
         	for (int i=0; i<this.scores.length; i++) {
                 this.scores[i]= corner * cornerscores[i] + mobility * mobilityscores[i] + placement * placementscores[i] + difference * differencescores[i] + random * (float)Math.random() + stability * stabilityscores[i] + frontier * frontierscores[i];
-                 
-                //System.out.println("res["+i+"] = " + scores[i]);
         	}
         }
         else {
         	for (int i=0; i<this.scores.length; i++) {
         		this.scores[i]= - corner * cornerscores[i] - mobility * mobilityscores[i] - stability * stabilityscores[i]  - difference * differencescores[i] - random * (float)Math.random() - placement * placementscores[i] - frontier * frontierscores[i];
-        		 
-        		//System.out.println("res["+i+"] = " + scores[i]);
         	}
         }
-        //this.scores=res;
     }
     
 	/**
      * max is a method that returns the move with the highest score
      * @return the move that has the highest evaluation, ie the best move to play
      */
-	 
     Move max() { // returns move with the highest score (static evaluation)
-    	
     	float max = this.scores[0];
     	ArrayList<Move> movesmax = new ArrayList<Move>();
-    	
     	for (int i=1; i<this.scores.length; i++) {
     		if (this.scores[i]>max) {
     			max = this.scores[i];
     		}
     	}
-    	
     	for (int i=0; i<this.scores.length; i++) {
     		if (this.scores[i]==max) {
     			movesmax.add(this.moves.get(i));
     		}
     	}
-    	
     	Random random = new Random();
     	int randomnb = random.nextInt(movesmax.size());
     	return movesmax.get(randomnb);  	
-    	
     }
     
     /**
@@ -301,143 +273,86 @@ public class Bot {
      * @return the move that has the lowest static evaluation
      */
     Move min() { // returns move with the lowest score (static evaluation)
-        
     	float min = this.scores[0];
     	ArrayList<Move> movesmin = new ArrayList<Move>();
-    	
         for (int i=1; i<this.scores.length; i++) {
             if (this.scores[i]<min) {
                 min = this.scores[i];
             }
         }
-        
         for (int i=0; i<this.scores.length; i++) {
         	if (this.scores[i]==min) {
         		movesmin.add(this.moves.get(i));
         	}
         }
-        
         Random random = new Random();
         int randomnb = random.nextInt(movesmin.size());
         return movesmin.get(randomnb);
     }
     
-    
-    
-    
-    
-    // TODO
-    // traiter le cas quand un joueur joue 2 fois
-    
+    /* unused code (however it is works)
     float singleminimax(Move move, int depth, Color player, int turn, int iter, Bot bot) {
-    	
-    	if (depth ==0) { // TODO fin de partie
+    	if (depth ==0) {
     		return bot.scores[iter];
     	}
-    	
     	float maxEval = - Float.MAX_VALUE;
 		ArrayList<Move> children = move.children();
-		
-		
 		Bot botchildren = new Bot(children);
 		botchildren.combine(turn+1, player.Opponent());
-		
     	if (player==Color.WHITE) {
-    		
-    		//System.out.println("maximizingPlayer, depth = " + depth);
-    		
-    		
-    		
     		for (Move child : children) {
-    			// revoir les arguments ???	
     			float eval = singleminimax(child, depth -1, player.Opponent(), turn +1, children.indexOf(child), botchildren);
     			maxEval = Float.max(eval, maxEval);    			
     		}
-    		
     		return maxEval;
     	}
-    	
     	else {
-    		
-    		//System.out.println("minimizingPlayer, depth = " + depth);
-    		
     		float minEval = Float.MAX_VALUE;
-    		
     		for (Move child : children) {
-    			
     			float eval = singleminimax(child, depth-1, player.Opponent(), turn +1, children.indexOf(child), botchildren);
     			minEval = Float.min(eval, minEval);
     		}
-    		
-    		return minEval;
+    		return minEval;	
     	}
     }
-    
-    
-   
-   
     Move minimax(ArrayList<Move> moves, int depth, Color player, int turn) {
-
     	this.combine(turn, player);
-    	
     	float[] evaluation = new float[this.numMoves];
-    	
     	for (int i=0; i<moves.size(); i++) {
     		evaluation[i]=singleminimax(moves.get(i), depth, player, turn, i, this);	
     	}
-    	
-    	this.scores = evaluation;
-    	
+    	this.scores = evaluation;    	
     	for (int i=0; i<moves.size(); i++) {
     	System.out.println("scores["+i+"] = " + this.scores[i]);
-    	}
-    	
-	
+    	}	
     	if (player==Color.WHITE) {
-    		
     		Move res = this.max();
-    		
     		System.out.println("the best move to play is " + res.toString());
-    		
     		System.out.println("voici la grille res");
     		res.currentGameState.displayGrid();
-    		
     		return res;
     	}
-    	
     	else {
-    		
     		Move res = this.min();
-    		
     		System.out.println("ths best move to play is " + res.toString());
-    		
     		System.out.println("voici la grille res");
     		res.currentGameState.displayGrid();
-    		
     		return res;
     	}
-    	
-    
     }
+    */
 
-
-
-    
-    
     Move simpleBot(Color player, int turn) {
     	this.combine(turn, player);
     	if (player == Color.WHITE) {
     		this.max().toString();
     		return this.max();
-    		
     	}
     	else {
     		this.min().toString();
     		return this.min();
     	}
     }
-    
-    
 
 }
 
