@@ -46,7 +46,6 @@ public class Move {
 	 * isValid is a method that checks whether a sandwich can be made from this position, ie if the move is valid.
 	 * @return true if the move is valid, false if the move is not valid.
 	 */
-
 	boolean isValid() {
 		if (!this.position.inGrid()) return false;
 		Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
@@ -59,8 +58,7 @@ public class Move {
 	/**
      * flipDisks is a method that plays the valid move and flips the sandwiched opponents disks. 
      * @return an array of the positions of the disks that can be flipped by playing said move.
-     */
-    
+     */    
     public ArrayList<Position> flipDisks() { // return the disks that can be flipped by playing this and flips them. 
         Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
         ArrayList<Position> res = new ArrayList<Position>(); // will contain the positions of the disks that can be flipped
@@ -107,7 +105,6 @@ public class Move {
      boolean isStable() {
     	 Color[][] consideredGrid = this.currentGameState.grid.clone(); //clones grid to modify it
     	 if (consideredGrid[this.position.x][this.position.y] != this.player) { //if the move tested is of invalid form
-    		 //System.out.println("consideredGrid[this.position.x][this.position.y] != this.player"); //debug
     		 return false;
     	 }
     	 ArrayList<Position> adjEmpty = new ArrayList<Position>(); //will contain the empty squares adjacent to this.position
@@ -117,14 +114,12 @@ public class Move {
     				 Position consideredPos = new Position(this.position.x+di, this.position.y+dj);
     				 if (consideredPos.inGrid()) {
 	    				 if (consideredGrid[consideredPos.x][consideredPos.y] == Color.EMPTY) { //if the adjacent square considered is empty
-	    					 //System.out.println("Adding " + consideredPos.toString() + " to adjEmpty"); //debug
 	    					 adjEmpty.add(consideredPos); //adds the considered position (adjacent to this.position and empty)
 	    				 }
     				 }
     			 }
     		 }
     	 }
-    	 //System.out.println("Calculated adjEmpty ArrayList: " + adjEmpty.toString()); //debug
     	 //the following lines fill consideredGrid empty squares with this.player.Opponent()'s disk
     	 Color opponent = this.player.Opponent(); //finds the opponent
     	 for (int i=0; i<8; i++) {		//goes through
@@ -135,7 +130,6 @@ public class Move {
     		 }
     	 }
     	 for (Position pos: adjEmpty) { //goes through the list of adjacent empty square to empty them and try to play at their position (steps 2 and 3)
-    		 //System.out.println("Testing position " + pos.toString()); //debug
     		 consideredGrid[pos.x][pos.y] = Color.EMPTY; //empties the square at pos
     		 GameState gameStateToTry = new GameState();	//creates a new GameState
     		 gameStateToTry.grid = consideredGrid;			//with a grid equal to consideredGrid
@@ -146,83 +140,23 @@ public class Move {
     	 return true; //executed if and only if the disk is stable (see algorithm description in the javadoc)
      }
      
-     
      public ArrayList<Move> children(){
-     	 
      	 Color[][] copygrid = this.currentGameState.copygrid(); // copygrid
-     	 
      	 GameState gamestatecopy = new GameState(); // creates new gamestate
      	 gamestatecopy.currentPlayer=this.player;
-     	 gamestatecopy.grid = copygrid;
-     	 
-     	 //System.out.println("this is the copy grid :");
-     	 //gamestatecopy.displayGrid();
-     	 
+     	 gamestatecopy.grid = copygrid;     	 
      	 Move movetoplay = new Move(this.player, this.position, gamestatecopy); // move copy
      	 movetoplay.flipDisks(); // plays move
-     	 
-     	 //System.out.println("after the move is played");
-     	 //movetoplay.currentGameState.displayGrid();
-     	 
      	 ArrayList<Move> children = movetoplay.currentGameState.validPositions(this.player.Opponent());
-     	 
-     	 //System.out.println("after children are calculated");
-     	 //movetoplay.currentGameState.displayGrid();
-     	 
-     	 //System.out.println("grid of first child");
-     	 //children.get(0).currentGameState.displayGrid();
-     	 
-     	 //System.out.println("this is the original grid");
-     	 //this.currentGameState.displayGrid();
-     	 
-     	 
      	 ArrayList<Move> childrencopy = new ArrayList<Move>();
-     	 
-     	 for (Move child : children) {
-     		 
+     	 for (Move child : children) {     		 
      		 Color[][] copycopygrid = movetoplay.currentGameState.copygrid();
      		 GameState gamestatecopycopy = new GameState();
      		 gamestatecopycopy.currentPlayer=this.player.Opponent();
         	 gamestatecopycopy.grid = copycopygrid;
-     		 
         	 Move childcopy = new Move(child.player, child.position, gamestatecopycopy);
         	 childrencopy.add(childcopy);
      	 }
-     	 
-     	 /*System.out.println("grid of first child");
-     	 childrencopy.get(0).currentGameState.displayGrid();
-     	
-     	 childrencopy.get(0).flipDisks();
-     	 childrencopy.get(1).flipDisks();
-     	 System.out.println("grid of first child played");
-     	 childrencopy.get(0).currentGameState.displayGrid();
-     	 
-     	 System.out.println("grid of second child");
-     	 childrencopy.get(1).currentGameState.displayGrid();
-     	 
-     	 System.out.println("grid of third child");
-     	 childrencopy.get(2).currentGameState.displayGrid();
-     	*/
-     	
-     	 
      	 return childrencopy;
-     }
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
+     }     
 }

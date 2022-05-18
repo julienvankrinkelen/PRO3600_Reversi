@@ -92,8 +92,7 @@ public class GameState {
     /**
 	 * scores counts the number of black disks and white disks on the grid.
 	 * @return two integers : the scores of black, white
-	 */
-	
+	 */	
 	int[] scores() { // returns the scores of black, white
         int black=0; 
         int white=0;
@@ -110,7 +109,6 @@ public class GameState {
     /**
 	 * displayScores is a test function used to display the scores of the two players.
 	 */
-
     void displayScores() {
         int[] score = this.scores();
         System.out.println("BLACK = " + score[0]);
@@ -122,19 +120,16 @@ public class GameState {
      * @param player is the player whose moves are checked.
      * @return an ArrayList of all the valid moves said player can make in the current game state.
      * @see isValid
-     */
-     
+     */     
     public ArrayList<Move> validPositions(Color player) {
     	ArrayList<Move> res = new ArrayList<Move>();
     	for (int i=0; i<8; i++) {
     		for (int j=0; j<8; j++) {
     			if (this.grid[i][j]==Color.EMPTY) { //this square needs to be empty
     				Move tested = new Move(player, new Position(i, j), this);
-    				//System.out.println("Testing: " + tested.toString());;
     				if (tested.isValid() && !tested.isIn(res)) {
     					res.add(tested); //the tested move needs to be legal and we prevent doubles from appearing in res
     				}
-    				//System.out.println("Current res: " + res.toString() + "\n"); //debuging
     			}
     		}
     	}
@@ -144,8 +139,7 @@ public class GameState {
     /**
 	 * copygrid creates a deep copy of this.grid
 	 * @return the deep copy of this.grid
-	 */
-     
+	 */     
 	Color[][] copygrid() {
 		Color[][] deepcopy = new Color[][] {
 			{Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY, Color.EMPTY},
@@ -164,28 +158,4 @@ public class GameState {
 		}
 		return deepcopy;
 	}
-
-
-//DEBUG : display the grid k in the array grids[][][]
-void displayGrids(int k) { //test function to display this.grid in console
-    System.out.println("  A B C D E F G H"); // labels columns
-    for (int i=0; i<this.grid.length; i++) {
-        System.out.print(Integer.valueOf(i+1) + " ");
-        for (int j=0; j<this.grid.length; j++) {
-            switch (this.grids[k][i][j]) {
-                case EMPTY: //square is empty
-                    System.out.print(". ");
-                    break;
-                case BLACK: //black disk
-                    System.out.print("x ");
-                    break;
-                case WHITE: //white disk
-                    System.out.print("o ");
-                    break;
-            }
-        }
-        System.out.println(); //skips line
-    	}
-	}
 }
-
