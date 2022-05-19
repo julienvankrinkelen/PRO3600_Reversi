@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Bot {
     ArrayList<Move> moves;
@@ -239,22 +238,16 @@ public class Bot {
      * max is a method that returns the move with the highest score calculated by static evaluation
      * @return the move that has the highest evaluation, ie the best move to play
      */
-    Move max() { // returns move with the highest score (static evaluation)
+	Move max() { // returns move with the highest score (static evaluation)
     	float max = this.scores[0];
-    	ArrayList<Move> movesmax = new ArrayList<Move>();
+    	int indicemax=0;
     	for (int i=1; i<this.scores.length; i++) { // looks for the highest score
     		if (this.scores[i]>max) {
     			max = this.scores[i];
+    			indicemax = i;
     		}
     	}
-    	for (int i=0; i<this.scores.length; i++) { // creates an array list of moves with the highest score
-    		if (this.scores[i]==max) {
-    			movesmax.add(this.moves.get(i));
-    		}
-    	}
-    	Random random = new Random();
-    	int randomnb = random.nextInt(movesmax.size());
-    	return movesmax.get(randomnb); // returns a move at random among the array of moves with the highest score
+    	return this.moves.get(indicemax);
     }
     
     /**
@@ -263,20 +256,14 @@ public class Bot {
      */
     Move min() { // returns move with the lowest score (static evaluation)
     	float min = this.scores[0];
-    	ArrayList<Move> movesmin = new ArrayList<Move>();
+    	int indicemin = 0;
         for (int i=1; i<this.scores.length; i++) { // looks for the highest score
             if (this.scores[i]<min) {
                 min = this.scores[i];
+            	indicemin = i;
             }
         }
-        for (int i=0; i<this.scores.length; i++) { // creates an array list of moves with the lowest score
-        	if (this.scores[i]==min) {
-        		movesmin.add(this.moves.get(i));
-        	}
-        }
-        Random random = new Random();
-        int randomnb = random.nextInt(movesmin.size());
-        return movesmin.get(randomnb); // returns a move at random among the array of moves with the lowest score
+        return this.moves.get(indicemin);
     }
 
 	/**
