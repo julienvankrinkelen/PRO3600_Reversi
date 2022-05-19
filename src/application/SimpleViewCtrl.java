@@ -194,7 +194,6 @@ public class SimpleViewCtrl {
     		}
     		else { //if the current player cannot play, skip a turn
     			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
-    			System.out.println("Skipped a turn");
     			validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play for the new player
     			if (validPositions.size()!=0) { //if the new current player can play
     				for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
@@ -251,7 +250,6 @@ public class SimpleViewCtrl {
     		}
     		buttonRedo.setDisable(true);
     		Main.testGame.currentGame.grids[Main.testGame.currentGame.turn] = Main.testGame.currentGame.grid; //stores the obtained grid in order to restore it with a redo if needed
-    		System.out.println("current turn : " + Main.testGame.currentGame.turn);
     		}
     	else if(bot==true) { //if a human is playing against the bot
 		if (validPositions.size()!=0) { //if the bot can play
@@ -349,7 +347,6 @@ public class SimpleViewCtrl {
     		}
 		else { //if the bot cannot play, skips a turn
 			Main.testGame.currentGame.currentPlayer = Main.testGame.currentGame.currentPlayer.Opponent(); //skips a turn
-			System.out.println("Skipped a turn");
 			validPositions = Main.testGame.currentGame.validPositions(Main.testGame.currentGame.currentPlayer); //calculates the list of legal moves to play for the new player
 			if (validPositions.size()!=0) { //if the new current player can play (the human player)
 				for(Move buttontodisplay: validPositions) { //for each valid move, enable the corresponding button
@@ -681,13 +678,8 @@ public class SimpleViewCtrl {
 	@FXML
 	void onClickUndo(MouseEvent event){
 		numberOfUndoInARow++;
-		System.out.println("nm of undo in a row:" + numberOfUndoInARow);
-		System.out.println("on est au coup " + Main.testGame.currentGame.turn);
-		Main.testGame.currentGame.turn--; //on undo
-		System.out.println("on revient au coup " + Main.testGame.currentGame.turn);
+		Main.testGame.currentGame.turn--; //on undo	
 		Main.testGame.currentGame.grid = Main.testGame.currentGame.grids[Main.testGame.currentGame.turn];
-		System.out.println("undoing: ");
-		Main.testGame.currentGame.displayGrid();
 		//resetting the grid
 		for(int i=0;i<8;i++) {
     		for(int j=0;j<8;j++) {
@@ -751,13 +743,9 @@ public class SimpleViewCtrl {
 	 */
 	@FXML
 	void onClickRedo(MouseEvent event) {
-		numberOfUndoInARow--;
-		System.out.println(numberOfUndoInARow);
-		Main.testGame.currentGame.turn++; // Coming back to the previous turn
-		System.out.println("on remonte au coup " + Main.testGame.currentGame.turn);
+		numberOfUndoInARow--;	
+		Main.testGame.currentGame.turn++; // Coming back to the previous turn	
 		Main.testGame.currentGame.grid = Main.testGame.currentGame.grids[Main.testGame.currentGame.turn];
-		System.out.println("undoing: ");
-		Main.testGame.currentGame.displayGrid();
 		//resetting the grid
 		for(int i=0;i<8;i++) {
     		for(int j=0;j<8;j++) {
@@ -810,9 +798,3 @@ public class SimpleViewCtrl {
     	}
 	}
 }
-
-
-
-
-
-
