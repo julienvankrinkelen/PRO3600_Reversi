@@ -30,7 +30,11 @@ public class Bot {
      * each function has to return a value in the [-1, 1] range and another function will return a linear combination of these values, using weights that may vary in time.
      */
     
-    public float[] staticEvalFrontier() { //returns, for this.move.get(i), the number of empty squares adjacent to the opponent minus the number of empty squares adjacent to the player
+    /**
+     * a good strategy in reversi is to keep your disks inside of your opponent's ones: it is important to have as few disks as possible that are adjacent to an empty square. staticEvalFrontier returns an evaluation of this criteria
+     * @return an array where the element in position i is, after this.moves[i] has been played, the number of empty squares adjacent to the opponent minus the number of empty squares adjacent to the player, normalized to fit the [-1, 1] range.
+     */
+    public float[] staticEvalFrontier() {
     	Position[] dirs = new Position[] {new Position(-1, -1), new Position(-1, 0), new Position(-1, 1), new Position(0, -1), new Position(0, 1), new Position(1, -1), new Position(1, 0), new Position(1, 1)}; // list of all possible directions
     	float[] res =new float[this.numMoves]; //result
     	for (int i=0; i<this.numMoves; i++) { //goes through this.moves
@@ -184,7 +188,11 @@ public class Bot {
         return res;
     }
     
-    public float[] staticEvalStability() { //evaluate the stability of the move played: (new stable pos - former stable pos)/64 
+    /**
+     * in reversi, a stable disk is a disk that cannot be flipped. staticEvalStability evaluates this criteria (the more stable disks you have, the better it is)
+     * @return returns an array where the element in position i is (new stable pos - former stable pos)/6 where former stable pos is the number of stable disks and new stable pos is the number of stable disks after this.moves[i] has been played
+     */
+    public float[] staticEvalStability() {
 		float[] res = new float[this.numMoves]; //results
 		for (int i = 0; i < this.numMoves; i++) {
 			res[i] = 0; //for the moment, all res are equal to 0
@@ -282,7 +290,7 @@ public class Bot {
     	}
     }
     
-    /* unused code (however it is works)
+    /* unused code (but it works)
 	this is our try of the minimax function
 
     float singleminimax(Move move, int depth, Color player, int turn, int iter, Bot bot) {
