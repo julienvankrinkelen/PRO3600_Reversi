@@ -60,3 +60,8 @@ B --> A
 A --> C
 ```
 Each part will also be improved in order to be more efficient and easier to use.
+
+01/09/2023 DISCLAIMER : 
+I, Julien Vankrinkelen, needed to change my commit email address for every commit on this project. Instead of using "julien.vankrinkelen@telecom-sudparis.eu", I used "julienvankrinkelen@telecom-sudparis.eu", I basically dropped the "."
+As a consequence, none of my contributions were showing under my name. I used git rebase to change every single one of my commit with the right email address. This is why the timestamps of almost every commit have been resetted to the day I did this modification.
+The project was closed a year ago, so the commit timestamps don't really matter much now. If I have time, one day, I will fix this issue byt applying the timestamps registered in the previous commit. 
